@@ -1,11 +1,15 @@
 package com.ongames.model;
 
 import java.io.Serializable;
+import javax.persistence.*;
 
+@Entity
 public class Categoria implements Serializable{
     private static final long serialVersionUID = 1L;
     
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column (nullable=false, length=20, unique=true)
     private String tipo;
 
     public Categoria(String tipo) {

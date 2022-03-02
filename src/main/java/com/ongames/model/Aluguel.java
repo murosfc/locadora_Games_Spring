@@ -3,11 +3,16 @@ package com.ongames.model;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
+import javax.persistence.*;
 
+@Entity
 public class Aluguel implements Serializable{
     private static final long serialVersionUID = 1L;
     
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int pedidoNumero;
+    
+    @Temporal(TemporalType.DATE)
     private Calendar dataInicioAluguel, dataFimAluguel;
     
     private Cliente cliente;

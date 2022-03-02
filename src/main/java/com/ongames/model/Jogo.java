@@ -2,12 +2,21 @@ package com.ongames.model;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.*;
 
+@Entity
 public class Jogo implements Serializable{
     private static final long serialVersionUID = 1L;
     
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String sku, titulo, imgURL;
+    @Column(length=20)
+    private String sku;
+    @Column(nullable=false, length=50)
+    private String titulo;
+    @Column(nullable=false, length=500)
+    private String imgURL;
+    @Column(nullable=false, scale=2)
     private float valor;
     
     private Plataforma plataforma;

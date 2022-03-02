@@ -1,12 +1,18 @@
 package com.ongames.model;
 
 import java.io.Serializable;
+import javax.persistence.*;
 
+@Entity
 public class Conta implements Serializable{
     private static final long serialVersionUID = 1L;
     
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    private String email, senha;
+    @Column(nullable=false, length = 80, unique =true)
+    private String email;
+    @Column(nullable=false, length = 32)
+    private String senha;
    
     private Jogo jogo;
 

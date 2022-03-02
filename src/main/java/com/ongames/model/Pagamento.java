@@ -2,13 +2,19 @@ package com.ongames.model;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import javax.persistence.*;
 
+@Entity
 public class Pagamento implements Serializable{
     private static final long serialVersionUID = 1L;
     
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Temporal(TemporalType.DATE)
     private Calendar dataPagamento;
+    @Column(nullable=false, scale=2)
     private float valor;
+    @Column(nullable=false, length = 32)
     private String validacao;
     
     private Aluguel alguel;

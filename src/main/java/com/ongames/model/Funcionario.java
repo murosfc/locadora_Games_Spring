@@ -2,11 +2,15 @@ package com.ongames.model;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.*;
 
+@Entity
 public class Funcionario extends Pessoa implements Serializable{
     private static final long serialVersionUID = 1L;
     
+    @Column(nullable=false, length=15)
     private String nick, whatsapp;
+    
     private List<Aluguel> alugueis;
 
     public Funcionario() {

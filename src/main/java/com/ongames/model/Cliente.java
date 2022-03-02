@@ -2,11 +2,18 @@ package com.ongames.model;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.*;
 
+@Entity
 public class Cliente extends Pessoa implements Serializable{
     private static final long serialVersionUID = 1L;
     
-    private String cep, numero, complemento;
+    @Column(length = 8)
+    private String cep;
+    @Column(length = 10)
+    private String numero;
+    @Column(length = 50)
+    private String complemento;
     
     private List<Aluguel> alugueis;
 

@@ -1,6 +1,8 @@
 package com.ongames.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
@@ -13,9 +15,10 @@ public class Cliente extends Pessoa implements Serializable{
     @Column(length = 10)
     private String numero;
     @Column(length = 50)
-    private String complemento;
+    private String complemento;    
     
-    private List<Aluguel> alugueis;
+    @JsonBackReference @OneToMany(mappedBy = "cliente")   
+    private List<Aluguel> alugueis = new ArrayList<>();
 
     public Cliente(String cep, String numero, String complemento, String cpf, String nome, String email, String senha) {
         super(cpf, nome, email, senha);

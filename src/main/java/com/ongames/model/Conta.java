@@ -1,5 +1,6 @@
 package com.ongames.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import javax.persistence.*;
 
@@ -14,7 +15,11 @@ public class Conta implements Serializable{
     @Column(nullable=false, length = 32)
     private String senha;
    
+    @OneToOne() @JoinColumn(name = "id_jogo")
     private Jogo jogo;
+    
+    @OneToOne @JsonBackReference 
+    private Aluguel aluguel;
 
     public Conta(String email, String senha) {
         this.email = email;

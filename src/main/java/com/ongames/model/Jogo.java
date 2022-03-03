@@ -1,6 +1,7 @@
 package com.ongames.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
@@ -14,13 +15,17 @@ public class Jogo implements Serializable{
     private String sku;
     @Column(nullable=false, length=50)
     private String titulo;
-    @Column(nullable=false, length=500)
+    @Lob
+    @Column(nullable=false, length=512)
     private String imgURL;
     @Column(nullable=false, scale=2)
     private float valor;
+    @Column(nullable=false, length=20)   
+    @Enumerated(EnumType.STRING)   
+    private PlataformaEnum plataforma;
     
-    private Plataforma plataforma;
-    private List<Categoria> categorias;
+    @OneToMany(fetch = FetchType.EAGER)     
+    private List<Categoria> categorias = new ArrayList<>();
     
     public Jogo() {
     }
@@ -32,11 +37,11 @@ public class Jogo implements Serializable{
         this.valor = valor;
     } 
 
-    public Plataforma getPlataforma() {
+    public PlataformaEnum getPlataforma() {
         return plataforma;
     }
 
-    public void setPlataforma(Plataforma plataforma) {
+    public void setPlataformaEnum (PlataformaEnum plataforma) {
         this.plataforma = plataforma;
     }
 

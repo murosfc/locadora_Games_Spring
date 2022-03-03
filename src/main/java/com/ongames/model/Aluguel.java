@@ -1,6 +1,8 @@
 package com.ongames.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.*;
@@ -15,9 +17,14 @@ public class Aluguel implements Serializable{
     @Temporal(TemporalType.DATE)
     private Calendar dataInicioAluguel, dataFimAluguel;
     
+    @ManyToOne @JsonManagedReference @JoinColumn(name = "id_cliente")
     private Cliente cliente;
-    private List<Conta> contas;
+    @OneToMany @JsonManagedReference
+    private List<Conta> contas = new ArrayList<>();
+    @ManyToOne @JsonManagedReference @JoinColumn(name = "id_funcionario")     
     private Funcionario contatoSuporte;
+    @OneToOne(cascade = CascadeType.ALL) @JsonManagedReference @JoinColumn(name = "id_pagamento")  
+    private Pagamento pagamento;
 
     public Aluguel(Calendar dataInicioAluguel, Calendar dataFimAluguel) {
         this.dataInicioAluguel = dataInicioAluguel;

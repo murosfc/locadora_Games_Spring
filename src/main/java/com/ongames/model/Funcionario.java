@@ -1,6 +1,8 @@
 package com.ongames.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
@@ -11,7 +13,8 @@ public class Funcionario extends Pessoa implements Serializable{
     @Column(nullable=false, length=15)
     private String nick, whatsapp;
     
-    private List<Aluguel> alugueis;
+    @JsonBackReference @OneToMany(mappedBy = "contatoSuporte") 
+    private List<Aluguel> alugueis = new ArrayList<>();
 
     public Funcionario() {
         super();

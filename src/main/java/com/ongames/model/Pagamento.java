@@ -1,5 +1,6 @@
 package com.ongames.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.*;
@@ -17,6 +18,7 @@ public class Pagamento implements Serializable{
     @Column(nullable=false, length = 32)
     private String validacao;
     
+    @OneToOne(mappedBy = "pagamento") @JsonBackReference 
     private Aluguel alguel;
 
     public int getId() {

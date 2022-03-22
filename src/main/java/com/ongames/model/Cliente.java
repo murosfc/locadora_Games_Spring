@@ -11,12 +11,11 @@ public class Cliente extends Pessoa implements Serializable{
     private static final long serialVersionUID = 1L;
     
     @Column(length = 8)
-    @Pattern(regexp = "[0-9]{5}[\-]?[0-9]{3}")
+    @Pattern(regexp="[0-9]{9}",message="CEP inválido")
     private String cep;
     @Column(length = 10)
     @NotNull
-    @Min(1)
-    @Max(10)
+    @Size(min=1, max=10) 
     private String numero;
     @Column(length = 50)
     @Max(50)

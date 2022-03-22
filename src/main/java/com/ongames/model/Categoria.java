@@ -11,8 +11,7 @@ public class Categoria implements Serializable{
     private int id;
     @Column (nullable=false, length=20, unique=true)
     @NotNull
-    @Min(2)
-    @Max(50)
+   @Size(min=2, max=50) 
     private String tipo;
 
     public Categoria(String tipo) {

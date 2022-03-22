@@ -10,10 +10,10 @@ import javax.persistence.*;
 public class Funcionario extends Pessoa implements Serializable{
     private static final long serialVersionUID = 1L;
     
-    @Column(nullable=false, length=15)
+    @Column(nullable=false, length=15, unique=true)
     private String nick;
-    @Column(nullable=false, length=15)
-    @Pattern(regexp = "^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$")
+    @Column(nullable=false, length=15, unique=true)
+    @Pattern(regexp="^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$")
     private String whatsapp;
     
     @JsonBackReference @OneToMany(mappedBy = "contatoSuporte") 

@@ -13,20 +13,19 @@ public abstract class Pessoa implements Serializable {
     private long id;
     
     @Column(nullable=false, length = 11, unique =true, updatable=false)
-    @Pattern(regexp = "[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}")
+    @CPF
     private String cpf;
     @Column(nullable=false, length = 150)
     @NotNull
-    @Min(5)
-    @Max(150)
+    @Size(min=5, max=150) 
+    @Pattern(regexp="^[a-zA-Z0-9]{3}",message="length must be 3") 
     private String nome;
     @Column(nullable=false, length = 80, unique =true)
     @Email
     private String email;
-    @Column(nullable=false, length = 32)
+    @Column(nullable=false, length = 32) //32 é o tamanho do hash que será salvo no banco de dados
     @NotNull
-    @Min(6)
-    @Max(20)
+    @Size(min=6, max=20) 
     private String senha; 
     
 

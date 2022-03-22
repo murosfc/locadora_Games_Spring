@@ -11,23 +11,22 @@ public class Jogo implements Serializable{
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(length=20)
+    @Column(length=22, unique=true)
     @NotNull
-    @Min(1)
-    @Max(22)
+    @Size(min=1, max=22) 
     private String sku;
     @Column(nullable=false, length=50)
     @NotNull
-    @Min(1)
-    @Max(150)
+    @Size(min=1, max=50) 
     private String titulo;
     @Lob
     @Column(nullable=false, length=512)
     @NotNull
-    @Pattern (regexp = "https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)")
+    @Pattern (regexp="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)")
     private String imgURL;
     @Column(nullable=false, scale=2)
     @NotNull
+    @Positive
     private float valor;
     @Column(nullable=false, length=20)   
     @Enumerated(EnumType.STRING)
@@ -127,5 +126,4 @@ public class Jogo implements Serializable{
         }
         return true;
     }
-    
 }

@@ -13,10 +13,9 @@ public class Conta implements Serializable{
     @Column(nullable=false, length = 80, unique =true)
     @Email
     private String email;
-    @Column(nullable=false, length = 32)
+    @Column(nullable=false, length = 32) //32 é o tamanho do hash que será salvo no banco de dados
     @NotNull
-    @Min(6)
-    @Max(20)
+    @Size(min=6, max=20) 
     private String senha;
    
     @OneToOne() @JoinColumn(name = "id_jogo")

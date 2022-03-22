@@ -15,15 +15,20 @@ public class Aluguel implements Serializable{
     private long pedidoNumero;
     
     @Temporal(TemporalType.DATE)
+    @futureOrPresent
     private Calendar dataInicioAluguel, dataFimAluguel;
     
     @ManyToOne @JsonManagedReference @JoinColumn(name = "id_cliente")
+    @Valid
     private Cliente cliente;
     @OneToMany @JsonManagedReference
+    @Valid
     private List<Conta> contas = new ArrayList<>();
-    @ManyToOne @JsonManagedReference @JoinColumn(name = "id_funcionario")     
+    @ManyToOne @JsonManagedReference @JoinColumn(name = "id_funcionario")
+    @Valid
     private Funcionario contatoSuporte;
-    @OneToOne(cascade = CascadeType.ALL) @JsonManagedReference @JoinColumn(name = "id_pagamento")  
+    @OneToOne(cascade = CascadeType.ALL) @JsonManagedReference @JoinColumn(name = "id_pagamento")
+    @Valid
     private Pagamento pagamento;
 
     public Aluguel(Calendar dataInicioAluguel, Calendar dataFimAluguel) {

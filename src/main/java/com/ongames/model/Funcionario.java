@@ -4,7 +4,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+
+import javax.validation.constraints.Pattern;
 
 @Entity
 public class Funcionario extends Pessoa implements Serializable{
@@ -13,7 +17,7 @@ public class Funcionario extends Pessoa implements Serializable{
     @Column(nullable=false, length=15, unique=true)
     private String nick;
     @Column(nullable=false, length=15, unique=true)
-    @Pattern(regexp="^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$")
+    @Pattern(regexp="\\(?\\d{2,}\\)?[ -]?\\d{4,}[\\-\\s]?\\d{4}")
     private String whatsapp;
     
     @JsonBackReference @OneToMany(mappedBy = "contatoSuporte") 

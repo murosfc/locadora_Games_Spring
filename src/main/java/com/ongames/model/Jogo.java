@@ -3,7 +3,20 @@ package com.ongames.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+
 
 @Entity
 public class Jogo implements Serializable{
@@ -21,8 +34,7 @@ public class Jogo implements Serializable{
     private String titulo;
     @Lob
     @Column(nullable=false, length=512)
-    @NotNull
-    @Pattern (regexp="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)")
+    @NotNull    
     private String imgURL;
     @Column(nullable=false, scale=2)
     @NotNull
@@ -101,11 +113,11 @@ public class Jogo implements Serializable{
     public void setValor(float valor) {
         this.valor = valor;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 11 * hash + this.id;
+        hash = 37 * hash + (int) (this.id ^ (this.id >>> 32));
         return hash;
     }
 

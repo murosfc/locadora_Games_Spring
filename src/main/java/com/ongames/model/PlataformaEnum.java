@@ -1,5 +1,8 @@
 package com.ongames.model;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public enum PlataformaEnum {
     NS("Nintendo Swtich"),
     PS4("Playstation 4"),

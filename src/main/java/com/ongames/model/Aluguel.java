@@ -5,7 +5,20 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.Valid;
+import javax.validation.constraints.FutureOrPresent;
+
 
 @Entity
 public class Aluguel implements Serializable{
@@ -15,7 +28,7 @@ public class Aluguel implements Serializable{
     private long pedidoNumero;
     
     @Temporal(TemporalType.DATE)
-    @futureOrPresent
+    @FutureOrPresent
     private Calendar dataInicioAluguel, dataFimAluguel;
     
     @ManyToOne @JsonManagedReference @JoinColumn(name = "id_cliente")
@@ -89,11 +102,11 @@ public class Aluguel implements Serializable{
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 71 * hash + this.pedidoNumero;
+        int hash = 3;
+        hash = 97 * hash + (int) (this.pedidoNumero ^ (this.pedidoNumero >>> 32));
         return hash;
     }
-
+   
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

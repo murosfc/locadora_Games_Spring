@@ -2,6 +2,10 @@ package com.ongames.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.br.CPF;
 
 
 @Entity
@@ -18,12 +22,11 @@ public abstract class Pessoa implements Serializable {
     @Column(nullable=false, length = 150)
     @NotNull
     @Size(min=5, max=150) 
-    @Pattern(regexp="^[a-zA-Z0-9]{3}",message="length must be 3") 
     private String nome;
     @Column(nullable=false, length = 80, unique =true)
     @Email
     private String email;
-    @Column(nullable=false, length = 32) //32 é o tamanho do hash que será salvo no banco de dados
+    @Column(nullable=false, length = 32) //32 Ã© o tamanho do hash que serÃ¡ salvo no banco de dados
     @NotNull
     @Size(min=6, max=20) 
     private String senha; 
@@ -71,7 +74,7 @@ public abstract class Pessoa implements Serializable {
         this.senha = senha;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -81,10 +84,10 @@ public abstract class Pessoa implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 79 * hash + this.id;
+        int hash = 7;
+        hash = 37 * hash + (int) (this.id ^ (this.id >>> 32));
         return hash;
-    }
+    }   
 
     @Override
     public boolean equals(Object obj) {

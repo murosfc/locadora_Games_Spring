@@ -4,14 +4,21 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 
 @Entity
 public class Cliente extends Pessoa implements Serializable{
     private static final long serialVersionUID = 1L;
     
     @Column(length = 8)
-    @Pattern(regexp="[0-9]{9}",message="CEP inválido")
+    @Pattern(regexp= "\\d{5}-\\d{3}")
     private String cep;
     @Column(length = 10)
     @NotNull

@@ -3,7 +3,16 @@ package com.ongames.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.Calendar;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
 
 @Entity
 public class Pagamento implements Serializable{
@@ -24,7 +33,7 @@ public class Pagamento implements Serializable{
     @OneToOne(mappedBy = "pagamento") @JsonBackReference 
     private Aluguel alguel;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -67,8 +76,8 @@ public class Pagamento implements Serializable{
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 71 * hash + this.id;
+        int hash = 5;
+        hash = 29 * hash + (int) (this.id ^ (this.id >>> 32));
         return hash;
     }
 

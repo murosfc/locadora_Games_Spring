@@ -10,12 +10,15 @@ public class Pagamento implements Serializable{
     private static final long serialVersionUID = 1L;
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Temporal(TemporalType.DATE)
+    @NotNull
     private Calendar dataPagamento;
     @Column(nullable=false, scale=2)
+    @NotNull
     private float valor;
     @Column(nullable=false, length = 32)
+    @NotNull
     private String validacao;
     
     @OneToOne(mappedBy = "pagamento") @JsonBackReference 

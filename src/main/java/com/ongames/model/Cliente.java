@@ -11,10 +11,15 @@ public class Cliente extends Pessoa implements Serializable{
     private static final long serialVersionUID = 1L;
     
     @Column(length = 8)
+    @Pattern(regexp = "[0-9]{5}[\-]?[0-9]{3}")
     private String cep;
     @Column(length = 10)
+    @NotNull
+    @Min(1)
+    @Max(10)
     private String numero;
     @Column(length = 50)
+    @Max(50)
     private String complemento;    
     
     @JsonBackReference @OneToMany(mappedBy = "cliente")   

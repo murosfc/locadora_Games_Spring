@@ -10,15 +10,23 @@ public abstract class Pessoa implements Serializable {
     private static final long serialVersionUID = 1L; 
     
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
+    private long id;
     
     @Column(nullable=false, length = 11, unique =true, updatable=false)
+    @Pattern(regexp = "[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}")
     private String cpf;
-    @Column(nullable=false, length = 150)    
+    @Column(nullable=false, length = 150)
+    @NotNull
+    @Min(5)
+    @Max(150)
     private String nome;
     @Column(nullable=false, length = 80, unique =true)
+    @Email
     private String email;
     @Column(nullable=false, length = 32)
+    @NotNull
+    @Min(6)
+    @Max(20)
     private String senha; 
     
 

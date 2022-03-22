@@ -9,10 +9,14 @@ public class Conta implements Serializable{
     private static final long serialVersionUID = 1L;
     
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Column(nullable=false, length = 80, unique =true)
+    @Email
     private String email;
     @Column(nullable=false, length = 32)
+    @NotNull
+    @Min(6)
+    @Max(20)
     private String senha;
    
     @OneToOne() @JoinColumn(name = "id_jogo")
@@ -37,11 +41,11 @@ public class Conta implements Serializable{
         this.jogo = jogo;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

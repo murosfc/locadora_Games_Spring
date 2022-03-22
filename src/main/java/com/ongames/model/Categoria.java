@@ -10,6 +10,9 @@ public class Categoria implements Serializable{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column (nullable=false, length=20, unique=true)
+    @NotNull
+    @Min(2)
+    @Max(50)
     private String tipo;
 
     public Categoria(String tipo) {

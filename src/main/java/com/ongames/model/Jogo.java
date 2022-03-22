@@ -10,18 +10,28 @@ public class Jogo implements Serializable{
     private static final long serialVersionUID = 1L;
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Column(length=20)
+    @NotNull
+    @Min(1)
+    @Max(22)
     private String sku;
     @Column(nullable=false, length=50)
+    @NotNull
+    @Min(1)
+    @Max(150)
     private String titulo;
     @Lob
     @Column(nullable=false, length=512)
+    @NotNull
+    @Pattern (regexp = "https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)")
     private String imgURL;
     @Column(nullable=false, scale=2)
+    @NotNull
     private float valor;
     @Column(nullable=false, length=20)   
-    @Enumerated(EnumType.STRING)   
+    @Enumerated(EnumType.STRING)
+    @NotNull
     private PlataformaEnum plataforma;
     
     @OneToMany(fetch = FetchType.EAGER)     
@@ -53,11 +63,11 @@ public class Jogo implements Serializable{
         this.categorias = categorias;
     }       
     
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

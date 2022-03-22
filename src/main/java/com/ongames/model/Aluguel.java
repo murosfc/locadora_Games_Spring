@@ -12,7 +12,7 @@ public class Aluguel implements Serializable{
     private static final long serialVersionUID = 1L;
     
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int pedidoNumero;
+    private long pedidoNumero;
     
     @Temporal(TemporalType.DATE)
     private Calendar dataInicioAluguel, dataFimAluguel;
@@ -58,11 +58,11 @@ public class Aluguel implements Serializable{
         this.contatoSuporte = contatoSuporte;
     }
 
-    public int getPedidoNumero() {
+    public long getPedidoNumero() {
         return pedidoNumero;
     }
 
-    public void setPedidoNumero(int pedidoNumero) {
+    public void setPedidoNumero(long pedidoNumero) {
         this.pedidoNumero = pedidoNumero;
     }
 

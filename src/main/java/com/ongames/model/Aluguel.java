@@ -18,6 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -29,6 +30,7 @@ public class Aluguel implements Serializable{
     
     @Temporal(TemporalType.DATE)
     @FutureOrPresent
+    @NotNull (message="A data é indispensável")
     private Calendar dataInicioAluguel, dataFimAluguel;
     
     @ManyToOne @JsonManagedReference @JoinColumn(name = "id_cliente")

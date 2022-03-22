@@ -17,8 +17,8 @@ public class Categoria implements Serializable{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column (nullable=false, length=20, unique=true)
-    @NotNull
-   @Size(min=2, max=50) 
+    @NotNull (message="A categoria precisa ser informada")
+    @Size(min=2, max=50, message= "A categoria precisa ter no mínimo 2 e no máximo 50 caracteres") 
     private String tipo;
 
     public Categoria(String tipo) {

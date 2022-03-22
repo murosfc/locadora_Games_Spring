@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.FutureOrPresent;
 
 
 @Entity
@@ -21,13 +22,13 @@ public class Pagamento implements Serializable{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Temporal(TemporalType.DATE)
-    @NotNull
+    @FutureOrPresent
+    @NotNull (message="A data é indispensável")
     private Calendar dataPagamento;
     @Column(nullable=false, scale=2)
-    @NotNull
+    @NotNull (message ="Valor do pagamento é obrigatório")
     private float valor;
-    @Column(nullable=false, length = 32)
-    @NotNull
+    @Column( length = 32)    
     private String validacao;
     
     @OneToOne(mappedBy = "pagamento") @JsonBackReference 

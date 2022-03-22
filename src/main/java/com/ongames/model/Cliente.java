@@ -17,15 +17,15 @@ import javax.validation.constraints.Size;
 public class Cliente extends Pessoa implements Serializable{
     private static final long serialVersionUID = 1L;
     
-    @Column(length = 8)
-    @Pattern(regexp= "\\d{5}-\\d{3}")
+    @Column(length = 9)
+    @Pattern(regexp= "[0-9]{5}[\\-]?[0-9]{3}", message="O CEP precisa respeitar o padrão 00000-000")
     private String cep;
     @Column(length = 10)
-    @NotNull
-    @Size(min=1, max=10) 
+    @NotNull (message = "É necessário informar o número, ou S/N, caso não tenha")
+    @Size(min=1, max=10, message="Limite de caracteres, mínimo 1 e máximo 10") 
     private String numero;
     @Column(length = 50)
-    @Max(50)
+    @Max(value=50, message="O complemento precisa ser menor que 50 caracteres")
     private String complemento;    
     
     @JsonBackReference @OneToMany(mappedBy = "cliente")   

@@ -1,5 +1,6 @@
 package com.ongames.model;
 
+import annotation.UrlValidation;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,24 +26,25 @@ public class Jogo implements Serializable{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(length=22, unique=true)
-    @NotNull
+    @NotNull (message="O sku precisa ser informado")
     @Size(min=1, max=22) 
     private String sku;
     @Column(nullable=false, length=50)
-    @NotNull
+    @NotNull (message="O título precisa ser informado")
     @Size(min=1, max=50) 
     private String titulo;
     @Lob
     @Column(nullable=false, length=512)
-    @NotNull    
+    @NotNull (message="É obrigatório inserir o link da imagem do jogo")
+    @UrlValidation
     private String imgURL;
     @Column(nullable=false, scale=2)
-    @NotNull
-    @Positive
+    @NotNull (message="Informar o valor do aluguel é obrigatório")
+    @Positive (message ="O valor precisa ser positivo")
     private float valor;
     @Column(nullable=false, length=20)   
     @Enumerated(EnumType.STRING)
-    @NotNull
+    @NotNull (message="A nick plataforma ser informada")
     private PlataformaEnum plataforma;
     
     @OneToMany(fetch = FetchType.EAGER)     

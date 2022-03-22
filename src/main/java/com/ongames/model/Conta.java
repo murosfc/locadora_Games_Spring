@@ -21,11 +21,11 @@ public class Conta implements Serializable{
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
     @Column(nullable=false, length = 80, unique =true)
-    @Email
+    @Email (message = "O e-mail precisa respeitar o padrão nome@provedor.xxx")
     private String email;
     @Column(nullable=false, length = 32) //32 é o tamanho do hash que será salvo no banco de dados
-    @NotNull
-    @Size(min=6, max=20) 
+    @NotNull (message="A senha precisa ser informada")
+    @Size(min=6, max=20, message="A senha deve conter no mínimo 6 e no máximo 20 caracteres") 
     private String senha;
    
     @OneToOne() @JoinColumn(name = "id_jogo")

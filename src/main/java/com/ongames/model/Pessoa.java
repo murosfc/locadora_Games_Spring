@@ -1,5 +1,6 @@
 package com.ongames.model;
 
+import annotation.Password;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -17,18 +18,19 @@ public abstract class Pessoa implements Serializable {
     private long id;
     
     @Column(nullable=false, length = 11, unique =true, updatable=false)
-    @CPF
+    @CPF (message ="O CPF precisa seguir o padrão 000.000.000-00")
+    @NotNull (message ="CPF é obrigatório")
     private String cpf;
     @Column(nullable=false, length = 150)
-    @NotNull
-    @Size(min=5, max=150) 
+    @NotNull (message ="O nome precisa ser informado")
+    @Size(min=5, max=150, message="O nome precisa possuir entre 5 e 150 caracteres") 
     private String nome;
     @Column(nullable=false, length = 80, unique =true)
-    @Email
+    @NotNull (message ="O e-mail precisa ser informado")
+    @Email (message = "O e-mail precisa respeitar o padrão nome@provedor.xxx")
     private String email;
     @Column(nullable=false, length = 32) //32 Ã© o tamanho do hash que serÃ¡ salvo no banco de dados
-    @NotNull
-    @Size(min=6, max=20) 
+    @Password
     private String senha; 
     
 

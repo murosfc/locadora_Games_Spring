@@ -16,6 +16,6 @@ public enum PlataformaEnum {
 
     private PlataformaEnum(String nome) {
         this.nome = nome;
-    }
+    } 
     
 }

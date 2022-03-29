@@ -39,6 +39,14 @@ public class Conta implements Serializable{
         this.senha = senha;
     }
 
+    public Aluguel getAluguel() {
+        return aluguel;
+    }
+
+    public void setAluguel(Aluguel aluguel) {
+        this.aluguel = aluguel;
+    }
+
     public Conta() {
     }
 

@@ -17,7 +17,7 @@ public abstract class Pessoa implements Serializable {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
     
-    @Column(nullable=false, length = 11, unique =true, updatable=false)
+    @Column(nullable=false, length = 14, unique =true, updatable=false)
     @CPF (message ="O CPF precisa seguir o padrão 000.000.000-00")
     @NotNull (message ="CPF é obrigatório")
     private String cpf;

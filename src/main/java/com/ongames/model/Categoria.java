@@ -1,6 +1,7 @@
 package com.ongames.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ public class Categoria implements Serializable{
     private static final long serialVersionUID = 1L;
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @Column (nullable=false, length=20, unique=true)
     @NotNull (message="A categoria precisa ser informada")
     @Size(min=2, max=50, message= "A categoria precisa ter no mínimo 2 e no máximo 50 caracteres") 
@@ -28,11 +29,11 @@ public class Categoria implements Serializable{
     public Categoria() {
     }    
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -46,10 +47,10 @@ public class Categoria implements Serializable{
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 67 * hash + this.id;
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.id);
         return hash;
-    }
+    }   
 
     @Override
     public boolean equals(Object obj) {

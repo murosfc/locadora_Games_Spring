@@ -37,6 +37,10 @@ public class Funcionario extends Pessoa implements Serializable{
         this.nick = nick;
         this.whatsapp = whatsapp;
     }
+
+    public Funcionario(String superHiggs, String string, String string0, String hugo_Villela_Silva, String superhiggsongamescom) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public List<Aluguel> getAlugueis() {
         return alugueis;

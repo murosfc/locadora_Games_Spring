@@ -1,11 +1,13 @@
 package com.ongames.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,18 +21,21 @@ import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
-
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Aluguel implements Serializable{
     private static final long serialVersionUID = 1L;
     
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long pedidoNumero;
+    private Long id;
     
+    @Column(nullable = false)
     @Temporal(TemporalType.DATE)
-    @FutureOrPresent
-    @NotNull (message="A data é indispensável")
+    @NotNull(message = "Data de início e do fim do aluguel são obrigatórias.")
+    @FutureOrPresent(message = "Data de inicio do aluguel deve ser atual ou no futuro.")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Calendar dataInicioAluguel, dataFimAluguel;
     
     @ManyToOne @JsonManagedReference @JoinColumn(name = "id_cliente")
@@ -49,9 +54,13 @@ public class Aluguel implements Serializable{
     public Aluguel(Calendar dataInicioAluguel, Calendar dataFimAluguel) {
         this.dataInicioAluguel = dataInicioAluguel;
         this.dataFimAluguel = dataFimAluguel;
+        pagamento.setValor(0f);
+        this.pagamento = new Pagamento(this);
     }
 
     public Aluguel() {
+        this.pagamento = new Pagamento(this);
+        pagamento.setValor(0f);
     }
 
     public Cliente getCliente() {
@@ -67,8 +76,19 @@ public class Aluguel implements Serializable{
     }
 
     public void setContas(List<Conta> contas) {
-        this.contas = contas;
+        this.contas = contas;  
+        float total = pagamento.getValor();
+        Conta tempConta = new Conta();
+        for (Conta conta : contas) {            
+            total = total + conta.getJogo().getValor();
+        }
+        pagamento.setValor(total);
     }
+     
+    public float getValor(){
+        return this.pagamento.getValor();
+    }
+    
 
     public Funcionario getContatoSuporte() {
         return contatoSuporte;
@@ -78,12 +98,12 @@ public class Aluguel implements Serializable{
         this.contatoSuporte = contatoSuporte;
     }
 
-    public long getPedidoNumero() {
-        return pedidoNumero;
+    public Long getId() {
+        return id;
     }
 
-    public void setPedidoNumero(long pedidoNumero) {
-        this.pedidoNumero = pedidoNumero;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Calendar getDataInicioAluguel() {
@@ -92,6 +112,9 @@ public class Aluguel implements Serializable{
 
     public void setDataInicioAluguel(Calendar dataInicioAluguel) {
         this.dataInicioAluguel = dataInicioAluguel;
+        Calendar datafim = this.dataInicioAluguel;
+        datafim.add(Calendar.DATE, 7);
+        this.dataFimAluguel = datafim;
     }
 
     public Calendar getDataFimAluguel() {
@@ -105,10 +128,18 @@ public class Aluguel implements Serializable{
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 97 * hash + (int) (this.pedidoNumero ^ (this.pedidoNumero >>> 32));
+        hash = 97 * hash + (int) (this.id ^ (this.id >>> 32));
         return hash;
     }
-   
+
+    public Pagamento getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
+    }
+       
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -121,11 +152,10 @@ public class Aluguel implements Serializable{
             return false;
         }
         final Aluguel other = (Aluguel) obj;
-        if (this.pedidoNumero != other.pedidoNumero) {
+        if (this.id != other.id) {
             return false;
         }
         return true;
-    }
-    
+    } 
     
 }

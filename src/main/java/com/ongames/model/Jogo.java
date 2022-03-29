@@ -42,10 +42,9 @@ public class Jogo implements Serializable{
     @NotNull (message="Informar o valor do aluguel é obrigatório")
     @Positive (message ="O valor precisa ser positivo")
     private float valor;
-    @Column(nullable=false, length=20)   
-    @Enumerated(EnumType.STRING)
+    @Column(nullable=false, length=20)    
     @NotNull (message="A nick plataforma ser informada")
-    private PlataformaEnum plataforma;
+    private String plataforma;
     
     @OneToMany(fetch = FetchType.EAGER)     
     private List<Categoria> categorias = new ArrayList<>();
@@ -60,13 +59,15 @@ public class Jogo implements Serializable{
         this.valor = valor;
     } 
 
-    public PlataformaEnum getPlataforma() {
+    public String getPlataforma() {
         return plataforma;
     }
 
-    public void setPlataformaEnum (PlataformaEnum plataforma) {
+    public void setPlataforma(String plataforma) {
         this.plataforma = plataforma;
     }
+
+    
 
     public List<Categoria> getCategorias() {
         return categorias;

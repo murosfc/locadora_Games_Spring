@@ -25,7 +25,7 @@ public class Cliente extends Pessoa implements Serializable{
     @Size(min=1, max=10, message="Limite de caracteres, mínimo 1 e máximo 10") 
     private String numero;
     @Column(length = 50)
-    @Max(value=50, message="O complemento precisa ser menor que 50 caracteres")
+    @Size(min=0, max=10, message="O complemento precisa ser menor que 50 caracteres")    
     private String complemento;    
     
     @JsonBackReference @OneToMany(mappedBy = "cliente")   

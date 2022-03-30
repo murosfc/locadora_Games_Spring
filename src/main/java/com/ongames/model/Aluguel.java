@@ -116,6 +116,11 @@ public class Aluguel implements Serializable{
     }
 
     public void setDataFimAluguel(LocalDate dataFimAluguel) {
+        LocalDate dtinicio = this.dataInicioAluguel;
+        if (dataFimAluguel.isBefore(dtinicio.plusDays(7)))
+        {
+            throw new RuntimeException("Data fim de alugel não pode ser anterior a 7 dias após o início");
+        }
         this.dataFimAluguel = dataFimAluguel;
     }
 

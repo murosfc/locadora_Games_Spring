@@ -1,22 +1,22 @@
 package com.ongames.model;
 
-import annotation.UrlValidation;
+import com.ongames.annotation.UrlValidation;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 
 @Entity
@@ -46,7 +46,7 @@ public class Jogo implements Serializable{
     @NotNull (message="A nick plataforma ser informada")
     private String plataforma;
     
-    @OneToMany(fetch = FetchType.EAGER)     
+    @ManyToMany(fetch = FetchType.EAGER)      
     private List<Categoria> categorias = new ArrayList<>();
     
     public Jogo() {

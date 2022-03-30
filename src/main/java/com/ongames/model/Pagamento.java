@@ -1,23 +1,20 @@
 package com.ongames.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import java.util.Calendar;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.springframework.format.annotation.DateTimeFormat;
-
 
 @Entity
 public class Pagamento implements Serializable{
@@ -25,20 +22,19 @@ public class Pagamento implements Serializable{
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Column(nullable = false)   
     @NotNull(message = "Data do pagamento é obrigatória.")
     @FutureOrPresent(message = "Data de inicio do aluguel deve ser atual ou no futuro.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Calendar dataPagamento;
+    private LocalDate dataPagamento;
     @Column(nullable=false, scale=2)
     @NotNull (message ="Valor do pagamento é obrigatório")
     private float valor;
     @Column( length = 32)    
     private String validacao;
     
-    @OneToOne(mappedBy = "pagamento") @JsonBackReference 
+    @OneToOne(mappedBy = "pagamento") @JsonIgnore 
     @Cascade(CascadeType.ALL)
     private Aluguel aluguel;
 
@@ -57,11 +53,11 @@ public class Pagamento implements Serializable{
         this.id = id;
     }
 
-    public Calendar getDataPagamento() {
+    public LocalDate getDataPagamento() {
         return dataPagamento;
     }
 
-    public void setDataPagamento(Calendar dataPagamento) {
+    public void setDataPagamento(LocalDate dataPagamento) {
         this.dataPagamento = dataPagamento;
         this.aluguel.setDataInicioAluguel(dataPagamento); //se o pagamento foi confirmado então o aluguel iniciou
     }

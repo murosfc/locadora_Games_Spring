@@ -15,8 +15,7 @@ import com.ongames.model.repository.FuncionarioRepository;
 import com.ongames.model.repository.JogoRepository;
 import com.ongames.model.repository.PagamentoRepository;
 import com.ongames.model.repository.AluguelRepository;
-import java.util.Calendar;
-import java.util.Collections;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,15 +78,12 @@ public class LocadoraApplication implements CommandLineRunner{
         objAluguel.setContatoSuporte(objFunc);
         //pagamento
         Pagamento pag = objAluguel.getPagamento();        
-        pag.setValor(objAluguel.getValor());
-        Calendar dataPagamento = Calendar.getInstance();        
-        //dataPagamento.set(2022, 03, 29);
-        pag.setDataPagamento(dataPagamento);      
+        pag.setValor(objAluguel.getValor());               
+        pag.setDataPagamento(LocalDate.now());      
         pag.setValidacao(gerarStringAleatoria());
         aluguelRepo.save(objAluguel);
         pagRepo.save(pag);
-        //finalização aluguel 
-        objAluguel.setDataInicioAluguel(dataPagamento);
+        //finalização aluguel         
         objConta.setAluguel(objAluguel);
         contaRepo.save(objConta);        
     }  

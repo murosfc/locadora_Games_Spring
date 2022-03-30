@@ -10,12 +10,12 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-
 @Entity
 public class Categoria implements Serializable{
     private static final long serialVersionUID = 1L;
-    
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)    
     private Long id;
     @Column (nullable=false, length=20, unique=true)
     @NotNull (message="A categoria precisa ser informada")
@@ -64,11 +64,13 @@ public class Categoria implements Serializable{
             return false;
         }
         final Categoria other = (Categoria) obj;
-        if (this.id != other.id) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
+
+  
     
     
 }

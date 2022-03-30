@@ -1,17 +1,15 @@
 package com.ongames.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
 
 @Entity
 public class Cliente extends Pessoa implements Serializable{
@@ -28,7 +26,7 @@ public class Cliente extends Pessoa implements Serializable{
     @Size(min=0, max=10, message="O complemento precisa ser menor que 50 caracteres")    
     private String complemento;    
     
-    @JsonBackReference @OneToMany(mappedBy = "cliente")   
+    @JsonIgnore @OneToMany(mappedBy = "cliente")   
     private List<Aluguel> alugueis = new ArrayList<>();
 
     public Cliente(String cep, String numero, String complemento, String cpf, String nome, String email, String senha) {

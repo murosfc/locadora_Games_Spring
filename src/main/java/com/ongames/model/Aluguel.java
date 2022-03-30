@@ -1,11 +1,11 @@
 package com.ongames.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
@@ -30,28 +28,24 @@ public class Aluguel implements Serializable{
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Column(nullable = false)    
     @NotNull(message = "Data de início e do fim do aluguel são obrigatórias.")
     @FutureOrPresent(message = "Data de inicio do aluguel deve ser atual ou no futuro.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Calendar dataInicioAluguel, dataFimAluguel;
+    private LocalDate dataInicioAluguel, dataFimAluguel;
     
-    @ManyToOne @JsonManagedReference @JoinColumn(name = "id_cliente")
-    @Valid
+    @ManyToOne @JoinColumn(name = "id_cliente")   
     private Cliente cliente;
-    @OneToMany @JsonManagedReference
-    @Valid
+    @OneToMany    
     private List<Conta> contas = new ArrayList<>();
-    @ManyToOne @JsonManagedReference @JoinColumn(name = "id_funcionario")
-    @Valid
+    @ManyToOne @JoinColumn(name = "id_funcionario")    
     private Funcionario contatoSuporte;
-    @OneToOne(cascade = CascadeType.ALL) @JsonManagedReference @JoinColumn(name = "id_pagamento")
+    @OneToOne(cascade = CascadeType.ALL) @JoinColumn(name = "id_pagamento")
     @Valid
     private Pagamento pagamento;
 
-    public Aluguel(Calendar dataInicioAluguel, Calendar dataFimAluguel) {
+    public Aluguel(LocalDate dataInicioAluguel, LocalDate dataFimAluguel) {
         this.dataInicioAluguel = dataInicioAluguel;
         this.dataFimAluguel = dataFimAluguel;
         pagamento.setValor(0f);
@@ -106,22 +100,22 @@ public class Aluguel implements Serializable{
         this.id = id;
     }
 
-    public Calendar getDataInicioAluguel() {
+    public LocalDate getDataInicioAluguel() {
         return dataInicioAluguel;
     }
 
-    public void setDataInicioAluguel(Calendar dataInicioAluguel) {
+    public void setDataInicioAluguel(LocalDate dataInicioAluguel) {
         this.dataInicioAluguel = dataInicioAluguel;
-        Calendar datafim = this.dataInicioAluguel;
-        datafim.add(Calendar.DATE, 7);
+        LocalDate datafim = this.dataInicioAluguel;
+        datafim.plusDays(7);
         this.dataFimAluguel = datafim;
     }
 
-    public Calendar getDataFimAluguel() {
+    public LocalDate getDataFimAluguel() {
         return dataFimAluguel;
     }
 
-    public void setDataFimAluguel(Calendar dataFimAluguel) {
+    public void setDataFimAluguel(LocalDate dataFimAluguel) {
         this.dataFimAluguel = dataFimAluguel;
     }
 
@@ -152,7 +146,7 @@ public class Aluguel implements Serializable{
             return false;
         }
         final Aluguel other = (Aluguel) obj;
-        if (this.id != other.id) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;

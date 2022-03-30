@@ -1,6 +1,6 @@
 package com.ongames.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class Funcionario extends Pessoa implements Serializable{
     @Pattern(regexp="\\(?\\d{2,}\\)?[ -]?\\d{4,}[\\-\\s]?\\d{4}", message="formato de telefone inválido")
     private String whatsapp;
     
-    @JsonBackReference @OneToMany(mappedBy = "contatoSuporte") 
+    @JsonIgnore @OneToMany(mappedBy = "contatoSuporte") 
     private List<Aluguel> alugueis = new ArrayList<>();
 
     public Funcionario() {

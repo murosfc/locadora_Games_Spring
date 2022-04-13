@@ -1,0 +1,10 @@
+com\ongames\model\Funcionario.class
+com\ongames\model\Categoria.class
+com\ongames\model\Cliente.class
+com\ongames\model\PlataformaEnum.class
+com\ongames\model\Conta.class
+com\ongames\model\Pessoa.class
+com\ongames\LocadoraApplication.class
+com\ongames\model\Aluguel.class
+com\ongames\model\Jogo.class
+com\ongames\model\Pagamento.class

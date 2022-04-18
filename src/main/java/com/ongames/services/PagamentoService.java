@@ -1,7 +1,7 @@
 package com.ongames.services;
 
 import com.ongames.model.Pagamento;
-import com.ongames.model.repository.PagamentoRepository;
+import com.ongames.repository.PagamentoRepository;
 import java.util.List;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

@@ -1,7 +1,7 @@
 package com.ongames.services;
 
 import com.ongames.model.Conta;
-import com.ongames.model.repository.ContaRepository;
+import com.ongames.repository.ContaRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -10,12 +10,20 @@ import org.springframework.stereotype.Service;
 public class ContaService {
     public ContaRepository repo;
     
-    public Conta findByid (Long id){
+    public Conta findById (Long id){
         Conta c = repo.getById(id);
         if (c == null){
             throw new RuntimeException("Conta não encontrada");
         }
         return c;
+    }
+    
+    public List<Conta> findAll(){
+        List contas = repo.findAll();
+        if (contas.isEmpty()){
+            throw new RuntimeException ("Nehuma conta foi encontrada");
+        }
+        return contas;       
     }
     
     public List<Conta> findByJogo (String titulo){

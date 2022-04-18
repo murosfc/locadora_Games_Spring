@@ -1,7 +1,7 @@
 package com.ongames.services;
 
 import com.ongames.model.Aluguel;
-import com.ongames.model.repository.AluguelRepository;
+import com.ongames.repository.AluguelRepository;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ public class AluguelService {
     @Autowired
     private AluguelRepository repo;
     
-    public List<Aluguel> FindByCliente(Long idCliente){        
+    public List<Aluguel> findByCliente(long idCliente){        
         List<Aluguel> result = repo.findByCliente(idCliente);
         if (result.isEmpty()){
             throw new RuntimeException("Não encontrado aluguel para o cliente informado");
@@ -21,12 +21,12 @@ public class AluguelService {
         return result;
     }
     
-    public List<Aluguel> findOngoing (LocalDate hoje)
+    public List<Aluguel> findOngoing ()
     {
-        hoje = LocalDate.now();
+        LocalDate hoje = LocalDate.now();
         List<Aluguel> result = repo.findOngoing(hoje);
         if (result.isEmpty()){
-            throw new RuntimeException("Não encontrado aluguel para o cliente informado");
+            throw new RuntimeException("Não encontrado aluguel em andamento");
         }
         return result;
     }

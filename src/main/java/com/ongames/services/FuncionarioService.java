@@ -1,7 +1,7 @@
 package com.ongames.services;
 
 import com.ongames.model.Funcionario;
-import com.ongames.model.repository.FuncionarioRepository;
+import com.ongames.repository.FuncionarioRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class FuncionarioService {
     private FuncionarioRepository repo;
     
-     public Funcionario FindById(Long id){
+     public Funcionario findById(Long id){
         Funcionario c = repo.getById(id);
         if (c == null){
             throw new RuntimeException("Funcionário não encontrado");

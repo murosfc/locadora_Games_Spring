@@ -1,4 +1,4 @@
-package com.ongames.model.repository;
+package com.ongames.repository;
 
 import com.ongames.model.Conta;
 import java.util.List;

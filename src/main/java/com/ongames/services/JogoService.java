@@ -1,7 +1,7 @@
 package com.ongames.services;
 
 import com.ongames.model.Jogo;
-import com.ongames.model.repository.JogoRepository;
+import com.ongames.repository.JogoRepository;
 import java.util.List;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,11 +11,19 @@ import org.springframework.stereotype.Service;
 public class JogoService {
     private JogoRepository repo;
     
-    public List<Jogo> fildAll(){
+    public List<Jogo> findAll(){
         return repo.findAll();
     }
     
-     public List<Jogo> fildAll(int page, int size){
+    public Jogo findById(long id){
+        Jogo j = repo.getById(id);
+        if (j == null){
+            throw new RuntimeException("Jogo não encontrado");
+        }
+        return j;
+    }
+    
+     public List<Jogo> findAll(int page, int size){
         Pageable p = PageRequest.of(page, size);
         return repo.findAll(p).toList();
     }

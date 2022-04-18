@@ -1,7 +1,7 @@
 package com.ongames.controller;
 
-import com.ongames.model.Categoria;
-import com.ongames.services.CategoriaService;
+import com.ongames.model.Conta;
+import com.ongames.services.ContaService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "apirest/categoria")
-public class CategoriaController {
+@RequestMapping(path = "apirest/conta")
+public class ContaController {
     @Autowired
-    public CategoriaService service;
+    public ContaService service;
 
    @GetMapping
    public ResponseEntity getAll(){
@@ -27,16 +27,15 @@ public class CategoriaController {
    }
    
    @PostMapping
-   public ResponseEntity save(@Valid @RequestBody Categoria categoria){
-       categoria.setId(null);
-       service.save(categoria);
-       return ResponseEntity.ok(categoria);
+   public ResponseEntity save(@Valid @RequestBody Conta conta){       
+       service.save(conta);
+       return ResponseEntity.ok(conta);
    }
    
    @PutMapping("/{id}")
-   public ResponseEntity update (@PathVariable("id") Long id, @Valid @RequestBody Categoria categoria){
-       categoria.setId(id);
-       service.update(categoria);
+   public ResponseEntity update (@PathVariable("id") Long id, @Valid @RequestBody Conta conta){
+       conta.setId(id);
+       service.update(conta);
        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();       
    }
    

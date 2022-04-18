@@ -1,7 +1,7 @@
 package com.ongames.services;
 
 import com.ongames.model.Cliente;
-import com.ongames.model.repository.ClienteRepository;
+import com.ongames.repository.ClienteRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class ClienteService {
     private ClienteRepository repo;
     
-    public Cliente FindById(Long id){
+    public Cliente findById(Long id){
         Cliente c = repo.getById(id);
         if (c == null){
             throw new RuntimeException("Cliente não encontrado");

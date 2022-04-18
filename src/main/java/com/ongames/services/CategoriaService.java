@@ -1,7 +1,7 @@
 package com.ongames.services;
 
 import com.ongames.model.Categoria;
-import com.ongames.model.repository.CategoriaRepository;
+import com.ongames.repository.CategoriaRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;

@@ -4,10 +4,12 @@ import com.ongames.model.Categoria;
 import com.ongames.repository.CategoriaRepository;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CategoriaService {
+    @Autowired
     public CategoriaRepository repo;
     
     public Categoria save(Categoria cat){
@@ -51,11 +53,11 @@ public class CategoriaService {
     }
     
     public Categoria findById(Long id){
-        Categoria cat = repo.getById(id);
-        if (cat == null){
+        Optional<Categoria> cats = repo.findById(id);
+        if (cats.isEmpty()){
             throw new RuntimeException ("Categoria foi encontrada com o id informado");
         }
-        return cat;        
+        return cats.get();        
     }
     
     private void verificaCategoriaSeCadastrada(Categoria cat){

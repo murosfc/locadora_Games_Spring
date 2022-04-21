@@ -15,8 +15,6 @@ import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 
 @Entity
@@ -65,9 +63,7 @@ public class Jogo implements Serializable{
 
     public void setPlataforma(String plataforma) {
         this.plataforma = plataforma;
-    }
-
-    
+    }    
 
     public List<Categoria> getCategorias() {
         return categorias;

@@ -1,5 +1,6 @@
 package com.ongames.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.validation.constraints.Size;
 
 
 @Entity
+@JsonIgnoreProperties(value ="senha", allowGetters = false, allowSetters = true)
 public class Conta implements Serializable{
     private static final long serialVersionUID = 1L;
     

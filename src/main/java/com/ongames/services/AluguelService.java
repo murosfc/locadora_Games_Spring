@@ -21,6 +21,14 @@ public class AluguelService {
         return result;
     }
     
+     public List<Aluguel> findByFuncionario(long idFuncionario){        
+        List<Aluguel> result = repo.findByCliente(idFuncionario);
+        if (result.isEmpty()){
+            throw new RuntimeException("Não encontrado aluguel para o cliente informado");
+        }
+        return result;
+    }
+    
     public List<Aluguel> findOngoing ()
     {
         LocalDate hoje = LocalDate.now();

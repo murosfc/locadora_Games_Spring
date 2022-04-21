@@ -1,3 +1,4 @@
+
 package com.ongames.controller;
 
 import com.ongames.model.Pagamento;
@@ -12,10 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "apirest/pagamento")
+@RequestMapping(path = "/pagamento")
 public class PagamentoController {
     @Autowired
     public PagamentoService service;
@@ -25,8 +27,9 @@ public class PagamentoController {
        return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
    }
    
-   @GetMapping
-   public ResponseEntity getAll(@PathVariable("page") int page,@PathVariable("size") int size) {
+   @GetMapping(path = "/pageable")
+   public ResponseEntity getAll(@RequestParam(name = "page", defaultValue = "1", required = false) int page,
+           @RequestParam(name = "size", defaultValue = "10", required = false) int size) {
        return ResponseEntity.status(HttpStatus.OK).body(service.findAll(page, size));
    }
    
@@ -36,7 +39,7 @@ public class PagamentoController {
        return ResponseEntity.ok(pag);
    }
    
-   @PutMapping("/{id}")
+   @PutMapping(path = "/{id}")
    public ResponseEntity update (@PathVariable("id") long id, @Valid @RequestBody Pagamento pag){
        pag.setId(id);
        service.update(pag);

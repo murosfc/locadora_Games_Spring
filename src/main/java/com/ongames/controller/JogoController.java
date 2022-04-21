@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "apirest/jogo")
+@RequestMapping(path = "/jogo")
 public class JogoController {
+    
     @Autowired
     public JogoService service;
 
@@ -26,8 +28,9 @@ public class JogoController {
        return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
    }
    
-   @GetMapping
-   public ResponseEntity getAll(@PathVariable("page") int page,@PathVariable("size") int size) {
+   @GetMapping(path = "/pageable")
+   public ResponseEntity getAll(@RequestParam(name="page", defaultValue = "1", required = false) int page,
+   @RequestParam(name="page", defaultValue = "10", required = false) int size ) {
        return ResponseEntity.status(HttpStatus.OK).body(service.findAll(page, size));
    }
    
@@ -37,26 +40,26 @@ public class JogoController {
        return ResponseEntity.ok(jogo);
    }
    
-   @PutMapping("/{id}")
+   @PutMapping(path = "/{id}")
    public ResponseEntity update (@PathVariable("id") long id, @Valid @RequestBody Jogo jogo){
        jogo.setId(id);
        service.update(jogo);
        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();       
    }
    
-   @DeleteMapping("/{id}")
+   @DeleteMapping(path = "/{id}")
    public ResponseEntity delete (@PathVariable("id") long id){
        service.delete(service.findById(id));
        return ResponseEntity.status(HttpStatus.OK).build();
    }
    
-   @GetMapping("/{id}")
+   @GetMapping(path = "/{id}")
    public ResponseEntity findByid(@PathVariable("id") long id){
        return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
    }
    
-   @GetMapping("/{titulo}")
-   public ResponseEntity findByTitulo (@PathVariable ("titulo") String titulo){
+   @GetMapping(path = "/porTitulo")
+   public ResponseEntity findByTitulo (@RequestParam(name ="titulo", defaultValue ="", required = true) String titulo){
        return ResponseEntity.status(HttpStatus.OK).body(service.findByTitulo(titulo));
    }
 }

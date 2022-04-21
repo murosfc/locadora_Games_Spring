@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "apirest/aluguel")
+@RequestMapping(path = "/aluguel")
 public class AluguelController {
     @Autowired
     public AluguelService service;
@@ -25,17 +25,22 @@ public class AluguelController {
        return ResponseEntity.ok(aluguel);
    }   
    
-   @GetMapping("/{id}")
+   @GetMapping(path = "/cliente/{id}")
    public ResponseEntity findByCliente(@PathVariable("id") long id){
        return ResponseEntity.status(HttpStatus.OK).body(service.findByCliente(id));
    }
    
-   @GetMapping
+   @GetMapping(path = "/funcionario/{id}")
+   public ResponseEntity findByFuncionario(@PathVariable("id") long id){
+       return ResponseEntity.status(HttpStatus.OK).body(service.findByFuncionario(id));
+   }
+   
+   @GetMapping(path = "/ongoing")
    public ResponseEntity findOngoing(){
        return ResponseEntity.ok(service.findOngoing());
    }
    
-   @GetMapping
+   @GetMapping(path = "/isPaid")
    public ResponseEntity checkIfPaid(@RequestBody Aluguel aluguel){
        return ResponseEntity.status(HttpStatus.OK).body(service.checkIfPaid(aluguel));
    }

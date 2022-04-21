@@ -12,16 +12,16 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import javax.persistence.CascadeType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Pagamento implements Serializable{
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;    
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    
     @Column(nullable = false)   
     @NotNull(message = "Data do pagamento é obrigatória.")
     @FutureOrPresent(message = "Data de inicio do aluguel deve ser atual ou no futuro.")
@@ -32,12 +32,12 @@ public class Pagamento implements Serializable{
     @NotNull (message ="Valor do pagamento é obrigatório")
     private float valor;
     @Column( length = 32)    
-    private String validacao;
+    private String validacao;    
     
-    @OneToOne(mappedBy = "pagamento") @JsonIgnore 
-    @Cascade(CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pagamento")
+    @JsonIgnore    
     private Aluguel aluguel;
-
+   
     public long getId() {
         return id;
     }

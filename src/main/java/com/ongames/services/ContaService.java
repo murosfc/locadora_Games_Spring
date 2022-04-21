@@ -4,18 +4,20 @@ import com.ongames.model.Conta;
 import com.ongames.repository.ContaRepository;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ContaService {
+    @Autowired
     public ContaRepository repo;
     
     public Conta findById (Long id){
-        Conta c = repo.getById(id);
-        if (c == null){
+        Optional<Conta> contas = repo.findById(id);
+        if (contas.isEmpty()){
             throw new RuntimeException("Conta não encontrada");
         }
-        return c;
+        return contas.get();
     }
     
     public List<Conta> findAll(){
@@ -44,14 +46,12 @@ public class ContaService {
         }
     }
     
-    public Conta update (Conta c){
-        Optional<Conta> resultado = repo.findById(c.getId());
-        if (resultado.isEmpty()){
-            throw new RuntimeException("Conta não cadastrada, não é possível atualizar");
-        }
-        checkIfThereIsAluguel(c);
-        c.setAluguel(null); //quando uma conta é atualizada o aluguel termina possibilitando que ela seja alugada novamente
+    public Conta update (Conta c, String senhaAtual, String novaSenha, String confirmaNovaSenha){
+        checkIfExists(c);   
+        Conta contaDB = repo.getById(c.getId());
+        atualizaSenha(contaDB, senhaAtual, novaSenha, confirmaNovaSenha);
         try{
+            c.setSenha(contaDB.getSenha());
             return repo.save(c);
         }
         catch (Exception e){
@@ -68,8 +68,8 @@ public class ContaService {
         catch (Exception e){
             throw new RuntimeException("Erro ao excluir conta");
         }
-    }
-    
+    }    
+   
     private void checkIfExists (Conta c){
         Conta conta = repo.findByEmail(c.getEmail());
         if (conta != null){
@@ -79,7 +79,23 @@ public class ContaService {
     
     private void checkIfThereIsAluguel(Conta c){
         if (c.getAluguel() != null){
-            throw new RuntimeException("Esta conta possui um aluguel vigente, não é possível excluir ou atualizar");
+            throw new RuntimeException("Esta conta possui um aluguel vigente, não é possível excluir a conta");
         }
+    }
+    
+    private void atualizaSenha(Conta c, String senhaAtual, String novaSenha, String confirmaNovaSenha){
+        if(!senhaAtual.isBlank() && !novaSenha.isBlank() && confirmaNovaSenha.isBlank()){
+            if (!senhaAtual.equals(c.getSenha())){
+                throw new RuntimeException ("A senha atual não confere");
+            }
+            if (senhaAtual.equals(novaSenha)){
+                throw new RuntimeException("A nova senha não pode ser igual à senha atual");
+            }
+            if (!novaSenha.equals(confirmaNovaSenha)){
+                throw new RuntimeException("Confirmação de senha não está igual à nova senha informada");
+            }
+            c.setAluguel(null); //quando uma conta é atualizada o aluguel termina possibilitando que ela seja alugada novamente
+            c.setSenha(novaSenha);
+        }        
     }
 }

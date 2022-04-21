@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping(path = "apirest/cliente")
+@RequestMapping(path = "/cliente")
 public class ClienteController {
     @Autowired
     public ClienteService service;
     
-    @GetMapping("/{id}")
+    @GetMapping(path = "/{id}")
     public ResponseEntity findByID(@PathVariable("id") long id){
         return ResponseEntity.ok(service.findById(id));
     }
@@ -32,14 +33,24 @@ public class ClienteController {
         return ResponseEntity.ok(cliente);
    }
       
-    @PutMapping()
-    public ResponseEntity update(@PathVariable("id") long id, @Valid @RequestBody Cliente cliente){
+    @PutMapping(path = "/{id}")
+    public ResponseEntity update(@PathVariable("id") long id, @RequestBody Cliente cliente){
         cliente.setId(id);
-        service.save(cliente);
+        service.update(cliente, "","","");
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); 
     }
     
-    @DeleteMapping("/{id}")
+    @PutMapping(path = "/{id}/newPass")
+    public ResponseEntity updatePassord(@PathVariable("id") long id, @RequestBody Cliente cliente,    
+           @RequestParam(name = "senhaAtual", defaultValue= "", required = true) String senhaAtual,
+           @RequestParam(name = "novaSenha", defaultValue= "", required = true) String novaSenha, 
+           @RequestParam(name = "confirmaNovaSenha", defaultValue= "", required = true) String confirmaNovaSenha){
+        cliente.setId(id);
+        service.update(cliente, senhaAtual,novaSenha,confirmaNovaSenha);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); 
+    }
+    
+    @DeleteMapping(path = "/{id}")
     public ResponseEntity delete (@PathVariable("id") long id){
        service.delete(service.findById(id));
        return ResponseEntity.status(HttpStatus.OK).build();

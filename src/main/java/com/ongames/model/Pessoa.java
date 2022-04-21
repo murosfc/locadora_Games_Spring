@@ -1,5 +1,6 @@
 package com.ongames.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ongames.annotation.Password;
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -18,6 +19,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonIgnoreProperties(value ="senha", allowGetters = false, allowSetters = true)
 public abstract class Pessoa implements Serializable {
     private static final long serialVersionUID = 1L; 
     

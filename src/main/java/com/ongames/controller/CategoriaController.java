@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "apirest/categoria")
+@RequestMapping(path = "/categoria")
 public class CategoriaController {
     @Autowired
     public CategoriaService service;
@@ -33,20 +33,20 @@ public class CategoriaController {
        return ResponseEntity.ok(categoria);
    }
    
-   @PutMapping("/{id}")
+   @PutMapping(path = "/{id}")
    public ResponseEntity update (@PathVariable("id") Long id, @Valid @RequestBody Categoria categoria){
        categoria.setId(id);
        service.update(categoria);
        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();       
    }
    
-   @DeleteMapping("/{id}")
+   @DeleteMapping(path = "/{id}")
    public ResponseEntity delete (@PathVariable("id") long id){
        service.delete(service.findById(id));
        return ResponseEntity.status(HttpStatus.OK).build();
    }
    
-   @GetMapping("/{id}")
+   @GetMapping(path = "/{id}")
    public ResponseEntity findByid(@PathVariable("id") long id){
        return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
    }

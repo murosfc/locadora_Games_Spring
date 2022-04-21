@@ -1,6 +1,7 @@
 package com.ongames.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,8 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.validation.Valid;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -29,20 +28,18 @@ public class Aluguel implements Serializable{
     private Long id;
     
     @Column(nullable = false)    
-    @NotNull(message = "Data de início e do fim do aluguel são obrigatórias.")
-    @FutureOrPresent(message = "Data de inicio do aluguel deve ser atual ou no futuro.")
+    @NotNull(message = "Data de início e do fim do aluguel são obrigatórias.")    
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataInicioAluguel, dataFimAluguel;
     
     @ManyToOne @JoinColumn(name = "id_cliente")   
     private Cliente cliente;
-    @OneToMany    
+    @OneToMany @JsonIgnore   
     private List<Conta> contas = new ArrayList<>();
     @ManyToOne @JoinColumn(name = "id_funcionario")    
     private Funcionario contatoSuporte;
-    @OneToOne(cascade = CascadeType.ALL) @JoinColumn(name = "id_pagamento")
-    @Valid
+    @OneToOne(cascade = CascadeType.ALL) @JoinColumn(name = "id_pagamento")   
     private Pagamento pagamento;
 
     public Aluguel(LocalDate dataInicioAluguel, LocalDate dataFimAluguel) {
@@ -106,9 +103,8 @@ public class Aluguel implements Serializable{
 
     public void setDataInicioAluguel(LocalDate dataInicioAluguel) {
         this.dataInicioAluguel = dataInicioAluguel;
-        LocalDate datafim = this.dataInicioAluguel;
-        datafim.plusDays(7);
-        this.dataFimAluguel = datafim;
+        LocalDate datafim = this.dataInicioAluguel;        
+        this.dataFimAluguel = datafim.plusDays(7);
     }
 
     public LocalDate getDataFimAluguel() {

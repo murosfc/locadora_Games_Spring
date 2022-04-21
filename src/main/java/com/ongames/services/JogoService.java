@@ -3,12 +3,15 @@ package com.ongames.services;
 import com.ongames.model.Jogo;
 import com.ongames.repository.JogoRepository;
 import java.util.List;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 public class JogoService {
+    @Autowired
     private JogoRepository repo;
     
     public List<Jogo> findAll(){
@@ -16,11 +19,11 @@ public class JogoService {
     }
     
     public Jogo findById(long id){
-        Jogo j = repo.getById(id);
-        if (j == null){
+        Optional<Jogo> jogos = repo.findById(id);
+        if (jogos.isEmpty()){
             throw new RuntimeException("Jogo não encontrado");
         }
-        return j;
+        return jogos.get();
     }
     
      public List<Jogo> findAll(int page, int size){
@@ -65,7 +68,7 @@ public class JogoService {
     
     private void checkDuplicity (Jogo j){
         Jogo jDB = repo.findBySku(j.getSku());
-        if (jDB == null){
+        if (jDB != null){
             throw new RuntimeException("SKU já cadastrado");
         }       
     }

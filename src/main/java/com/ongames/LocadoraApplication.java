@@ -68,8 +68,8 @@ public class LocadoraApplication implements CommandLineRunner{
         Conta objConta = new Conta("conta01@ongames.com", "Hi34Ub");
         objConta.setJogo(objJogo); 
         contaRepo.save(objConta);
-        //funcionario
-        Funcionario objFunc = new Funcionario("SuperHiggs","(22)9977-0001","592.344.610-37", "Hugo Villela Silva", "superhiggs@ongames.com", "So6410Hge!");
+        //funcionario public Funcionario(String nick, String whatsapp, String cpf, String nome, String email, String senha)
+        Funcionario objFunc = new Funcionario("SuperHiggs","(22)9977-0001","942.275.060-18", "Hugo Villela Silva", "superhiggs@ongames.com", "So6410Hge!");
         funcRepo.save(objFunc);
         //aluguel
         Aluguel objAluguel = new Aluguel();
@@ -85,7 +85,8 @@ public class LocadoraApplication implements CommandLineRunner{
         pagRepo.save(pag);
         //finalização aluguel         
         objConta.setAluguel(objAluguel);
-        contaRepo.save(objConta);        
+        contaRepo.save(objConta);  
+        System.out.println(clienteRepo.findAll());
     }  
     
     public String gerarStringAleatoria(){

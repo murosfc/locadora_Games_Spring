@@ -39,7 +39,7 @@ public class Aluguel implements Serializable{
     private List<Conta> contas = new ArrayList<>();
     @ManyToOne @JoinColumn(name = "id_funcionario")    
     private Funcionario contatoSuporte;
-    @OneToOne(cascade = CascadeType.ALL) @JoinColumn(name = "id_pagamento")   
+    @OneToOne(cascade = CascadeType.ALL) @JoinColumn(name = "id_pagamento", referencedColumnName = "id")   
     private Pagamento pagamento;
 
     public Aluguel(LocalDate dataInicioAluguel, LocalDate dataFimAluguel) {

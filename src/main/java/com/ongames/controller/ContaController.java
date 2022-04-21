@@ -60,4 +60,9 @@ public class ContaController {
    public ResponseEntity findByid(@PathVariable("id") long id){
        return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
    }
+   
+   @GetMapping(path = "/jogo")
+   public ResponseEntity findByTituloJogo(@RequestParam(name = "titulo", defaultValue="", required= false) String titulo){
+       return ResponseEntity.status(HttpStatus.OK).body(service.findByJogo(titulo));
+   }
 }

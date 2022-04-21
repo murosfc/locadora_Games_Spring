@@ -18,7 +18,7 @@ public interface JogoRepository extends JpaRepository<Jogo, Long>{
     @Query("SELECT j FROM Jogo j WHERE j.sku = :sku")
     public Jogo findBySku(String sku); 
     
-    @Query("SELECT j FROM Jogo j JOIN Conta c WHERE id_aluguel IS NOT NULL AND j.id = :idJogo")
+    @Query(value = "SELECT * FROM Jogo j JOIN Conta c ON c.id_jogo = j.id WHERE c.id_aluguel IS NOT NULL AND j.id = :idJogo", nativeQuery = true)
     public Jogo findJogoInAluguel (long idJogo);
        
 }

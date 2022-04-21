@@ -12,7 +12,7 @@ public interface ContaRepository extends JpaRepository<Conta, Long>{
     
     public Conta findByEmail(String email);
     
-    @Query("SELECT c FROM Conta c JOIN Jogo j WHERE j.titulo LIKE %:titulo%")
+    @Query(value = "SELECT * FROM Conta c JOIN Jogo j WHERE j.titulo LIKE %:titulo%", nativeQuery = true)
     public List<Conta> findByTituloJogo (String titulo);
     
 }

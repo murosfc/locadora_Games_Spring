@@ -32,10 +32,10 @@ public class Pagamento implements Serializable{
     @NotNull (message ="Valor do pagamento é obrigatório")
     private float valor;
     @Column( length = 32)    
-    private String validacao;    
+    private String validacao; 
     
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pagamento")
-    @JsonIgnore    
+    @JsonIgnore   
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pagamento")  
     private Aluguel aluguel;
    
     public long getId() {

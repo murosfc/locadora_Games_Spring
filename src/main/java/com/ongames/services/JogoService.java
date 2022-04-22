@@ -80,5 +80,9 @@ public class JogoService {
         }
     }
     
+    public int countJogoInAluguel (Long idJogo) {
+    	return repo.countJogoInAluguel(idJogo);
+    }
+    
     
 }

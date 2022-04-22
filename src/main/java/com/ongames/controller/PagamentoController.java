@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/pagamento")
+@RequestMapping(path = "/pagamentos")
 public class PagamentoController {
     @Autowired
     public PagamentoService service;

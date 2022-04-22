@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/jogo")
+@RequestMapping(path = "/jogos")
 public class JogoController {
     
     @Autowired
@@ -62,4 +62,10 @@ public class JogoController {
    public ResponseEntity findByTitulo (@RequestParam(name ="titulo", defaultValue ="", required = true) String titulo){
        return ResponseEntity.status(HttpStatus.OK).body(service.findByTitulo(titulo));
    }
+   
+   @GetMapping(path = "/alugueis/{id}")
+   public ResponseEntity countJogoInAluguel (@PathVariable("id") long id){
+       return ResponseEntity.status(HttpStatus.OK).body(service.countJogoInAluguel(id));
+   }
+   
 }

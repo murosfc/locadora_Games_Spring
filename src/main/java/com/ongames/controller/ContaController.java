@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/conta")
+@RequestMapping(path = "/contas")
 public class ContaController {
     @Autowired
     public ContaService service;

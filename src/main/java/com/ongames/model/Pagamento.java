@@ -1,5 +1,6 @@
 package com.ongames.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
@@ -10,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import javax.persistence.CascadeType;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,22 +20,20 @@ public class Pagamento implements Serializable{
     private static final long serialVersionUID = 1L;    
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    
-    @Column(nullable = false)   
-    @NotNull(message = "Data do pagamento é obrigatória.")
-    @FutureOrPresent(message = "Data de inicio do aluguel deve ser atual ou no futuro.")
+    private long id;        
+      
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataPagamento;
     @Column(nullable=false, scale=2)
     @NotNull (message ="Valor do pagamento é obrigatório")
-    private float valor;
+    private float valorTotal;
     @Column( length = 32)    
-    private String validacao; 
-    
-    @JsonIgnore   
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pagamento")  
+    private String validacao;     
+     
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pagamento")    
+    @NotNull (message ="Um pagamento precisa ser associado a um aluguel")
+    @JsonBackReference  
     private Aluguel aluguel;
    
     public long getId() {
@@ -62,12 +60,12 @@ public class Pagamento implements Serializable{
         this.aluguel.setDataInicioAluguel(dataPagamento); //se o pagamento foi confirmado então o aluguel iniciou
     }
 
-    public float getValor() {
-        return valor;
+    public float getValorTotal() {
+        return valorTotal;
     }
 
-    public void setValor(float valor) {
-        this.valor = valor;
+    public void setValorTotal(float valor) {
+        this.valorTotal = valor;
     }
 
     public String getValidacao() {
@@ -76,13 +74,13 @@ public class Pagamento implements Serializable{
     
     public void setValidacao(String validacao) {
         this.validacao = validacao;        
-    }
-
-    public Aluguel getAlguel() {
+    }    
+    
+    public Aluguel getAluguel() {
         return aluguel;
     }
 
-    public void setAlguel(Aluguel alguel) {
+    public void setAluguel(Aluguel alguel) {
         this.aluguel = alguel;
     }
 

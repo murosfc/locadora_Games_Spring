@@ -2,9 +2,9 @@ package com.ongames.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -33,25 +33,26 @@ public class Aluguel implements Serializable{
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataInicioAluguel, dataFimAluguel;
     
-    @ManyToOne @JoinColumn(name = "id_cliente")   
+    @ManyToOne @JoinColumn(name = "id_cliente", referencedColumnName = "id")   
     private Cliente cliente;
     @OneToMany @JsonIgnore   
-    private List<Conta> contas = new ArrayList<>();
-    @ManyToOne @JoinColumn(name = "id_funcionario")    
+    private List<Conta> contas;
+    @ManyToOne @JoinColumn(name = "id_funcionario", referencedColumnName = "id")    
     private Funcionario contatoSuporte;
-    @OneToOne(cascade = CascadeType.ALL) @JoinColumn(name = "id_pagamento", referencedColumnName = "id")   
+    @OneToOne(cascade = CascadeType.ALL) @JoinColumn(name = "id_pagamento", referencedColumnName = "id")
+    @JsonManagedReference
     private Pagamento pagamento;
 
     public Aluguel(LocalDate dataInicioAluguel, LocalDate dataFimAluguel) {
         this.dataInicioAluguel = dataInicioAluguel;
         this.dataFimAluguel = dataFimAluguel;
-        pagamento.setValor(0f);
+        pagamento.setValorTotal(0f);
         this.pagamento = new Pagamento(this);
     }
 
     public Aluguel() {
         this.pagamento = new Pagamento(this);
-        pagamento.setValor(0f);
+        pagamento.setValorTotal(0f);
     }
 
     public Cliente getCliente() {
@@ -68,16 +69,17 @@ public class Aluguel implements Serializable{
 
     public void setContas(List<Conta> contas) {
         this.contas = contas;  
-        float total = pagamento.getValor();
+        float total = pagamento.getValorTotal();
         Conta tempConta = new Conta();
         for (Conta conta : contas) {            
             total = total + conta.getJogo().getValor();
         }
-        pagamento.setValor(total);
+        pagamento.setValorTotal(total);
     }
-     
+    
+    @JsonIgnore
     public float getValor(){
-        return this.pagamento.getValor();
+        return this.pagamento.getValorTotal();
     }
     
 

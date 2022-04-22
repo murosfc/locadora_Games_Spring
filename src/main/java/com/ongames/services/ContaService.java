@@ -2,6 +2,7 @@ package com.ongames.services;
 
 import com.ongames.model.Conta;
 import com.ongames.repository.ContaRepository;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,11 @@ public class ContaService {
     
     public Conta update (Conta c, String senhaAtual, String novaSenha, String confirmaNovaSenha){
         checkIfExists(c);   
-        Conta contaDB = repo.getById(c.getId());
+        Conta contaDB = repo.getById(c.getId());        
+        if (contaDB.getAluguel().getDataFimAluguel().isAfter(LocalDate.now()) ||
+                contaDB.getAluguel().getDataFimAluguel().isEqual(LocalDate.now())){
+            throw new RuntimeException("Não é possível editar uma conta com aluguel em andamento");
+        }
         atualizaSenha(contaDB, senhaAtual, novaSenha, confirmaNovaSenha);
         try{
             c.setSenha(contaDB.getSenha());

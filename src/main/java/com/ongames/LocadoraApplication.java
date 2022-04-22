@@ -77,12 +77,11 @@ public class LocadoraApplication implements CommandLineRunner{
         objAluguel.setContas(List.of(objConta));
         objAluguel.setContatoSuporte(objFunc);
         //pagamento
-        Pagamento pag = objAluguel.getPagamento();        
-        pag.setValor(objAluguel.getValor());               
+        Pagamento pag = objAluguel.getPagamento();                      
         pag.setDataPagamento(LocalDate.now());      
         pag.setValidacao(gerarStringAleatoria());
         aluguelRepo.save(objAluguel);
-        pagRepo.save(pag);
+        pagRepo.save(objAluguel.getPagamento());
         //finalização aluguel         
         objConta.setAluguel(objAluguel);
         contaRepo.save(objConta);  

@@ -40,8 +40,8 @@ public class AluguelService {
     }
     
     public Aluguel save (Aluguel obj){
-    	if (obj.getDataInicioAluguel().plusDays(7).isBefore(obj.getDataFimAluguel())) {
-    		 throw new RuntimeException("A período de aluguel está incorreto, não pode ser menor que 7 dias");
+    	if (obj.getDataInicioAluguel().plusDays(7).isAfter(obj.getDataFimAluguel())) {
+    		 throw new RuntimeException("O período de aluguel está incorreto, não pode ser menor que 7 dias");
     	}
         try{
            return repo.save(obj);

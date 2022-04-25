@@ -1,10 +1,13 @@
 package com.ongames.services;
 
+import com.ongames.exception.NotAllowedException;
+import com.ongames.exception.NotFoundException;
 import com.ongames.model.Conta;
 import com.ongames.repository.ContaRepository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +19,7 @@ public class ContaService {
     public Conta findById (Long id){
         Optional<Conta> contas = repo.findById(id);
         if (contas.isEmpty()){
-            throw new RuntimeException("Conta não encontrada");
+            throw new NotFoundException("Conta não encontrada");
         }
         return contas.get();
     }
@@ -24,7 +27,7 @@ public class ContaService {
     public List<Conta> findAll(){
         List contas = repo.findAll();
         if (contas.isEmpty()){
-            throw new RuntimeException ("Nehuma conta foi encontrada");
+            throw new NotFoundException("Nehuma conta foi encontrada");
         }
         return contas;       
     }
@@ -32,7 +35,7 @@ public class ContaService {
     public List<Conta> findByJogo (String titulo){
         List<Conta> contas = repo.findByTituloJogo(titulo);
         if (contas.isEmpty()){
-            throw new RuntimeException("Conta não encontrada para o jogo informado");
+            throw new NotFoundException("Conta não encontrada para o jogo informado");
         }
         return contas;
     }
@@ -52,7 +55,7 @@ public class ContaService {
         Conta contaDB = repo.getById(c.getId());        
         if (contaDB.getAluguel().getDataFimAluguel().isAfter(LocalDate.now()) ||
                 contaDB.getAluguel().getDataFimAluguel().isEqual(LocalDate.now())){
-            throw new RuntimeException("Não é possível editar uma conta com aluguel em andamento");
+            throw new NotAllowedException("Não é possível editar uma conta com aluguel em andamento");
         }
         atualizaSenha(contaDB, senhaAtual, novaSenha, confirmaNovaSenha);
         try{
@@ -60,6 +63,13 @@ public class ContaService {
             return repo.save(c);
         }
         catch (Exception e){
+            Throwable t = e;
+            while (t.getCause() != null){
+                t = t.getCause();
+                if (t instanceof ConstraintViolationException){
+                    throw (ConstraintViolationException) t;
+                }
+            }
             throw new RuntimeException("Erro ao atualizar conta");
         }
     }
@@ -78,26 +88,26 @@ public class ContaService {
     private void checkIfExists (Conta c){
         Conta conta = repo.findByEmail(c.getEmail());
         if (conta != null){
-            throw new RuntimeException("Já existe uma conta com este e-mail");
+            throw new NotAllowedException("Já existe uma conta com este e-mail");
         }
     }
     
     private void checkIfThereIsAluguel(Conta c){
         if (c.getAluguel() != null){
-            throw new RuntimeException("Esta conta possui um aluguel vigente, não é possível excluir a conta");
+            throw new NotAllowedException("Esta conta possui um aluguel vigente, não é possível excluir a conta");
         }
     }
     
     private void atualizaSenha(Conta c, String senhaAtual, String novaSenha, String confirmaNovaSenha){
         if(!senhaAtual.isBlank() && !novaSenha.isBlank() && confirmaNovaSenha.isBlank()){
             if (!senhaAtual.equals(c.getSenha())){
-                throw new RuntimeException ("A senha atual não confere");
+                throw new NotAllowedException("A senha atual não confere");
             }
             if (senhaAtual.equals(novaSenha)){
-                throw new RuntimeException("A nova senha não pode ser igual à senha atual");
+                throw new NotAllowedException("A nova senha não pode ser igual à senha atual");
             }
             if (!novaSenha.equals(confirmaNovaSenha)){
-                throw new RuntimeException("Confirmação de senha não está igual à nova senha informada");
+                throw new NotAllowedException("Confirmação de senha não está igual à nova senha informada");
             }
             c.setAluguel(null); //quando uma conta é atualizada o aluguel termina possibilitando que ela seja alugada novamente
             c.setSenha(novaSenha);

@@ -1,5 +1,7 @@
 package com.ongames.services;
 
+import com.ongames.exception.NotAllowedException;
+import com.ongames.exception.NotFoundException;
 import com.ongames.model.Jogo;
 import com.ongames.repository.JogoRepository;
 import java.util.List;
@@ -21,7 +23,7 @@ public class JogoService {
     public Jogo findById(long id){
         Optional<Jogo> jogos = repo.findById(id);
         if (jogos.isEmpty()){
-            throw new RuntimeException("Jogo não encontrado");
+            throw new NotFoundException("Jogo não encontrado");
         }
         return jogos.get();
     }
@@ -69,14 +71,14 @@ public class JogoService {
     private void checkDuplicity (Jogo j){
         Jogo jDB = repo.findBySku(j.getSku());
         if (jDB != null){
-            throw new RuntimeException("SKU já cadastrado");
+            throw new NotAllowedException("SKU já cadastrado");
         }       
     }
 
     private void checkIfInAluguel(Jogo j) {
         Jogo jogo = repo.findJogoInAluguel(j.getId());
         if (jogo != null){
-            throw new RuntimeException("Não é possível excluir um jogo alugado");
+            throw new NotAllowedException("Não é possível excluir um jogo alugado");
         }
     }
     

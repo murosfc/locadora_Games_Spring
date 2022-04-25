@@ -1,9 +1,12 @@
 package com.ongames.services;
 
+import com.ongames.exception.NotAllowedException;
+import com.ongames.exception.NotFoundException;
 import com.ongames.model.Cliente;
 import com.ongames.repository.ClienteRepository;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +18,7 @@ public class ClienteService {
     public Cliente findById(Long id){
         Optional<Cliente> clientes = repo.findById(id);
         if (clientes.isEmpty()){
-            throw new RuntimeException("Cliente não encontrado");
+            throw new NotFoundException("Cliente não encontrado");
         }
         return clientes.get();
     }
@@ -40,6 +43,13 @@ public class ClienteService {
             return repo.save(c);         
         }
         catch (Exception e){
+            Throwable t = e;
+            while (t.getCause() != null){
+                t = t.getCause();
+                if (t instanceof ConstraintViolationException){
+                    throw (ConstraintViolationException) t;
+                }
+            }
             throw new RuntimeException("Erro ao atualizar cliente");
         }
     } 
@@ -57,33 +67,33 @@ public class ClienteService {
    private void checkDuplicity(String cpf, String email){
        List<Cliente> clientes = repo.findByCpfOrEmail(cpf, email);
        if (!clientes.isEmpty()){
-           throw new RuntimeException ("Já existe um cadastro com o e-mail ou cpf informado");
+           throw new NotAllowedException("Já existe um cadastro com o e-mail ou cpf informado");
        }       
    }
    
    private void hasAluguel(Cliente c){
        if (!c.getAlugueis().isEmpty()){
-           throw new RuntimeException("O cliente não pode ser apagado, pois possui aluguel registrado");
+           throw new NotAllowedException("O cliente não pode ser apagado, pois possui aluguel registrado");
        }
    }
    
    private void checkIfExists (Cliente c){
         Optional<Cliente> resultado = repo.findById(c.getId());
         if (resultado.isEmpty()){
-            throw new RuntimeException ("Cliente não encontrado");
+            throw new NotFoundException("Cliente não encontrado");
         }
    }
    
     private void atualizaSenha(Cliente c, String senhaAtual, String novaSenha, String confirmaNovaSenha){
         if(!senhaAtual.isBlank() && !novaSenha.isBlank() && confirmaNovaSenha.isBlank()){
             if (!senhaAtual.equals(c.getSenha())){
-                throw new RuntimeException ("A senha atual não confere");
+                throw new NotAllowedException ("A senha atual não confere");
             }
             if (senhaAtual.equals(novaSenha)){
-                throw new RuntimeException("A nova senha não pode ser igual à senha atual");
+                throw new NotAllowedException("A nova senha não pode ser igual à senha atual");
             }
             if (!novaSenha.equals(confirmaNovaSenha)){
-                throw new RuntimeException("Confirmação de senha não está igual à nova senha informada");
+                throw new NotAllowedException("Confirmação de senha não está igual à nova senha informada");
             }            
             c.setSenha(novaSenha);
         }  

@@ -1,5 +1,7 @@
 package com.ongames.services;
 
+import com.ongames.exception.NotAllowedException;
+import com.ongames.exception.NotFoundException;
 import com.ongames.model.Pagamento;
 import com.ongames.repository.PagamentoRepository;
 import java.util.List;
@@ -15,11 +17,19 @@ public class PagamentoService {
     
     public List<Pagamento> findAll(int page, int size){
         Pageable p = PageRequest.of(page, size);
-        return repo.findAll(p).toList();
+        List<Pagamento> pagamentos = repo.findAll(p).toList();
+        if (pagamentos.isEmpty()){
+            throw new NotFoundException ("Não foram encontrados pagamentos");
+        }
+        return pagamentos;
     }
     
     public List<Pagamento> findAll(){
-        return repo.findAll();        
+        List<Pagamento> pagamentos = repo.findAll();
+        if (pagamentos.isEmpty()){
+            throw new NotFoundException ("Não foram encontrados pagamentos");
+        }
+        return pagamentos;        
     }
     
     public Pagamento save(Pagamento p){
@@ -36,7 +46,7 @@ public class PagamentoService {
     public Pagamento update(Pagamento p){
         Pagamento pDB = repo.getById(p.getId());
         if (!pDB.getValidacao().isEmpty()){
-            throw new RuntimeException("Não é possível atualizar um pagamento já confirmado");
+            throw new NotAllowedException("Não é possível atualizar um pagamento já confirmado");
         } 
         pDB.setValidacao(p.getValidacao());
         try{
@@ -51,7 +61,7 @@ public class PagamentoService {
     private void checkIfExist(Pagamento p) {
         Pagamento pag = repo.getById(p.getId());
         if (pag != null){
-            throw new RuntimeException("Funcionário já cadastrado");
+            throw new NotAllowedException("Pagamento já cadastrado com a id informada");
         }
     }
     

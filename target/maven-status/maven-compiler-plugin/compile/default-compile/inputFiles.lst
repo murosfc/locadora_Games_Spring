@@ -5,6 +5,7 @@ C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\co
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\LocadoraApplication.java
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\model\Funcionario.java
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\services\JogoService.java
+C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\exception\Error.java
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\controller\JogoController.java
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\repository\ClienteRepository.java
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\annotation\PasswordValidator.java
@@ -32,4 +33,5 @@ C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\co
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\services\FuncionarioService.java
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\annotation\Password.java
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\services\ContaService.java
+C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\controller\LocadoraRestControllerAdvice.java
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\model\Aluguel.java

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragmentos :: import-css(title='Ongame locadora de jogos digitais')}">
+        <title></title>        
+    </head>
+    <body>
+        <div th:replace="~{fragmentos :: barramenu(pagina='')}"></div>
+        <div class="container" align="center">
+            <img th:src="@{~/images/logoOngames.png}" alt="Logo" style="opacity: 10%"/>
+        </div>        
+        <div th:replace="~{fragmentos :: import-js}"></div>
+    </body>
+</html>

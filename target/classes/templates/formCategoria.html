@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragmentos :: import-css(title='Cadastro categoria')}">
+        <title></title>         
+    </head>
+    <body>
+        <div th:replace="~{fragmentos :: barramenu(pagina='categorias')}"/>        
+        
+            <div class="container" style="width: 60%; margin-top: 10px ">
+                <div class="card-header">
+                    <h4>
+                        Cadastro de categoria
+                        <a class="btn btn-primary" th:href="@{~/categorias}" role="button" style="float:right">⬅</a>
+                    </h4>
+                </div> 
+                
+                <div th:replace="~{fragmentos :: mensagens}"></div>
+                
+                <form th:object="${categoria}" th:action="@{~/categorias/categoria/{id} (id=${categoria.id})}" method="post" class="card-body">
+                    <input type="hidden" th:field="*{id}"/>
+                    <div class="row g-1">
+                        <div class="col-md-2" >
+                            <label for="tipo">Categoria:</label>
+                            <input th:field="*{tipo}" type="text" class="form-control" placeholder="Categoria" required="required" minlength="2" maxlength="50" name="tipo"/>
+                        </div>
+                    </div>
+                    <div class="card-footer" style="margin-top: 20px">
+                        <input type="submit" class="btn btn-success" value="Salvar" />
+                        <input type="reset" class="btn btn-danger" value="Limpar"/>
+                    </div>
+                </form>
+            </div>
+    </body>
+</html>

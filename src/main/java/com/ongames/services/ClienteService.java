@@ -15,6 +15,14 @@ public class ClienteService {
     @Autowired
     private ClienteRepository repo;
     
+    public List<Cliente> findAll(){
+        List<Cliente> clientes = repo.findAll();
+        if (clientes.isEmpty()){
+            throw new NotFoundException("Não encontrado cliente cadastrado");
+        }
+        return clientes;
+    }
+    
     public Cliente findById(Long id){
         Optional<Cliente> clientes = repo.findById(id);
         if (clientes.isEmpty()){

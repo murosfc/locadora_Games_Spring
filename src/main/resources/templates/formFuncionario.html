@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragmentos :: import-css(title='Cadastro cliente')}">
+        <title></title> 
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    </head>
+    <body>
+        <div th:replace="~{fragmentos :: barramenu(pagina='funcionario')}"/>     
+        
+        
+            <div class="container" style="width: 60%; margin-top: 10px ">
+                <div class="card-header">
+                    <h4>
+                        Cadastro de funcionário
+                        <a class="btn btn-primary" th:href="@{~/funcionarios}" role="button" style="float:right">⬅</a>
+                    </h4>
+                </div> 
+                
+                <div th:replace="~{fragmentos :: mensagens}"></div>
+                
+                <form th:object="${funcionario}" th:action="@{~/funcionarios/funcionario/{id} (id=${funcionario.id})}" method="post" class="card-body">
+                    <input type="hidden" th:field="*{id}"/>
+                    <div class="row g-2">
+                        <div class="col-md-8" >
+                            <label for="nome">Nome:</label>
+                            <input th:field="*{nome}" type="text" class="form-control" placeholder="Nome completo" required="required" maxlength="100" name="nome"/>
+                        </div>                        
+                        <div class="col-md-4">
+                            <label for="cpf">CPF:</label>
+                            <input th:field="*{cpf}" type="text" class="form-control" placeholder="000.000.000-00" required="required" maxlength="14" name="cpf" pattern="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})"/>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label for="email">e-mail:</label>
+                            <input th:field="*{email}" type="text" class="form-control" placeholder="nick@ongames.com" required="required" maxlength="80" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/>
+                        </div>
+                        <input type="hidden" class="col-md-4"/>
+                        <div class="col-md-4">
+                            <label for="nick">Nickname:</label>
+                            <input th:field="*{nick}" type="text" class="form-control" placeholder="nickname" required="required" minlength="4" maxlength="20" name="nick"/>
+                        </div> 
+                        <div class="col-md-4">
+                            <label for="whatsapp">Whatsapp:</label>
+                            <input th:field="*{whatsapp}" type="tel" class="form-control" placeholder="(22)9970-00XX" required="required" maxlength="15" name="whatsapp" pattern="\\(?\\d{2,}\\)?[ -]?\\d{4,}[\\-\\s]?\\d{4}"/>
+                        </div>  
+                    </div>
+                    
+                    <div class="card-footer" style="margin-top: 20px">
+                        <input type="submit" class="btn btn-success" value="Salvar"/>
+                        <input type="reset" class="btn btn-danger" value="Limpar" />
+                    </div>
+                </form>
+            </div>
+        
+        <div th:replace="~{fragmentos :: import-js}"/>
+        
+        <script type="text/javascript">
+            $("#cep").focusout(function(){			
+                $.ajax({                    
+                    url: 'https://viacep.com.br/ws/'+$(this).val()+'/json',                   
+                    dataType: 'json',                    
+                    success: function(resposta){                            
+                        $("#rua").val(resposta.logradouro);					
+                        $("#bairro").val(resposta.bairro);
+                        $("#cidade").val(resposta.localidade);
+                        $("#uf").val(resposta.uf);                            
+                        $("#numero").focus();
+                    }
+                });
+            });
+            $(document).ready(function(){                                  
+                $("#cep").focus();
+                $("#cep").focusout();               
+            });
+	</script>
+    </body>
+</html>

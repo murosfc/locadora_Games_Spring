@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragmentos :: import-css(title='Cadastro conta')}">
+        <title></title>         
+    </head>
+    <body>
+        <div th:replace="~{fragmentos :: barramenu(pagina='contas')}"/>        
+        
+            <div class="container" style="width: 60%; margin-top: 10px ">
+                <div class="card-header">
+                    <h4>
+                        Cadastro de conta
+                        <a class="btn btn-primary" th:href="@{~/contas}" role="button" style="float:right">⬅</a>
+                    </h4>
+                </div> 
+                
+                <div th:replace="~{fragmentos :: mensagens}"></div>
+                
+                <form th:object="${conta}" th:action="@{~/contas/conta/{id} (id=${conta.id})}" method="post" class="card-body">
+                    <input type="hidden" th:field="*{id}"/>
+                    <div class="row g-2">
+                        <div class="col-md-8" >
+                            <label for="tipo">E-mail:</label>
+                            <input th:field="*{email}" type="text" class="form-control" placeholder="contaxx@ongames.com" required="required" maxlength="80" name="email"/>
+                        </div>
+                        <div class="col-md-4" >
+                            <label for="tipo">Senha:</label>
+                            <input th:field="*{senha}" type="text" class="form-control" placeholder="Senha" required="required" maxlength="20" name="senha"/>
+                        </div>
+                    </div>
+                    <div class="row g1" style='margin-top: 20px'>
+                        <div class="col-md-12" >
+                            <label for="select_jogo">Jogo:</label>                        
+                            <select class="form-control" data-live-search="true" th:field="*{jogo.id}">
+                                <option th:each="jogo : ${jogos}" th:value="${jogo.id}" th:text="${jogo.plataforma} +' - '+${jogo.titulo}" th:required="required" ></option>                           
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-footer" style="margin-top: 20px">
+                        <input type="submit" class="btn btn-success" value="Salvar" />
+                        <input type="reset" class="btn btn-danger" value="Limpar"/>
+                    </div>
+                </form>
+            </div>
+    </body>
+</html>
+

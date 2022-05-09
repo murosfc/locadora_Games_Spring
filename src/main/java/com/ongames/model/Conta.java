@@ -21,7 +21,7 @@ public class Conta implements Serializable{
     private static final long serialVersionUID = 1L;
     
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(nullable=false, length = 80, unique =true)
     @Email (message = "O e-mail precisa respeitar o padrão nome@provedor.xxx")
     private String email;
@@ -60,11 +60,11 @@ public class Conta implements Serializable{
         this.jogo = jogo;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

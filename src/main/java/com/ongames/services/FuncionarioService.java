@@ -2,7 +2,6 @@ package com.ongames.services;
 
 import com.ongames.exception.NotAllowedException;
 import com.ongames.exception.NotFoundException;
-import com.ongames.model.Conta;
 import com.ongames.model.Funcionario;
 import com.ongames.repository.FuncionarioRepository;
 import java.util.List;
@@ -23,6 +22,10 @@ public class FuncionarioService {
         }
         return funcionarios.get();
     }
+     
+     public List<Funcionario> findAll(){
+         return repo.findAll();
+     }
     
     public Funcionario save(Funcionario f){
         checkDuplicity(f.getCpf(), f.getEmail());

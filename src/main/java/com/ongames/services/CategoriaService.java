@@ -38,6 +38,7 @@ public class CategoriaService {
     }
     
     public void delete(Categoria cat){
+        checkIfInJogo(cat);
         try{
             repo.delete(cat);
         }
@@ -67,6 +68,13 @@ public class CategoriaService {
         if (!resultado.isEmpty()){
             throw new NotAllowedException("Categoria já cadastrada");
         }
+    }
+    
+    private void checkIfInJogo(Categoria cat){
+        List<Categoria> resultado = repo.checkIfInJogo();
+        if (!resultado.isEmpty()){
+            throw new NotAllowedException("Não é possível excluir categoria vinculada a um jogo!");
+        }        
     }
 }
 

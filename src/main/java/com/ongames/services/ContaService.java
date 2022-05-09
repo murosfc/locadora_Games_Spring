@@ -50,16 +50,15 @@ public class ContaService {
         }
     }
     
-    public Conta update (Conta c, String senhaAtual, String novaSenha, String confirmaNovaSenha){
-        checkIfExists(c);   
-        Conta contaDB = repo.getById(c.getId());        
-        if (contaDB.getAluguel().getDataFimAluguel().isAfter(LocalDate.now()) ||
+    public Conta update (Conta c){           
+        Conta contaDB = repo.getById(c.getId());
+        if(contaDB.getAluguel() != null){
+           if (contaDB.getAluguel().getDataFimAluguel().isAfter(LocalDate.now()) ||
                 contaDB.getAluguel().getDataFimAluguel().isEqual(LocalDate.now())){
             throw new NotAllowedException("Não é possível editar uma conta com aluguel em andamento");
-        }
-        atualizaSenha(contaDB, senhaAtual, novaSenha, confirmaNovaSenha);
-        try{
-            c.setSenha(contaDB.getSenha());
+        } 
+        }                
+        try{            
             return repo.save(c);
         }
         catch (Exception e){
@@ -74,8 +73,7 @@ public class ContaService {
         }
     }
     
-    public void delete(Conta c){
-        checkIfExists(c);
+    public void delete(Conta c){        
         checkIfThereIsAluguel(c);
         try{
             repo.delete(c);
@@ -97,20 +95,6 @@ public class ContaService {
             throw new NotAllowedException("Esta conta possui um aluguel vigente, não é possível excluir a conta");
         }
     }
+       
     
-    private void atualizaSenha(Conta c, String senhaAtual, String novaSenha, String confirmaNovaSenha){
-        if(!senhaAtual.isBlank() && !novaSenha.isBlank() && confirmaNovaSenha.isBlank()){
-            if (!senhaAtual.equals(c.getSenha())){
-                throw new NotAllowedException("A senha atual não confere");
-            }
-            if (senhaAtual.equals(novaSenha)){
-                throw new NotAllowedException("A nova senha não pode ser igual à senha atual");
-            }
-            if (!novaSenha.equals(confirmaNovaSenha)){
-                throw new NotAllowedException("Confirmação de senha não está igual à nova senha informada");
-            }
-            c.setAluguel(null); //quando uma conta é atualizada o aluguel termina possibilitando que ela seja alugada novamente
-            c.setSenha(novaSenha);
-        }        
-    }
 }

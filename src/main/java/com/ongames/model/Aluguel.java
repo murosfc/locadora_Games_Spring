@@ -28,12 +28,12 @@ public class Aluguel implements Serializable{
     private Long id;
     
     @Column(nullable = false)    
-    @NotNull(message = "Data de início e do fim do aluguel são obrigatórias.")    
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Data de início e do fim do aluguel são obrigatórias.")      
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataInicioAluguel, dataFimAluguel;
     
-    @ManyToOne @JoinColumn(name = "id_cliente", referencedColumnName = "id")   
+    @ManyToOne @JoinColumn(name = "id_cliente", referencedColumnName = "id")
     private Cliente cliente;
     @OneToMany @JsonIgnore   
     private List<Conta> contas;
@@ -45,9 +45,9 @@ public class Aluguel implements Serializable{
 
     public Aluguel(LocalDate dataInicioAluguel, LocalDate dataFimAluguel) {
         this.dataInicioAluguel = dataInicioAluguel;
-        this.dataFimAluguel = dataFimAluguel;
-        pagamento.setValorTotal(0f);
+        this.dataFimAluguel = dataFimAluguel;        
         this.pagamento = new Pagamento(this);
+        pagamento.setValorTotal(0f);
     }
 
     public Aluguel() {
@@ -113,12 +113,7 @@ public class Aluguel implements Serializable{
         return dataFimAluguel;
     }
 
-    public void setDataFimAluguel(LocalDate dataFimAluguel) {
-        LocalDate dtinicio = this.dataInicioAluguel;
-        if (dataFimAluguel.isBefore(dtinicio.plusDays(7)))
-        {
-            throw new RuntimeException("Data fim de alugel não pode ser anterior a 7 dias após o início");
-        }
+    public void setDataFimAluguel(LocalDate dataFimAluguel) {        
         this.dataFimAluguel = dataFimAluguel;
     }
 

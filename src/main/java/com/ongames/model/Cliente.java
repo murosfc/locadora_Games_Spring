@@ -15,8 +15,8 @@ import javax.validation.constraints.Size;
 public class Cliente extends Pessoa implements Serializable{
     private static final long serialVersionUID = 1L;
     
-    @Column(length = 9)
-    @Pattern(regexp= "[0-9]{5}[\\-]?[0-9]{3}", message="O CEP precisa respeitar o padrão 00000-000")
+    @Column(length = 8)
+    @Pattern(regexp= "[0-9]{8}", message="Digite apenas números")
     private String cep;
     @Column(length = 10)
     @NotNull (message = "É necessário informar o número, ou S/N, caso não tenha")

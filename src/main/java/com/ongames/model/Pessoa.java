@@ -24,10 +24,10 @@ public abstract class Pessoa implements Serializable {
     private static final long serialVersionUID = 1L; 
     
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     
     @Column(nullable=false, length = 14, unique =true, updatable=false)
-    @CPF (message ="O CPF precisa seguir o padrão 000.000.000-00")
+    @CPF (message ="O CPF precisa conter 11 numeros, e apenas números")
     @NotNull (message ="CPF é obrigatório")
     private String cpf;
     @Column(nullable=false, length = 150)
@@ -85,11 +85,11 @@ public abstract class Pessoa implements Serializable {
         this.senha = senha;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

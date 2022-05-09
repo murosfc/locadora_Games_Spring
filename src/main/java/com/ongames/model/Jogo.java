@@ -22,7 +22,7 @@ public class Jogo implements Serializable{
     private static final long serialVersionUID = 1L;
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(length=22, unique=true)
     @NotNull (message="O sku precisa ser informado")
     @Size(min=1, max=22) 
@@ -73,11 +73,11 @@ public class Jogo implements Serializable{
         this.categorias = categorias;
     }       
     
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

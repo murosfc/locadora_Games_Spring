@@ -50,7 +50,7 @@ public class LocadoraApplication implements CommandLineRunner{
         
                 
         //cliente
-        Cliente objCliente = new Cliente("28015-150", "34", "Ap 302", "318.091.980-97", "Julio Oliveira Campos", "jocampos@gmail.com", "MzH45b561!"); 
+        Cliente objCliente = new Cliente("28015150", "34", "Ap 302", "318.091.980-97", "Julio Oliveira Campos", "jocampos@gmail.com", "MzH45b561!"); 
         clienteRepo.save(objCliente);
         //categoria
         Categoria cat1 = new Categoria("RPG");
@@ -61,9 +61,13 @@ public class LocadoraApplication implements CommandLineRunner{
         catRepo.save(cat3);
         //jogo
         Jogo objJogo = new Jogo("70010000000025", "The Legend of Zelda™: Breath of the Wild", "https://assets.nintendo.com/image/upload/c_pad,f_auto,h_613,q_auto,w_1089/ncom/pt_BR/games/switch/t/the-legend-of-zelda-breath-of-the-wild-switch/hero?v=2022021722", 15.50f);
+        Jogo objJogo2 = new Jogo("70010000046395", "Splatoon™ 3", "https://assets.nintendo.com/image/upload/c_pad,f_auto,h_613,q_auto,w_1089/ncom/en_US/games/switch/b/bayonetta-3-switch/hero?v=2022042317", 20.00f);
         objJogo.setCategorias(List.of(cat1, cat2, cat3));
+        objJogo2.setCategorias(List.of(cat3));
         objJogo.setPlataforma(PlataformaEnum.NS.name());
+        objJogo2.setPlataforma(PlataformaEnum.NS.name());
         jogoRepo.save(objJogo);
+        jogoRepo.save(objJogo2);
         //conta
         Conta objConta = new Conta("conta01@ongames.com", "Hi34Ub");
         objConta.setJogo(objJogo); 
@@ -76,10 +80,9 @@ public class LocadoraApplication implements CommandLineRunner{
         objAluguel.setCliente(objCliente);
         objAluguel.setContas(List.of(objConta));
         objAluguel.setContatoSuporte(objFunc);
-        //pagamento
-        Pagamento pag = objAluguel.getPagamento();                      
-        pag.setDataPagamento(LocalDate.now());      
-        pag.setValidacao(gerarStringAleatoria());
+        //pagamento                          
+        objAluguel.getPagamento().setDataPagamento(LocalDate.now());      
+        objAluguel.getPagamento().setValidacao(gerarStringAleatoria());
         aluguelRepo.save(objAluguel);
         pagRepo.save(objAluguel.getPagamento());
         //finalização aluguel         

@@ -8,7 +8,7 @@ public enum PlataformaEnum {
     PS4("Playstation 4"),
     PS5("Playstation 5"),
     XBOXONE("Xbox One"),
-    XBOXSERIESXS("Xbox Series X/S");
+    XBOXSERIES("Xbox Series X/S");
     
     @NotNull
     @Size(min=2, max=50) 

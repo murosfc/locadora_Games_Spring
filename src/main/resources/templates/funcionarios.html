@@ -29,7 +29,7 @@
                     <span th:text="${func.nick}"/><br>
                                                          
                     <div class="card-body">
-                        <a th:href="@{~/alugueis(cliente=${func.id})}" class="btn btn-success">Alugueis</a>
+                        <a th:href="@{'~/funcionarios/funcionario/'+${func.id}+'/alugueis'}" class="btn btn-success">Alugueis</a>
                         <a th:href="@{'~/funcionarios/funcionario/'+${func.id}}" class="btn btn-warning">Editar</a>
                         <a th:href="@{'~/funcionarios/'+${func.id}+'/deletar'}" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este cliente?')">Excluir</a>
                     </div>

@@ -61,7 +61,7 @@ public class LocadoraApplication implements CommandLineRunner{
         catRepo.save(cat3);
         //jogo
         Jogo objJogo = new Jogo("70010000000025", "The Legend of Zelda™: Breath of the Wild", "https://assets.nintendo.com/image/upload/c_pad,f_auto,h_613,q_auto,w_1089/ncom/pt_BR/games/switch/t/the-legend-of-zelda-breath-of-the-wild-switch/hero?v=2022021722", 15.50f);
-        Jogo objJogo2 = new Jogo("70010000046395", "Splatoon™ 3", "https://assets.nintendo.com/image/upload/c_pad,f_auto,h_613,q_auto,w_1089/ncom/en_US/games/switch/b/bayonetta-3-switch/hero?v=2022042317", 20.00f);
+        Jogo objJogo2 = new Jogo("70010000046395", "Splatoon™ 3", "https://assets.nintendo.com/image/upload/c_pad,f_auto,h_613,q_auto,w_1089/ncom/en_US/games/switch/s/splatoon-3-switch/hero?v=2022042820", 20.00f);
         objJogo.setCategorias(List.of(cat1, cat2, cat3));
         objJogo2.setCategorias(List.of(cat3));
         objJogo.setPlataforma(PlataformaEnum.NS.name());
@@ -81,7 +81,8 @@ public class LocadoraApplication implements CommandLineRunner{
         objAluguel.setContas(List.of(objConta));
         objAluguel.setContatoSuporte(objFunc);
         //pagamento                          
-        objAluguel.getPagamento().setDataPagamento(LocalDate.now());      
+        objAluguel.getPagamento().setDataPagamento(LocalDate.now()); 
+        objAluguel.getPagamento().iniciaAluguel();
         objAluguel.getPagamento().setValidacao(gerarStringAleatoria());
         aluguelRepo.save(objAluguel);
         pagRepo.save(objAluguel.getPagamento());

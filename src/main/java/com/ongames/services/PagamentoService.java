@@ -34,8 +34,11 @@ public class PagamentoService {
     
     public Pagamento save(Pagamento p){
         checkIfExist(p);
-        try{
-            repo.save(p);
+        try{ 
+            repo.save(p); //se salva com sucesso atualiza o aluguel e salva novamente
+             if (p.iniciaAluguel()){
+                repo.save(p);
+            } 
         }
         catch (Exception e){
             throw new RuntimeException("Erro ao registrar pagamento");
@@ -43,19 +46,17 @@ public class PagamentoService {
         return p;
     }
     
-    public Pagamento update(Pagamento p){
-        Pagamento pDB = repo.getById(p.getId());
-        if (!pDB.getValidacao().isEmpty()){
-            throw new NotAllowedException("Não é possível atualizar um pagamento já confirmado");
-        } 
-        pDB.setValidacao(p.getValidacao());
+    public Pagamento update(Pagamento p){        
         try{
-            repo.save(pDB);
+            repo.save(p); //se salvar sem erro, então inicia a
+            if (p.iniciaAluguel()){
+                repo.save(p);
+            }            
         }
         catch (Exception e){
             throw new RuntimeException("Erro ao atualizar pagamento");
         }
-        return pDB;
+        return p;
     }
 
     private void checkIfExist(Pagamento p) {

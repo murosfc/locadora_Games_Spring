@@ -60,6 +60,7 @@ public class JogoService {
     
     public void delete (Jogo j){
         checkIfInAluguel(j);
+        checkIfJogoInConta(j);
         try{
             repo.delete(j);
         }
@@ -79,6 +80,13 @@ public class JogoService {
         Jogo jogo = repo.findJogoInAluguel(j.getId());
         if (jogo != null){
             throw new NotAllowedException("Não é possível excluir um jogo alugado");
+        }
+    }
+    
+    private void checkIfJogoInConta(Jogo j) {
+        Jogo jogo = repo.findJogoInConta(j.getId());
+        if (jogo != null){
+            throw new NotAllowedException("Não é possível excluir um jogo vinculado a uma conta. Exclua a conta ou remova o jogo dela, depois tente novamente.");
         }
     }
     

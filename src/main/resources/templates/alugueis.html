@@ -34,11 +34,12 @@
                         <span>Valor:</span>
                         <span th:text="${aluguel.pagamento.valorTotal}"/><br>
                         <span>Pagamento:</span>
-                        <span th:text="${aluguel.pagamento.validacao} == null ? 'pendente' : 'pago'"/>
+                        <span th:text="${aluguel.pagamento.validacao} == null ? 'pendente' : 'pago em '+${aluguel.pagamento.dataPagamento}"/>
                         
                         <div class="card-body">                        
                             <a th:href="@{'~/alugueis/aluguel/'+${aluguel.id}}" class="btn btn-warning">Editar</a>
-                            <a th:href="@{'~/alugueis/'+${aluguel.id}+'/deletar'}" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta categoria?')">Excluir</a>
+                            <a th:href="@{'~/alugueis/aluguel/'+${aluguel.id}+'/cliente'}" class="btn btn-success">Cliente</a>
+                            <a th:href="@{'~/alugueis/aluguel/'+${aluguel.id}+'/funcionario'}" class="btn btn-success">Funcionario</a> 
                         </div>
                     </div>
                 </div>

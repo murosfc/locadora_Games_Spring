@@ -12,5 +12,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long>{
     @Query("SELECT c FROM Cliente c WHERE c.cpf = :cpf OR c.email = :email")
     public List<Cliente> findByCpfOrEmail(String cpf, String email);
         
-    
+    @Query("SELECT c FROM Cliente c JOIN c.alugueis a WHERE a.id = :idAluguel")
+    public List<Cliente> findByAluguelById(Long idAluguel);
 }

@@ -1,6 +1,7 @@
 package com.ongames.annotation.view;
 
 import com.ongames.model.Cliente;
+import com.ongames.services.AluguelService;
 import com.ongames.services.ClienteService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/clientes")
 public class ClienteViewController {
     
     @Autowired
-    private ClienteService service;  
+    private ClienteService service;
+    @Autowired
+    private AluguelService aluguelService;
+    
+    @GetMapping(path ="/cliente/{id}/alugueis")
+    public String findAlugueisByCliente(@PathVariable("id") Long id, Model model){
+        model.addAttribute("alugueis", aluguelService.findByCliente(id));
+        return "alugueis";
+    }
     
     @GetMapping(path = "/{id}/deletar")
     public String deletar(@PathVariable("id") Long id, Model model){       
@@ -47,10 +57,14 @@ public class ClienteViewController {
     }
     
     @PostMapping(path = "/cliente")
-    public String save(@Valid @ModelAttribute Cliente cliente, BindingResult result, Model model){
+    public String save(@Valid @ModelAttribute Cliente cliente, BindingResult result, Model model, @RequestParam("confirmaSenha") String confirmaSenha){
         if (result.hasErrors()){
             model.addAttribute("msgErros", result.getAllErrors());
             return "formCliente"; 
+        }
+        if (!confirmaSenha.equals(cliente.getSenha())){
+           model.addAttribute("msgErros", new ObjectError("clientes", "Senhas não conferem"));
+           return "formFuncionario";
         }
         else{
             try{ 
@@ -68,7 +82,8 @@ public class ClienteViewController {
     }
     
     @PostMapping(path = "/cliente/{id}")
-    public String update(@Valid @ModelAttribute Cliente cliente, BindingResult result, @PathVariable("id") Long id, Model model){
+    public String update(@ModelAttribute Cliente cliente, BindingResult result, @PathVariable("id") Long id, Model model){
+        cliente.setSenha(service.findById(id).getSenha());
         if (result.hasErrors()){
             model.addAttribute("msgErros", result.getAllErrors());
             return "formCliente"; 

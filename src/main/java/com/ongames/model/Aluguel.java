@@ -3,6 +3,7 @@ package com.ongames.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.ongames.exception.NotAllowedException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -27,8 +28,7 @@ public class Aluguel implements Serializable{
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable = false)    
-    @NotNull(message = "Data de início e do fim do aluguel são obrigatórias.")      
+    @Column(nullable = true)          
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataInicioAluguel, dataFimAluguel;
@@ -103,17 +103,15 @@ public class Aluguel implements Serializable{
         return dataInicioAluguel;
     }
 
-    public void setDataInicioAluguel(LocalDate dataInicioAluguel) {
-        this.dataInicioAluguel = dataInicioAluguel;
-        LocalDate datafim = this.dataInicioAluguel;        
-        this.dataFimAluguel = datafim.plusDays(7);
+    public void setDataInicioAluguel(LocalDate dataInicioAluguel) {       
+        this.dataInicioAluguel = dataInicioAluguel;        
     }
 
     public LocalDate getDataFimAluguel() {
         return dataFimAluguel;
     }
 
-    public void setDataFimAluguel(LocalDate dataFimAluguel) {        
+    public void setDataFimAluguel(LocalDate dataFimAluguel) {            
         this.dataFimAluguel = dataFimAluguel;
     }
 

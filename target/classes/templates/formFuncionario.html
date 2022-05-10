@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{fragmentos :: import-css(title='Cadastro cliente')}">
+    <head th:replace="~{fragmentos :: import-css(title='Cadastro funcionário')}">
         <title></title> 
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     </head>
@@ -44,6 +44,16 @@
                             <label for="whatsapp">Whatsapp:</label>
                             <input th:field="*{whatsapp}" type="tel" class="form-control" placeholder="(22)9970-00XX" required="required" maxlength="15" name="whatsapp" pattern="\\(?\\d{2,}\\)?[ -]?\\d{4,}[\\-\\s]?\\d{4}"/>
                         </div>  
+                    </div>
+                    <div class="row g-3" th:if="${funcionario.id == null}">
+                        <div class="col-md-4">
+                            <label for="senha">Senha Inicial:</label>
+                            <input th:field="*{senha}" type="password" class="form-control" placeholder="******" required="required" minlength="6" maxlength="20" name="senha"/>
+                        </div>
+                         <div class="col-md-4">
+                            <label for="confirma">Confirme a senha:</label>
+                            <input name="confirmaSenha" type="password" class="form-control" placeholder="******" required="required" minlength="6" maxlength="20"/>
+                        </div>                       
                     </div>
                     
                     <div class="card-footer" style="margin-top: 20px">

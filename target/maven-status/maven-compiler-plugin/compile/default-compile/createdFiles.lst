@@ -7,6 +7,7 @@ com\ongames\model\Conta.class
 com\ongames\repository\JogoRepository.class
 com\ongames\controller\apirest\PagamentoController.class
 com\ongames\annotation\UrlValidator.class
+com\ongames\annotation\view\FuncionarioViewController.class
 com\ongames\controller\apirest\FuncionarioController.class
 com\ongames\controller\apirest\JogoController.class
 com\ongames\services\AluguelService.class
@@ -35,10 +36,13 @@ com\ongames\annotation\view\ClienteViewController.class
 com\ongames\repository\FuncionarioRepository.class
 com\ongames\controller\apirest\CategoriaController.class
 com\ongames\services\JogoService.class
+com\ongames\annotation\view\ContaViewController.class
+com\ongames\annotation\view\JogoViewController.class
 com\ongames\controller\apirest\ClienteController.class
 com\ongames\exception\NotAllowedException.class
 com\ongames\services\FuncionarioService.class
 com\ongames\controller\apirest\AluguelController.class
 com\ongames\model\Aluguel.class
+com\ongames\annotation\view\AluguelViewController.class
 com\ongames\repository\ContaRepository.class
 com\ongames\model\Pagamento.class

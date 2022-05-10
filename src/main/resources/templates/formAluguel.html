@@ -21,34 +21,61 @@
                     <div class="row g-2">
                         <div class="col-md-3" >
                             <label for="dtini">Data inicio:</label>
-                            <input th:value="*{dataInicioAluguel}" th:field="*{dataInicioAluguel}" type="date" class="form-control" required="required" name="dtini"/>
+                            <input th:value="*{dataInicioAluguel}" th:field="*{dataInicioAluguel}" type="date" class="form-control" name="dtini" th:disabled="${aluguel.id == null ? true : false}" th:title="${aluguel.id == null ? 'A data de início depende do pagamento' : ''}"/>
                         </div>
                         <div class="col-md-3" >
                             <label for="dtfim">Data fim:</label>
-                            <input th:value="*{dataFimAluguel}" th:field="*{dataFimAluguel}" type="date" class="form-control" required="required" name="dtfim"/>
+                            <input th:value="*{dataFimAluguel}" th:field="*{dataFimAluguel}" type="date" class="form-control" name="dtfim" title="O ideal é deixar em branco, o sistema preenche automáaticamente"/>
                         </div>                       
                     </div>
-                    <div class="row g-2">
+                    <div class="row g-1">
                         <div class="col-md-4" >
                             <label for="form">Cliente:</label>
                             <select class="form-control" data-live-search="true" th:field="*{cliente.id}" aria-label="Selecione um cliente" name="form" required="required">
                                 <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.email}"/>
                             </select>                            
                         </div>
+                    </div>
+                    <div class="row g-1">
                         <div class="col-md-4" >
-                            <label for="form-conta">Conta:</label>
-                            <select class="form-control" data-live-search="true" aria-label="Selecione uma conta" name="form-conta" required="required">
-                                <option th:each="conta : ${contas}" th:value="${conta.id}" th:text="${conta.email}"/>
-                            </select>                            
+                            <label>Contas:</label>
+                            <div style="overflow-y:scroll; width:250px; height:150px" class="form-control" data-live-search="true" th:if="${aluguel.id != null}">
+                                <div class="form-check form-check-inline" th:each="conta, i : ${contas}">
+                                    <input class="form-check-input" type="checkbox" th:name="${'contas['+i.index+'].id'}" th:value="${conta.id}" th:checked="${#lists.contains(aluguel.contas, conta) ? 'checked' : false}"/>
+                                    <label class="form-check-label" th:text="${conta.email}"></label>
+                                </div>
+                            </div> 
+                            <div style="overflow-y:scroll; width:250px; height:150px" class="form-control" data-live-search="true" th:if="${aluguel.id == null}">
+                                <div class="form-check form-check-inline" th:each="conta, i : ${contas}">
+                                    <input class="form-check-input" type="checkbox" th:name="${'contas['+i.index+'].id'}" th:value="${conta.id}" th:checked="${#lists.contains(aluguel.contas, conta) ? 'checked' : false}"/>
+                                    <label class="form-check-label" th:text="${conta.email}"></label>
+                                </div>
+                            </div>
+                              
+                            
                         </div>
-                    </div>                    
-                    <div class="row g-4" style="margin-top: 5px">
-                       <div class="col-md-4" >
+                    </div>                   
+                    <div class="row g-1" style="margin-top: 5px">
+                        <div class="col-md-4" >
                             <label for="func">Funcionário suporte:</label>
-                            <select class="form-control" data-live-search="true" th:field="*{contatoSuporte.id}" aria-label="Selecione um funcionário" name="func" required="required">
-                                <option th:each="funcionario : ${funcionarios}" th:value="${funcionario.id}" th:text="${funcionario.email}"/>
+                            <select class="form-control" data-live-search="true" th:field="*{contatoSuporte.id}" aria-label="Selecione um funcionário" name="func" required="required">                                
+                                <option th:each="funcionario : ${funcionarios}" th:value="${funcionario.id}" th:text="${funcionario.email}" ></option>
                             </select>                            
                         </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-3" >
+                            <label for="dtpag">Data do pagamento:</label>
+                            <input th:value="*{pagamento.dataPagamento}" th:field="*{pagamento.dataPagamento}" type="date" class="form-control" name="dtpag"/>
+                        </div>                         
+                        <div class="col-md-4" >
+                            <label for="comprovante">Comprovante de pagamento:</label>
+                            <input th:value="*{pagamento.validacao}" th:field="*{pagamento.validacao}" type="text" class="form-control" name="comprovante"/>
+                        </div> 
+                        <div class="col-md-3" >
+                            <label for="total">Valor total:</label>
+                            <input th:value="*{pagamento.valorTotal}" th:field="*{pagamento.valorTotal}" type="number" step="0.01" class="form-control" title="Modifique apenas em caso de desconto, pois é calculado automáticamente quando salvo" name="total"/>
+                        </div>                         
                     </div>
                     <div class="card-footer" style="margin-top: 20px">
                         <input type="submit" class="btn btn-success" value="Salvar" />

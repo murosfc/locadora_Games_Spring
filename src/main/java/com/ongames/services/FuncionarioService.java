@@ -23,6 +23,10 @@ public class FuncionarioService {
         return funcionarios.get();
     }
      
+    public List<Funcionario> findByAluguelById(Long idAluguel){
+        return repo.findByAluguelById(idAluguel);
+    }
+     
      public List<Funcionario> findAll(){
          return repo.findAll();
      }

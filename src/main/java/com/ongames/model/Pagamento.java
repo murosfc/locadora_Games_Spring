@@ -19,8 +19,9 @@ public class Pagamento implements Serializable{
     private static final long serialVersionUID = 1L;    
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;        
-      
+    private Long id;        
+    
+    @Column(nullable=true)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataPagamento;
@@ -35,7 +36,7 @@ public class Pagamento implements Serializable{
     @JsonBackReference  
     private Aluguel aluguel;
    
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -46,7 +47,7 @@ public class Pagamento implements Serializable{
         this.aluguel = aluguel;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -55,8 +56,17 @@ public class Pagamento implements Serializable{
     }
 
     public void setDataPagamento(LocalDate dataPagamento) {
-        this.dataPagamento = dataPagamento;
-        this.aluguel.setDataInicioAluguel(dataPagamento); //se o pagamento foi confirmado então o aluguel iniciou
+        this.dataPagamento = dataPagamento;        
+    }
+    
+    public boolean iniciaAluguel(){
+        if (this.aluguel.getDataInicioAluguel() == null && this.getDataPagamento() != null){
+           this.aluguel.setDataInicioAluguel(this.getDataPagamento()); //se o pagamento foi confirmado então o aluguel iniciou
+           LocalDate dtfim = (LocalDate) this.getDataPagamento();
+           this.aluguel.setDataFimAluguel(dtfim.plusDays(7));
+           return true;
+        } 
+        return false;
     }
 
     public float getValorTotal() {

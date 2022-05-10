@@ -12,6 +12,6 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Long>{
     @Query ("SELECT c FROM Categoria c WHERE c.tipo = :tipo")
     public List<Categoria> findByTipo (String tipo);
     
-    @Query (value = "SELECT DISTINCT * FROM categoria c JOIN jogo_categorias jc ON c.id=jc.categorias_id", nativeQuery = true)
-    public List<Categoria> checkIfInJogo ();
+    @Query (value = "SELECT DISTINCT * FROM categoria c JOIN jogo_categorias jc ON c.id = jc.categorias_id WHERE c.id = :idCategoria", nativeQuery = true)
+    public List<Categoria> checkIfInJogo (Long idCategoria);
 }

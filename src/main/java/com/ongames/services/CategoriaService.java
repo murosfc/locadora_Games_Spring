@@ -71,7 +71,7 @@ public class CategoriaService {
     }
     
     private void checkIfInJogo(Categoria cat){
-        List<Categoria> resultado = repo.checkIfInJogo();
+        List<Categoria> resultado = repo.checkIfInJogo(cat.getId());
         if (!resultado.isEmpty()){
             throw new NotAllowedException("Não é possível excluir categoria vinculada a um jogo!");
         }        

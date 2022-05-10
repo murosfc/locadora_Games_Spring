@@ -19,6 +19,7 @@ C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\co
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\repository\AluguelRepository.java
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\services\CategoriaService.java
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\repository\CategoriaRepository.java
+C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\annotation\view\AluguelViewController.java
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\repository\PagamentoRepository.java
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\annotation\UrlValidation.java
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\annotation\UrlValidator.java
@@ -28,6 +29,9 @@ C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\co
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\controller\apirest\PagamentoController.java
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\exception\NotAllowedException.java
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\model\Jogo.java
+C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\annotation\view\ContaViewController.java
+C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\annotation\view\FuncionarioViewController.java
+C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\annotation\view\JogoViewController.java
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\model\Conta.java
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\model\Categoria.java
 C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\exception\ValidationError.java

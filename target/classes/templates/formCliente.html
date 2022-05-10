@@ -30,16 +30,12 @@
                             <input th:field="*{cpf}" type="text" class="form-control" placeholder="000.000.000-00" required="required" maxlength="14" name="cpf" pattern="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})"/>
                         </div>
                     </div>
-                    <div class="row g-3">
+                    <div class="row g-1">
                         <div class="col-md-4">
                             <label for="email">e-mail:</label>
                             <input th:field="*{email}" type="text" class="form-control" placeholder="nome@provedor.com" required="required" maxlength="80" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/>
                         </div>
-                        <input type="hidden" class="col-md-4"/>
-                        <div class="col-md-4">
-                            <label for="senha">Senha inicial:</label>
-                            <input th:field="*{senha}" type="text" inputmode="numeric" class="form-control" placeholder="Ongames2022!" required="required" maxlength="32" name="senha"/>
-                        </div>                       
+                        <input type="hidden" class="col-md-4"/>                                              
                     </div>
                     <div class="row g-4" >
                         <div class="col-md-2">
@@ -101,6 +97,16 @@
                                 <option value="TO">Tocantins</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="row g-3" th:if="${cliente.id == null}">
+                        <div class="col-md-4">
+                            <label for="senha">Senha Inicial:</label>
+                            <input th:field="*{senha}" type="password" class="form-control" placeholder="******" required="required" minlength="6" maxlength="20" name="senha"/>
+                        </div>
+                         <div class="col-md-4">
+                            <label for="confirma">Confirme a senha:</label>
+                            <input name="confirmaSenha" type="password" class="form-control" placeholder="******" required="required" minlength="6" maxlength="20"/>
+                        </div>                       
                     </div>
                     <div class="card-footer" style="margin-top: 20px">
                         <input type="submit" class="btn btn-success" value="Salvar"/>

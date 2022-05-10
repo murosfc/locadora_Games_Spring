@@ -32,6 +32,14 @@ public class AluguelService {
         return result;
     }
     
+    public List<Aluguel> findByConta(Long idConta){        
+        List<Aluguel> result = repo.findByConta(idConta);
+        if (result.isEmpty()){
+            throw new NotFoundException("Não encontrado aluguel para a conta informada");
+        }
+        return result;
+    }
+    
     public List<Aluguel> findAll(){
         List<Aluguel> result = repo.findAll();
          if (result.isEmpty()){
@@ -41,9 +49,9 @@ public class AluguelService {
     }
     
      public List<Aluguel> findByFuncionario(long idFuncionario){        
-        List<Aluguel> result = repo.findByCliente(idFuncionario);
+        List<Aluguel> result = repo.findByFuncionario(idFuncionario);
         if (result.isEmpty()){
-            throw new NotFoundException("Não encontrado aluguel para o cliente informado");
+            throw new NotFoundException("Não encontrado aluguel para o funcionario informado");
         }
         return result;
     }
@@ -59,12 +67,7 @@ public class AluguelService {
     }
     
     public Aluguel save (Aluguel obj){
-        if (obj.getDataInicioAluguel() == null || obj.getDataFimAluguel() == null){
-            throw new NotAllowedException("As datas de início e fim não podem estar vazias");
-        }
-    	if (obj.getDataInicioAluguel().plusDays(7).isAfter(obj.getDataFimAluguel())) {
-            throw new NotAllowedException("O período de aluguel está incorreto, não pode ser menor que 7 dias");
-    	}
+        this.validaDatasAluguel(obj);
         try{
            return repo.save(obj);
         }
@@ -74,20 +77,16 @@ public class AluguelService {
     }
     
     public Aluguel update (Aluguel obj){
-        if (obj.getDataInicioAluguel() == null || obj.getDataFimAluguel() == null){
-            throw new NotAllowedException("As datas de início e fim não podem estar vazias");
-        }
-    	if (obj.getDataInicioAluguel().plusDays(7).isAfter(obj.getDataFimAluguel())) {
-            throw new NotAllowedException("O período de aluguel está incorreto, não pode ser menor que 7 dias");
-    	}
+        obj.getPagamento().setId(repo.getById(obj.getId()).getPagamento().getId());
+        this.validaDatasAluguel(obj);
         try{
            return repo.save(obj);
         }
         catch (Exception e){
             e.printStackTrace();
-            throw new RuntimeException("Falha ao atualzar o aluguel");
+            throw new RuntimeException("Falha ao atualizar o aluguel");
         }        
-    }
+    }  
     
     public boolean checkIfPaid (Aluguel a){
         Aluguel aDB = repo.getById(a.getId());
@@ -96,6 +95,25 @@ public class AluguelService {
         }
         return ! (aDB.getPagamento().getValidacao().isEmpty());          
     }    
+    
+    private void validaDatasAluguel(Aluguel obj){        
+        if (obj.getDataInicioAluguel() == null && obj.getPagamento().getDataPagamento() != null){
+           obj.setDataInicioAluguel(obj.getPagamento().getDataPagamento()); //se o pagamento foi confirmado então o aluguel iniciou
+           if(obj.getDataFimAluguel() == null){
+                LocalDate dtfim = obj.getDataInicioAluguel();
+                obj.setDataFimAluguel(dtfim.plusDays(7));
+           }            
+        }
+        if (obj.getPagamento().getDataPagamento() == null && obj.getDataInicioAluguel() != null){
+            throw new NotAllowedException("O aluguel não pode iniciar sem a confirmação do pagamento.");
+        }    	
+        if (obj.getPagamento().getDataPagamento().isAfter(obj.getDataInicioAluguel())){
+            throw new NotAllowedException("O aluguel não pode iniciar antes da data do pagamento");
+        }
+        if (obj.getDataInicioAluguel().plusDays(7).isAfter(obj.getDataFimAluguel())) {
+            throw new NotAllowedException("O período de aluguel está incorreto, não pode ser menor que 7 dias");
+        }        
+    }
     
     
 }

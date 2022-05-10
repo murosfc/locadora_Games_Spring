@@ -15,9 +15,9 @@ import javax.validation.Payload;
 @Retention (RetentionPolicy.RUNTIME)
 public @interface Password {
     String message() default "O password precisa conter: "
-            + "mínimo 6 e máximo 20 caracteres,"
-            + "pelo menos uma letra maiúscula,"
-            + "uma letra minúscula"
+            + "mínimo 6 e máximo 20 caracteres, "
+            + "pelo menos uma letra maiúscula, "
+            + "uma letra minúscula "
             + "e um caractere especial";
     Class<?>[] groups() default{};
     Class<? extends Payload>[] payload() default{};

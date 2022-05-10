@@ -1,7 +1,7 @@
-
 package com.ongames.annotation.view;
 
 import com.ongames.model.Conta;
+import com.ongames.services.AluguelService;
 import com.ongames.services.ContaService;
 import com.ongames.services.JogoService;
 import javax.validation.Valid;
@@ -23,6 +23,14 @@ public class ContaViewController {
     private ContaService service;
     @Autowired
     private JogoService serviceJogo;
+     @Autowired
+    private AluguelService aluguelService;
+    
+    @GetMapping(path ="/conta/{id}/alugueis")
+    public String findAlugueisByConta(@PathVariable("id") Long id, Model model){
+        model.addAttribute("alugueis", aluguelService.findByConta(id));
+        return "alugueis";
+    }
     
     @GetMapping
     public String getAll(Model model){

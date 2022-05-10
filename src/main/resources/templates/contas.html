@@ -27,7 +27,7 @@
                         <span th:text="${conta.jogo.plataforma}"/>
                     </div>                
                    <div class="card-body">    
-                        <a th:if="${conta.aluguel} != null" th:href="@{'~/contas/conta/aluguel'+${conta.aluguel.id}}" class="btn btn-success">Aluguel</a>
+                        <a th:href="@{'~/contas/conta/'+${conta.id}+'/alugueis'}" class="btn btn-success">Alugueis</a>
                         <a th:href="@{'~/contas/conta/'+${conta.id}}" class="btn btn-warning">Editar</a>
                         <a th:href="@{'~/contas/'+${conta.id}+'/deletar'}" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta categoria?')">Excluir</a>
                     </div>

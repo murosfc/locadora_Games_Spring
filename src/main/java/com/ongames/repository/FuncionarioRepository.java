@@ -12,5 +12,8 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long>{
     
    @Query("SELECT f FROM Funcionario f WHERE f.cpf = :cpf OR f.email = :email") 
    public List<Funcionario> findByCpfOrEmail(String cpf, String email);
+   
+   @Query("SELECT f FROM Funcionario f JOIN f.alugueis a WHERE a.id = :idAluguel")
+   public List<Funcionario> findByAluguelById(Long idAluguel);
     
 }

@@ -23,6 +23,10 @@ public class ClienteService {
         return clientes;
     }
     
+    public List<Cliente> findByAluguelById(Long idAluguel){
+        return repo.findByAluguelById(idAluguel);
+    }
+    
     public Cliente findById(Long id){
         Optional<Cliente> clientes = repo.findById(id);
         if (clientes.isEmpty()){

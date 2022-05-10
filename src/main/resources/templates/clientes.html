@@ -32,7 +32,7 @@
                     <span> </span>
                     <span th:if="${not #strings.isEmpty(cliente.complemento)}" th:text="'Complemento '+${cliente.complemento}"/>
                     <div class="card-body">
-                        <a th:href="@{~/alugueis(cliente=${cliente.id})}" class="btn btn-success">Alugueis</a>
+                    <a th:href="@{'~/clientes/cliente/'+${cliente.id}+'/alugueis'}" class="btn btn-success">Alugueis</a>
                         <a th:href="@{'~/clientes/cliente/'+${cliente.id}}" class="btn btn-warning">Editar</a>
                         <a th:href="@{'~/clientes/'+${cliente.id}+'/deletar'}" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este cliente?')">Excluir</a>
                     </div>

@@ -50,7 +50,8 @@ public class FuncionarioViewController {
     }
     
     @PostMapping(path="/funcionario/{id}")
-    public String update (@Valid @ModelAttribute Funcionario func,@PathVariable("id") Long id, BindingResult result, Model model){
+    public String update (@ModelAttribute Funcionario func,@PathVariable("id") Long id, BindingResult result, Model model){
+        func.setSenha(service.findById(id).getSenha());
         if (result.hasErrors()){
             model.addAttribute("msgErros", result.getAllErrors());
             return "formFuncionario";

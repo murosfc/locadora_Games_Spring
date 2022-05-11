@@ -12,7 +12,6 @@ com\ongames\controller\apirest\FuncionarioController.class
 com\ongames\controller\apirest\JogoController.class
 com\ongames\services\AluguelService.class
 com\ongames\services\CategoriaService.class
-com\ongames\support\JsonCepReader.class
 com\ongames\repository\CategoriaRepository.class
 com\ongames\services\PagamentoService.class
 com\ongames\exception\ValidationError.class

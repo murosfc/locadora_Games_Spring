@@ -1,5 +1,6 @@
 package com.ongames.services;
 
+import com.ongames.annotation.PasswordValidator;
 import com.ongames.exception.NotAllowedException;
 import com.ongames.exception.NotFoundException;
 import com.ongames.model.Funcionario;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,6 +36,7 @@ public class FuncionarioService {
     public Funcionario save(Funcionario f){
         checkDuplicity(f.getCpf(), f.getEmail());
         try{
+            f.setSenha(new BCryptPasswordEncoder().encode(f.getSenha()));
             return repo.save(f);
         }
         catch (Exception e){
@@ -73,8 +76,8 @@ public class FuncionarioService {
     }
     
    private void checkDuplicity(String cpf, String email){
-       List<Funcionario> func = repo.findByCpfOrEmail(cpf, email);
-       if (!func.isEmpty()){
+       Funcionario func = repo.findByCpfOrEmail(cpf, email);
+       if (func != null){
            throw new NotAllowedException("Já existe um cadastro com o e-mail ou cpf informado");
        }       
    }
@@ -92,7 +95,7 @@ public class FuncionarioService {
         }
    }
    
-   private void atualizaSenha(Funcionario f, String senhaAtual, String novaSenha, String confirmaNovaSenha){
+   private void atualizaSenha(Funcionario f, String senhaAtual, String novaSenha, String confirmaNovaSenha){       
         if(!senhaAtual.isBlank() && !novaSenha.isBlank() && confirmaNovaSenha.isBlank()){
             if (!senhaAtual.equals(f.getSenha())){
                 throw new NotAllowedException("A senha atual não confere");
@@ -102,8 +105,15 @@ public class FuncionarioService {
             }
             if (!novaSenha.equals(confirmaNovaSenha)){
                 throw new NotAllowedException("Confirmação de senha não está igual à nova senha informada");
-            }            
-            f.setSenha(novaSenha);
+            }
+            if (!PasswordValidator.isValid(novaSenha)){
+                throw new NotAllowedException("O password precisa conter: "
+                 + "mínimo 6 e máximo 20 caracteres, "
+                 + "pelo menos uma letra maiúscula, "
+                 + "uma letra minúscula "
+                 + "e um caractere especial");
+            }
+            f.setSenha(new BCryptPasswordEncoder().encode(novaSenha));
         } 
    }
     

@@ -82,8 +82,7 @@ public class AluguelService {
         try{
            return repo.save(obj);
         }
-        catch (Exception e){
-            e.printStackTrace();
+        catch (Exception e){            
             throw new RuntimeException("Falha ao atualizar o aluguel");
         }        
     }  

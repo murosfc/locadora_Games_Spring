@@ -6,7 +6,7 @@ import com.ongames.model.Cliente;
 import com.ongames.model.Conta;
 import com.ongames.model.Funcionario;
 import com.ongames.model.Jogo;
-import com.ongames.model.Pagamento;
+import com.ongames.model.Permissao;
 import com.ongames.model.PlataformaEnum;
 import com.ongames.repository.CategoriaRepository;
 import com.ongames.repository.ClienteRepository;
@@ -15,6 +15,7 @@ import com.ongames.repository.FuncionarioRepository;
 import com.ongames.repository.JogoRepository;
 import com.ongames.repository.PagamentoRepository;
 import com.ongames.repository.AluguelRepository;
+import com.ongames.repository.PermissaoRepository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
@@ -22,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class LocadoraApplication implements CommandLineRunner{
@@ -39,18 +41,24 @@ public class LocadoraApplication implements CommandLineRunner{
     @Autowired
     private FuncionarioRepository funcRepo;    
     @Autowired
-    private PagamentoRepository pagRepo;    
+    private PagamentoRepository pagRepo;  
+    @Autowired
+    private PermissaoRepository permRepo;
 
-	public static void main(String[] args) {
-		SpringApplication.run(LocadoraApplication.class, args);          
-	}
+    public static void main(String[] args) {
+            SpringApplication.run(LocadoraApplication.class, args);          
+    }
 
     @Override
     public void run(String... args) throws Exception { 
-        
-                
+        //Permissões
+        Permissao pAdm = new Permissao("ADMIN");
+        Permissao pFunc = new Permissao("FUNC"); 
+        Permissao pCliente = new Permissao("CLIENTE");
+        permRepo.saveAll(List.of(pAdm, pFunc, pCliente));        
         //cliente
-        Cliente objCliente = new Cliente("28015150", "34", "Ap 302", "318.091.980-97", "Julio Oliveira Campos", "jocampos@gmail.com", "MzH45b561!"); 
+        Cliente objCliente = new Cliente("28015150", "34", "Ap 302", "318.091.980-97", "Julio Oliveira Campos", "jocampos@gmail.com", new BCryptPasswordEncoder().encode("MzH45b561!")); 
+        objCliente.setPermissoes(List.of(pCliente));
         clienteRepo.save(objCliente);
         //categoria
         Categoria cat1 = new Categoria("RPG");
@@ -73,7 +81,8 @@ public class LocadoraApplication implements CommandLineRunner{
         objConta.setJogo(objJogo); 
         contaRepo.save(objConta);
         //funcionario public Funcionario(String nick, String whatsapp, String cpf, String nome, String email, String senha)
-        Funcionario objFunc = new Funcionario("SuperHiggs","(22)9977-0001","942.275.060-18", "Hugo Villela Silva", "superhiggs@ongames.com", "So6410Hge!");
+        Funcionario objFunc = new Funcionario("SuperHiggs","(22)9977-0001","942.275.060-18", "Hugo Villela Silva", "superhiggs@ongames.com", new BCryptPasswordEncoder().encode("Senha123!"));
+        objFunc.setPermissoes(List.of(pAdm, pFunc));
         funcRepo.save(objFunc);
         //aluguel
         Aluguel objAluguel = new Aluguel();

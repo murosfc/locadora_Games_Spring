@@ -34,8 +34,7 @@
                         <div class="col-md-4">
                             <label for="email">e-mail:</label>
                             <input th:field="*{email}" type="text" class="form-control" placeholder="nick@ongames.com" required="required" maxlength="80" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/>
-                        </div>
-                        <input type="hidden" class="col-md-4"/>
+                        </div>                        
                         <div class="col-md-4">
                             <label for="nick">Nickname:</label>
                             <input th:field="*{nick}" type="text" class="form-control" placeholder="nickname" required="required" minlength="4" maxlength="20" name="nick"/>
@@ -45,7 +44,7 @@
                             <input th:field="*{whatsapp}" type="tel" class="form-control" placeholder="(22)9970-00XX" required="required" maxlength="15" name="whatsapp" pattern="\\(?\\d{2,}\\)?[ -]?\\d{4,}[\\-\\s]?\\d{4}"/>
                         </div>  
                     </div>
-                    <div class="row g-3" th:if="${funcionario.id == null}">
+                    <div class="row g-2" th:if="${funcionario.id == null}">
                         <div class="col-md-4">
                             <label for="senha">Senha Inicial:</label>
                             <input th:field="*{senha}" type="password" class="form-control" placeholder="******" required="required" minlength="6" maxlength="20" name="senha"/>
@@ -55,6 +54,23 @@
                             <input name="confirmaSenha" type="password" class="form-control" placeholder="******" required="required" minlength="6" maxlength="20"/>
                         </div>                       
                     </div>
+                    <div class="row g-1">
+                        <div class="col-md-4" >
+                            <label>Contas:</label>
+                            <div style="overflow-y:scroll; width:250px; height:150px" class="form-control" data-live-search="true" th:if="${funcionario.id != null}">
+                                <div class="form-check form-check-inline" th:each="permissao, i : ${permissoes}">
+                                    <input class="form-check-input" type="checkbox" th:name="${'permissoes['+i.index+'].id'}" th:value="${permissao.id}" th:checked="${#lists.contains(funcionario.permissoes, permissao) ? 'checked' : false}"/>
+                                    <label class="form-check-label" th:text="${permissao.nome}"></label>
+                                </div>
+                            </div> 
+                            <div style="overflow-y:scroll; width:250px; height:150px" class="form-control" data-live-search="true" th:if="${funcionario.id == null}">
+                                <div class="form-check form-check-inline" th:each="permissao, i : ${permissoes}">
+                                    <input class="form-check-input" type="checkbox" th:name="${'permissoes['+i.index+'].id'}" th:value="${permissao.id}"/>
+                                    <label class="form-check-label" th:text="${permissao.nome}"></label>
+                                </div>
+                            </div>                          
+                        </div>
+                    </div> 
                     
                     <div class="card-footer" style="margin-top: 20px">
                         <input type="submit" class="btn btn-success" value="Salvar"/>

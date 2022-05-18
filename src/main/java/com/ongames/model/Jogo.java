@@ -41,7 +41,7 @@ public class Jogo implements Serializable{
     @Positive (message ="O valor precisa ser positivo")
     private float valor;
     @Column(nullable=false, length=20)    
-    @NotNull (message="A nick plataforma ser informada")
+    @NotNull (message="A plataforma precisa ser informada")
     private String plataforma;
     
     @ManyToMany(fetch = FetchType.EAGER)      

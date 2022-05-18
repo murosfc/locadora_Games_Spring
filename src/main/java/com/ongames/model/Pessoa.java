@@ -1,15 +1,18 @@
 package com.ongames.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.ongames.annotation.Password;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -38,9 +41,13 @@ public abstract class Pessoa implements Serializable {
     @NotNull (message ="O e-mail precisa ser informado")
     @Email (message = "O e-mail precisa respeitar o padrão nome@provedor.xxx")
     private String email;
-    @Column(nullable=false, length = 32) //32 Ã© o tamanho do hash que serÃ¡ salvo no banco de dados
-    @Password
+    //@Password com a criptografia da senha a validação precisa ser em níveis superiores
+    @Column(nullable=false, length = 60)    
     private String senha; 
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Size (min = 1, message= "Pessoa precisa ter ao menos uma perimissão")
+    private List<Permissao> permissoes = new ArrayList<>();  
     
 
     public Pessoa(String cpf, String nome, String email, String senha) {
@@ -51,7 +58,15 @@ public abstract class Pessoa implements Serializable {
     }
 
     public Pessoa() {
-    }    
+    } 
+    
+    public List<Permissao> getPermissoes() {
+        return permissoes;
+    }
+
+    public void setPermissoes(List<Permissao> permissoes) {
+        this.permissoes = permissoes;
+    }
 
     public String getCpf() {
         return cpf;

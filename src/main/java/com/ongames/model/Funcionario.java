@@ -26,7 +26,7 @@ public class Funcionario extends Pessoa implements Serializable{
     private String whatsapp;
     
     @JsonIgnore @OneToMany(mappedBy = "contatoSuporte") 
-    private List<Aluguel> alugueis = new ArrayList<>();
+    private List<Aluguel> alugueis = new ArrayList<>();  
 
     public Funcionario() {
         super();

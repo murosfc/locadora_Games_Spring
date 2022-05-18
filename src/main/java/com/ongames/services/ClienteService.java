@@ -1,5 +1,6 @@
 package com.ongames.services;
 
+import com.ongames.annotation.PasswordValidator;
 import com.ongames.exception.NotAllowedException;
 import com.ongames.exception.NotFoundException;
 import com.ongames.model.Cliente;
@@ -106,6 +107,13 @@ public class ClienteService {
             }
             if (!novaSenha.equals(confirmaNovaSenha)){
                 throw new NotAllowedException("Confirmação de senha não está igual à nova senha informada");
+            }
+            if (!PasswordValidator.isValid(novaSenha)){
+                throw new NotAllowedException("O password precisa conter: "
+                 + "mínimo 6 e máximo 20 caracteres, "
+                 + "pelo menos uma letra maiúscula, "
+                 + "uma letra minúscula "
+                 + "e um caractere especial");
             }            
             c.setSenha(novaSenha);
         }  

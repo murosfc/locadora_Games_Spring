@@ -25,7 +25,7 @@ public class LocadoraWebSecurity extends WebSecurityConfigurerAdapter{
                 .authorizeRequests()                
                 .antMatchers("/apirest/**").hasRole("ADMIN")
                 .antMatchers("/funcionarios/**").hasRole("ADMIN")
-                .antMatchers("/funcionarios/funcionario/meusDados/**").hasAnyRole("ADMIN", "FUNC")
+                .antMatchers("/funcionarios/meusDados/**").hasAnyRole("ADMIN", "FUNC")
                 .antMatchers("/pagamentos/**").hasRole("ADMIN")                
                 .anyRequest().authenticated()               
                 .and()

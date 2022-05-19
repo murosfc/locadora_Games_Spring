@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="~{fragmentos :: import-css(title='Cadastro funcionário')}">
-        <title></title> 
-        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <title></title>       
     </head>
     <body>
         <div th:replace="~{fragmentos :: barramenu(pagina='funcionario')}"/>     
@@ -56,7 +55,7 @@
                     </div>
                     <div class="row g-1">
                         <div class="col-md-4" >
-                            <label>Contas:</label>
+                            <label>Permissões:</label>
                             <div style="overflow-y:scroll; width:250px; height:150px" class="form-control" data-live-search="true" th:if="${funcionario.id != null}">
                                 <div class="form-check form-check-inline" th:each="permissao, i : ${permissoes}">
                                     <input class="form-check-input" type="checkbox" th:name="${'permissoes['+i.index+'].id'}" th:value="${permissao.id}" th:checked="${#lists.contains(funcionario.permissoes, permissao) ? 'checked' : false}"/>
@@ -79,26 +78,6 @@
                 </form>
             </div>
         
-        <div th:replace="~{fragmentos :: import-js}"/>
-        
-        <script type="text/javascript">
-            $("#cep").focusout(function(){			
-                $.ajax({                    
-                    url: 'https://viacep.com.br/ws/'+$(this).val()+'/json',                   
-                    dataType: 'json',                    
-                    success: function(resposta){                            
-                        $("#rua").val(resposta.logradouro);					
-                        $("#bairro").val(resposta.bairro);
-                        $("#cidade").val(resposta.localidade);
-                        $("#uf").val(resposta.uf);                            
-                        $("#numero").focus();
-                    }
-                });
-            });
-            $(document).ready(function(){                                  
-                $("#cep").focus();
-                $("#cep").focusout();               
-            });
-	</script>
+        <div th:replace="~{fragmentos :: import-js}"/>  
     </body>
 </html>

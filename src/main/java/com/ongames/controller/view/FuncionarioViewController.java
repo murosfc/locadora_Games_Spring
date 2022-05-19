@@ -1,11 +1,14 @@
 package com.ongames.controller.view;
 
+import com.ongames.exception.NotAllowedException;
 import com.ongames.model.Funcionario;
 import com.ongames.repository.PermissaoRepository;
 import com.ongames.services.AluguelService;
 import com.ongames.services.FuncionarioService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -74,6 +77,29 @@ public class FuncionarioViewController {
         }
     }
     
+    @PostMapping(path="/meusdados")
+    public String updateMeusDados (@ModelAttribute Funcionario func, BindingResult result, Model model,
+            @AuthenticationPrincipal User meuUser, @RequestParam("senhaAtual") String senhaAtual, 
+            @RequestParam("novaSenha") String novaSenha,@RequestParam("confirmaNovaSenha") String confirmaNovaSenha){                
+        Funcionario funcDB = service.findByEmail(meuUser.getUsername());
+        if (!func.getId().equals(funcDB.getId())){
+            throw new NotAllowedException("Atualização de funcionário não autorizada");
+        }               
+        if (result.hasErrors()){
+            model.addAttribute("msgErros", result.getAllErrors());
+            return "formMeusDados";
+        }
+        func.setPermissoes(funcDB.getPermissoes());        
+        try{            
+            service.update(func, senhaAtual, novaSenha, confirmaNovaSenha);
+            model.addAttribute("msgSucesso", "Funcionario atualizado com sucesso");
+            return "formMeusDados";            
+        }catch (Exception e){
+            model.addAttribute("msgErros", new ObjectError("funcionarios", e.getMessage()));
+            return "formMeusDados";    
+        }
+    }
+    
     @PostMapping(path="/funcionario")
     public String save (@Valid @ModelAttribute Funcionario func, BindingResult result, Model model, @RequestParam("confirmaSenha") String confirmaSenha){
         model.addAttribute("permissoes", permissaoRepo.findAll());
@@ -108,5 +134,12 @@ public class FuncionarioViewController {
             return "funcionarios";
         }        
     }
-    
+        
+    @GetMapping(path = "/meusdados")
+    public String getMeusDados (@AuthenticationPrincipal User meuUser, Model model){
+        Funcionario func = service.findByEmail(meuUser.getUsername());       
+        model.addAttribute("funcionario", func);
+        return "formMeusDados";
+    }   
+
 }

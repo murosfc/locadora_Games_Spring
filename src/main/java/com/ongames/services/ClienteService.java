@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -50,9 +51,11 @@ public class ClienteService {
         checkIfExists(c);       
         c.setCpf(repo.getById(c.getId()).getCpf());
         Cliente clienteDB = repo.getById(c.getId());
-        atualizaSenha(clienteDB, senhaAtual, novaSenha, confirmaNovaSenha);
-        try{
+        if (senhaAtual.equals("") || novaSenha.equals("") || confirmaNovaSenha.equals("")){        
             c.setSenha(clienteDB.getSenha());
+        }
+        atualizaSenha(clienteDB, senhaAtual, novaSenha, confirmaNovaSenha);       
+        try{            
             return repo.save(c);         
         }
         catch (Exception e){
@@ -97,9 +100,8 @@ public class ClienteService {
         }
    }
    
-    private void atualizaSenha(Cliente c, String senhaAtual, String novaSenha, String confirmaNovaSenha){
-        if(!senhaAtual.isBlank() && !novaSenha.isBlank() && confirmaNovaSenha.isBlank()){
-            if (!senhaAtual.equals(c.getSenha())){
+    private void atualizaSenha(Cliente c, String senhaAtual, String novaSenha, String confirmaNovaSenha){     
+            if (!new BCryptPasswordEncoder().matches(senhaAtual, c.getSenha())){
                 throw new NotAllowedException ("A senha atual não confere");
             }
             if (senhaAtual.equals(novaSenha)){
@@ -115,8 +117,8 @@ public class ClienteService {
                  + "uma letra minúscula "
                  + "e um caractere especial");
             }            
-            c.setSenha(novaSenha);
-        }  
+            c.setSenha(new BCryptPasswordEncoder().encode(novaSenha));
+        
     }
     
 }

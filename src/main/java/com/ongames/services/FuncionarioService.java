@@ -25,6 +25,10 @@ public class FuncionarioService {
         return funcionarios.get();
     }
      
+    public Funcionario findByEmail(String email){
+        return repo.findByEmail(email);
+    }
+     
     public List<Funcionario> findByAluguelById(Long idAluguel){
         return repo.findByAluguelById(idAluguel);
     }
@@ -47,10 +51,9 @@ public class FuncionarioService {
     public Funcionario update(Funcionario f, String senhaAtual, String novaSenha, String confirmaNovaSenha){
         checkIfExists(f);        
         f.setCpf(repo.getById(f.getId()).getCpf());
-        Funcionario funcDB = repo.getById(f.getId());
-        atualizaSenha(funcDB, senhaAtual, novaSenha, confirmaNovaSenha);
-        try{
-            f.setSenha(funcDB.getSenha());
+        f.setSenha(repo.getById(f.getId()).getSenha());
+        atualizaSenha(f, senhaAtual, novaSenha, confirmaNovaSenha);
+        try{            
             return repo.save(f);         
         }
         catch (Exception e){
@@ -61,7 +64,7 @@ public class FuncionarioService {
                     throw (ConstraintViolationException) t;
                 }
             }
-            throw new RuntimeException("Erro ao atualizar funcionario");
+            throw new RuntimeException("Erro ao atualizar funcionario: "+e.getMessage());
         }
     } 
     
@@ -95,9 +98,8 @@ public class FuncionarioService {
         }
    }
    
-   private void atualizaSenha(Funcionario f, String senhaAtual, String novaSenha, String confirmaNovaSenha){       
-        if(!senhaAtual.isBlank() && !novaSenha.isBlank() && confirmaNovaSenha.isBlank()){
-            if (!senhaAtual.equals(f.getSenha())){
+   private void atualizaSenha(Funcionario f, String senhaAtual, String novaSenha, String confirmaNovaSenha){      
+            if (!new BCryptPasswordEncoder().matches(senhaAtual, f.getSenha())){
                 throw new NotAllowedException("A senha atual não confere");
             }
             if (senhaAtual.equals(novaSenha)){
@@ -113,8 +115,7 @@ public class FuncionarioService {
                  + "uma letra minúscula "
                  + "e um caractere especial");
             }
-            f.setSenha(new BCryptPasswordEncoder().encode(novaSenha));
-        } 
+            f.setSenha(new BCryptPasswordEncoder().encode(novaSenha));       
    }
     
 }

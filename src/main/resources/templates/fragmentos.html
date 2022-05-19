@@ -42,14 +42,13 @@
                           </li>
                             <li class="nav-item" th:classappend="${pagina == 'algueis' ? 'active' : ''}">
                             <a class="nav-link" th:href="@{~/alugueis}"}>Alugueis</a>
-                          </li> 
-                          </li>
+                          </li>                         
                             <li class="nav-item" th:classappend="${pagina == 'meusdados' ? 'active' : ''}" sec:authorize="isAuthenticated()">
-                            <a class="nav-link" th:href="@{~/funcionario/meusdados}"}>Meus dados</a>
+                            <a class="nav-link" th:href="@{~/funcionarios/meusdados}"}>Meus dados</a>
                           </li> 
-                        </ul>
-                        <a sec:authorize="isAuthenticated()" class="btn btn-outline-danger" th:href="@{~/logout}" role="button" style="float: right; margin-right: 0">Logout</a>
+                        </ul>                         
                     </div>
+                    <a sec:authorize="isAuthenticated()" class="btn btn-outline-danger" th:href="@{~/logout}" role="button" style="float:right; margin-right: 10px">Logout</a>
                 </nav>
             </div>
         </div>

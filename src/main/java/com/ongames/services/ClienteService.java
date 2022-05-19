@@ -54,7 +54,9 @@ public class ClienteService {
         if (senhaAtual.equals("") || novaSenha.equals("") || confirmaNovaSenha.equals("")){        
             c.setSenha(clienteDB.getSenha());
         }
-        atualizaSenha(clienteDB, senhaAtual, novaSenha, confirmaNovaSenha);       
+        else {
+            atualizaSenha(clienteDB, senhaAtual, novaSenha, confirmaNovaSenha);
+        }       
         try{            
             return repo.save(c);         
         }

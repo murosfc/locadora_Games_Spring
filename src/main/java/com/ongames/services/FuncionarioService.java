@@ -50,9 +50,13 @@ public class FuncionarioService {
     
     public Funcionario update(Funcionario f, String senhaAtual, String novaSenha, String confirmaNovaSenha){
         checkIfExists(f);        
-        f.setCpf(repo.getById(f.getId()).getCpf());
-        f.setSenha(repo.getById(f.getId()).getSenha());
-        atualizaSenha(f, senhaAtual, novaSenha, confirmaNovaSenha);
+        f.setCpf(repo.getById(f.getId()).getCpf());        
+        if (senhaAtual.equals("") || novaSenha.equals("") || confirmaNovaSenha.equals("")){  
+            f.setSenha(repo.getById(f.getId()).getSenha());
+        }
+        else {
+            atualizaSenha(f, senhaAtual, novaSenha, confirmaNovaSenha);
+        }       
         try{            
             return repo.save(f);         
         }

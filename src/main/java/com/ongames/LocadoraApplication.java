@@ -88,8 +88,10 @@ public class LocadoraApplication implements CommandLineRunner{
         Aluguel objAluguel = new Aluguel();
         objAluguel.setCliente(objCliente);
         objAluguel.setContas(List.of(objConta));
+        //objAluguel.setContas(List.of(objConta));
         objAluguel.setContatoSuporte(objFunc);
-        //pagamento                          
+        //pagamento        
+        objAluguel.getPagamento().iniciaAluguel();
         objAluguel.getPagamento().setDataPagamento(LocalDate.now()); 
         objAluguel.getPagamento().iniciaAluguel();
         objAluguel.getPagamento().setValidacao(gerarStringAleatoria());
@@ -98,7 +100,7 @@ public class LocadoraApplication implements CommandLineRunner{
         //finalização aluguel         
         objConta.setAluguel(objAluguel);
         contaRepo.save(objConta);  
-        System.out.println(clienteRepo.findAll());
+        
     }  
     
     public String gerarStringAleatoria(){

@@ -17,6 +17,10 @@ public class ClienteService {
     @Autowired
     private ClienteRepository repo;
     
+    public List<Cliente> findByName(String nome){
+        return repo.findByName(nome);
+    }
+    
     public List<Cliente> findAll(){
         List<Cliente> clientes = repo.findAll();
         if (clientes.isEmpty()){

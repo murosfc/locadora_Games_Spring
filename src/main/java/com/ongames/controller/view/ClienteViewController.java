@@ -50,7 +50,13 @@ public class ClienteViewController {
     public String findAll(Model model){
         model.addAttribute("clientes", service.findAll());        
         return "clientes";
-    }   
+    }  
+    
+    @PostMapping(path ="/busca")
+    public String buscar(@RequestParam("nome") String nome, Model model){        
+        model.addAttribute("clientes", service.findByName(nome));
+        return "clientes";
+    }
     
     @GetMapping(path = "/cliente")
     public String cadastro(Model model){
@@ -83,6 +89,7 @@ public class ClienteViewController {
             }
         }        
     }
+     
     
     @PostMapping(path = "/cliente/{id}")
     public String update(@ModelAttribute Cliente cliente, BindingResult result, @PathVariable("id") Long id, Model model){

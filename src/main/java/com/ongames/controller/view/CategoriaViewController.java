@@ -2,7 +2,6 @@ package com.ongames.controller.view;
 
 import com.ongames.model.Categoria;
 import com.ongames.services.CategoriaService;
-import com.ongames.services.JogoService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(path="categorias")
@@ -24,6 +24,12 @@ public class CategoriaViewController {
     @GetMapping
     public String findAll(Model model){          
         model.addAttribute("categorias", service.findAll());         
+        return "categorias";
+    }
+    
+    @PostMapping(path="/busca")
+    public String busca(@RequestParam("nome") String nome, Model model){
+        model.addAttribute("categorias", service.findByName(nome));
         return "categorias";
     }
     

@@ -14,4 +14,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long>{
         
     @Query("SELECT c FROM Cliente c JOIN c.alugueis a WHERE a.id = :idAluguel")
     public List<Cliente> findByAluguelById(Long idAluguel);
+    
+    @Query("SELECT c FROM Cliente c WHERE c.nome LIKE %:nome%")
+    public List<Cliente> findByName(String nome);
 }

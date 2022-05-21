@@ -28,6 +28,10 @@ public class FuncionarioService {
     public Funcionario findByEmail(String email){
         return repo.findByEmail(email);
     }
+    
+    public List<Funcionario> findByName(String name){
+        return repo.findByName(name);
+    }
      
     public List<Funcionario> findByAluguelById(Long idAluguel){
         return repo.findByAluguelById(idAluguel);

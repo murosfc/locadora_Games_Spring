@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragmentos :: import-css(title='Erro')}">
+        <title></title>        
+    </head>
+    <body>
+        <div th:replace="~{fragmentos :: barramenu(pagina='locadora')}" ></div>
+        <div class="container" align="center"style="margin: 30px">
+            <h3>Ops! Algo inesperado aconteceu. 😟</h3>
+            <div th:replace="~{fragmentos :: mensagens}"></div>
+            <a th:href="@{~/}" class='btn btn-primary' role='button' "margin-top: 30px">Voltar</a>
+        </div>        
+        <div th:replace="~{fragmentos :: import-js}"></div>
+    </body>
+</html>
+

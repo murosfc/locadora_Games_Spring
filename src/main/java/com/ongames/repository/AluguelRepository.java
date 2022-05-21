@@ -19,6 +19,7 @@ public interface AluguelRepository extends JpaRepository<Aluguel, Long>{
     @Query(value = "SELECT * FROM aluguel a JOIN aluguel_contas ac ON a.id = ac.aluguel_id WHERE ac.contas_id = :idConta", nativeQuery = true)
     public List<Aluguel> findByConta(Long idConta);
     
-    @Query("SELECT a FROM Aluguel a WHERE a.dataFimAluguel >= :hoje")
-    public List<Aluguel> findOngoing(LocalDate hoje);   
+    @Query("SELECT a FROM Aluguel a WHERE a.dataFimAluguel >= :hoje AND a.dataInicioAluguel <= :hoje")
+    public List<Aluguel> findOngoing(LocalDate hoje);       
+   
 }

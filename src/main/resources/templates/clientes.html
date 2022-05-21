@@ -7,12 +7,13 @@
         <div th:replace="~{fragmentos :: barramenu(pagina='clientes')}"></div>       
         
         <div class="container" style="margin-top: 10px">
+            <div th:replace="~{fragmentos :: busca(tipo='nome', path='~/clientes/busca', origem='~/clientes')}"/>
             <div class="card-header">
                 <h4>
                     Clientes cadastrados
                     <a class="btn btn-primary" th:href="@{~/clientes/cliente}" role="button" style="float:right">+</a>
                 </h4>
-            </div>  
+            </div> 
             
             <div th:replace="~{fragmentos :: mensagens}"></div>
            

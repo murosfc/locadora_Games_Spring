@@ -24,6 +24,10 @@ public class CategoriaService {
         }        
     }
     
+    public List<Categoria> findByName (String nome){
+        return repo.findByName(nome);
+    }
+    
      public Categoria update(Categoria cat){
         Categoria cDB = repo.getById(cat.getId());
         if (cDB == null){

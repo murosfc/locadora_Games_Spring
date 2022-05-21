@@ -23,15 +23,17 @@ public class LocadoraWebSecurity extends WebSecurityConfigurerAdapter{
         http.csrf().ignoringAntMatchers("/apirest/**")
                 .and()
                 .authorizeRequests()                
-                .antMatchers("/apirest/**").hasRole("ADMIN")
-                .antMatchers("/funcionarios/**").hasRole("ADMIN")
-                .antMatchers("/funcionarios/meusDados/**").hasAnyRole("ADMIN", "FUNC")
-                .antMatchers("/pagamentos/**").hasRole("ADMIN")                
-                .anyRequest().authenticated()               
+                    .antMatchers("/apirest/**").hasRole("ADMIN")
+                    .antMatchers("/funcionarios/**").hasRole("ADMIN")
+                    .antMatchers("/funcionarios/meusDados/**").hasAnyRole("ADMIN", "FUNC")
+                    .antMatchers("/pagamentos/**").hasRole("ADMIN")                
+                    .anyRequest().authenticated()               
                 .and()
                 .httpBasic()
                 .and()
-                .formLogin()                               
-                .usernameParameter("email");  
+                .formLogin()                    
+                    .usernameParameter("email")                                    
+                .and()
+                .logout().permitAll();                 
     }      
 }

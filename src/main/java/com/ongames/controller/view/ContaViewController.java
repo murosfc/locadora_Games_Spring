@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(path = "/contas")
@@ -35,6 +36,12 @@ public class ContaViewController {
     @GetMapping
     public String getAll(Model model){
         model.addAttribute("contas", service.findAll());        
+        return "contas";
+    }
+    
+    @PostMapping(path = "/busca")
+    public String busca(@RequestParam("nome") String titulo, Model model){
+        model.addAttribute("contas", service.findByJogo(titulo));
         return "contas";
     }
     

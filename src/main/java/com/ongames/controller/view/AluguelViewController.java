@@ -33,20 +33,26 @@ public class AluguelViewController {
     private FuncionarioService funcionarioService;
        
     @GetMapping(path="/aluguel/{id}/cliente")
-    public String findByCliente(Model model, @PathVariable("id") Long idHotel){
-        model.addAttribute("clientes", clienteService.findByAluguelById(idHotel));
+    public String findByCliente(Model model, @PathVariable("id") Long idAluguel){
+        model.addAttribute("clientes", clienteService.findByAluguelById(idAluguel));
         return "clientes";
     }
     
     @GetMapping(path="/aluguel/{id}/funcionario")
-    public String findByFuncionario(Model model, @PathVariable("id") Long idHotel){
-        model.addAttribute("funcionarios", funcionarioService.findByAluguelById(idHotel));
+    public String findByFuncionario(Model model, @PathVariable("id") Long idAluguel){
+        model.addAttribute("funcionarios", funcionarioService.findByAluguelById(idAluguel));
         return "funcionarios";
     }
     
     @GetMapping
     public String findAll(Model model){
         model.addAttribute("alugueis", service.findAll());
+        return "alugueis";
+    }
+    
+    @PostMapping(path="/busca")
+    public String findByPeriod (Model model){
+        model.addAttribute("alugueis", service.findOngoing());
         return "alugueis";
     }
     
@@ -69,7 +75,7 @@ public class AluguelViewController {
     }
     
     @PostMapping(path="/aluguel")
-    public String save(@Valid @ModelAttribute Aluguel aluguel, BindingResult result, Model model){
+    public String save(@ModelAttribute Aluguel aluguel, BindingResult result, Model model){
         if (result.hasErrors()){
             this.cadastro(model);
             model.addAttribute("msgErros", result.getAllErrors());

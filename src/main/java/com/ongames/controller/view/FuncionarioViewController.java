@@ -44,6 +44,13 @@ public class FuncionarioViewController {
         return "funcionarios";    
     }
     
+    @PostMapping(path = "/busca")
+    public String busca(@RequestParam("nome") String nome, Model model){
+        model.addAttribute("funcionarios", service.findByName(nome));
+        return "funcionarios";
+    }
+    
+    
     @GetMapping(path="/funcionario")
     private String cadastrar(Model model){
         model.addAttribute("funcionario", new Funcionario());

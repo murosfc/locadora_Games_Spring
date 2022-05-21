@@ -6,6 +6,7 @@
     <body>
         <div th:replace="~{fragmentos :: barramenu(pagina='categorias')}"></div>
         <div class="container" style="margin-top: 10px">
+            <div th:replace="~{fragmentos :: busca(tipo='nome', path='~/categorias/busca', origem='~/categorias')}"/>
             <div class="card-header">
                 <h4 style="margin-bottom: 20px">
                     Categorias cadastradas

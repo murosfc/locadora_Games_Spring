@@ -22,7 +22,7 @@ public class ContaService {
             throw new NotFoundException("Conta não encontrada");
         }
         return contas.get();
-    }
+    }     
     
     public List<Conta> findAll(){
         List contas = repo.findAll();
@@ -33,11 +33,7 @@ public class ContaService {
     }
     
     public List<Conta> findByJogo (String titulo){
-        List<Conta> contas = repo.findByTituloJogo(titulo);
-        if (contas.isEmpty()){
-            throw new NotFoundException("Conta não encontrada para o jogo informado");
-        }
-        return contas;
+       return repo.findByTituloJogo(titulo);
     }
     
     public Conta save(Conta c){

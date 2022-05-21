@@ -5,7 +5,9 @@
     </head>
     <body>
         <div th:replace="~{fragmentos :: barramenu(pagina='jogos')}"></div>
+        
         <div class="container" style="margin-top: 10px">
+            <div th:replace="~{fragmentos :: busca(tipo='titulo', path='~/jogos/busca', origem='~/jogos')}"/>
             <div class="card-header">
                 <h4>
                     Jogos cadastrados

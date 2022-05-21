@@ -23,7 +23,7 @@ public class AluguelService {
         }
         return alu.get();
     }
-    
+     
     public List<Aluguel> findByCliente(Long idCliente){        
         List<Aluguel> result = repo.findByCliente(idCliente);
         if (result.isEmpty()){
@@ -58,12 +58,8 @@ public class AluguelService {
     
     public List<Aluguel> findOngoing ()
     {
-        LocalDate hoje = LocalDate.now();
-        List<Aluguel> result = repo.findOngoing(hoje);
-        if (result.isEmpty()){
-            throw new NotFoundException("Não encontrado aluguel em andamento");
-        }
-        return result;
+        LocalDate hoje = LocalDate.now();        
+        return repo.findOngoing(hoje);
     }
     
     public Aluguel save (Aluguel obj){

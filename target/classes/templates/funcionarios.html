@@ -7,6 +7,7 @@
         <div th:replace="~{fragmentos :: barramenu(pagina='funcionarios')}"></div>       
         
         <div class="container" style="margin-top: 10px">
+            <div th:replace="~{fragmentos :: busca(tipo='nome', path='~/funcionarios/busca', origem='~/funcionarios')}"/>
             <div class="card-header">
                 <h4>
                     Funcionários cadastrados

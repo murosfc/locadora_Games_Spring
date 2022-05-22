@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -31,26 +32,17 @@ public class Aluguel implements Serializable{
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataInicioAluguel, dataFimAluguel;
     
-    @ManyToOne @JoinColumn(name = "id_cliente", referencedColumnName = "id")
+    @ManyToOne @JoinColumn(name = "id_cliente", referencedColumnName = "id") @NotNull(message = "Um cliente precisa ser associado ao aluguel")
     private Cliente cliente;
-    @OneToMany @JsonIgnore   
+    @OneToMany @JsonIgnore @NotNull(message = "A menos uma conta precisa ser associada ao aluguel")  
     private List<Conta> contas;
-    @ManyToOne @JoinColumn(name = "id_funcionario", referencedColumnName = "id")    
+    @ManyToOne @JoinColumn(name = "id_funcionario", referencedColumnName = "id") @NotNull(message = "A menos um funcionário precisa ser associado ao aluguel")     
     private Funcionario contatoSuporte;
-    @OneToOne(cascade = CascadeType.ALL) @JoinColumn(name = "id_pagamento", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL) @JoinColumn(name = "id_pagamento", referencedColumnName = "id") @NotNull(message = "Um pagamento precisa ser associado ao aluguel")
     @JsonManagedReference
-    private Pagamento pagamento;
+    private Pagamento pagamento;   
 
-    public Aluguel(LocalDate dataInicioAluguel, LocalDate dataFimAluguel) {
-        this.dataInicioAluguel = dataInicioAluguel;
-        this.dataFimAluguel = dataFimAluguel;        
-        this.pagamento = new Pagamento(this);
-        pagamento.setValorTotal(0f);
-    }
-
-    public Aluguel() {
-        this.pagamento = new Pagamento(this);
-        pagamento.setValorTotal(0f);
+    public Aluguel() {        
     }
 
     public Cliente getCliente() {
@@ -60,26 +52,26 @@ public class Aluguel implements Serializable{
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+    
+    public void atualizaTotal(){
+        Float total = 0f;
+        for (int i=0;i<this.contas.size();i++){
+            total += this.contas.get(i).getJogo().getValor();
+        }
+        this.pagamento.setValorTotal(total);
+    }
 
     public List<Conta> getContas() {
-        return contas;
+        return this.contas;
     }
 
     public void setContas(List<Conta> contas) {
-        this.contas = contas;  
-        float total = pagamento.getValorTotal();
-        Conta tempConta = new Conta();
-        for (Conta conta : contas) {            
-            total = total + conta.getJogo().getValor();
-        }
-        pagamento.setValorTotal(total);
-    }
+        this.contas = contas;     
+    }    
     
-    @JsonIgnore
     public float getValor(){
         return this.pagamento.getValorTotal();
-    }
-    
+    }    
 
     public Funcionario getContatoSuporte() {
         return contatoSuporte;

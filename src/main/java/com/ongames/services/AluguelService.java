@@ -64,22 +64,29 @@ public class AluguelService {
     
     public Aluguel save (Aluguel obj){
         this.validaDatasAluguel(obj);
+        if (obj.getValor() == 0){
+            obj.atualizaTotal();
+        }        
         try{
            return repo.save(obj);
         }
         catch (Exception e){
-            throw new RuntimeException("Falha ao cadastrar o aluguel");
+            throw new RuntimeException("Falha ao cadastrar o aluguel: " + e.getMessage());
         }        
     }
     
-    public Aluguel update (Aluguel obj){
-        obj.getPagamento().setId(repo.getById(obj.getId()).getPagamento().getId());
+    public Aluguel update (Aluguel obj){        
+        Float totalDigitado = obj.getValor();
+        obj.atualizaTotal();
+        if (totalDigitado > 0  && obj.getValor() != totalDigitado){
+            obj.getPagamento().setValorTotal(totalDigitado);
+        }        
         this.validaDatasAluguel(obj);
         try{
            return repo.save(obj);
         }
         catch (Exception e){            
-            throw new RuntimeException("Falha ao atualizar o aluguel");
+            throw new RuntimeException("Falha ao atualizar o aluguel: "+ e.getMessage());
         }        
     }  
     

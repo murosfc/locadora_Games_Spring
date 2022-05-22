@@ -6,6 +6,7 @@ import com.ongames.model.Cliente;
 import com.ongames.model.Conta;
 import com.ongames.model.Funcionario;
 import com.ongames.model.Jogo;
+import com.ongames.model.Pagamento;
 import com.ongames.model.Permissao;
 import com.ongames.model.PlataformaEnum;
 import com.ongames.repository.CategoriaRepository;
@@ -58,8 +59,10 @@ public class LocadoraApplication implements CommandLineRunner{
         permRepo.saveAll(List.of(pAdm, pFunc, pCliente));        
         //cliente
         Cliente objCliente = new Cliente("28015150", "34", "Ap 302", "318.091.980-97", "Julio Oliveira Campos", "jocampos@gmail.com", new BCryptPasswordEncoder().encode("MzH45b561!")); 
+        Cliente objCliente2 = new Cliente("27943141", "592", "", "350.011.410-52", "Luiza Nascimento Pena", "lupena@hotmail.com", new BCryptPasswordEncoder().encode("LP@3n4Na")); 
         objCliente.setPermissoes(List.of(pCliente));
-        clienteRepo.save(objCliente);
+        objCliente2.setPermissoes(List.of(pCliente));
+        clienteRepo.saveAll(List.of(objCliente,objCliente2));
         //categoria
         Categoria cat1 = new Categoria("RPG");
         Categoria cat2 = new Categoria("Puzzle");
@@ -74,33 +77,38 @@ public class LocadoraApplication implements CommandLineRunner{
         objJogo2.setCategorias(List.of(cat3));
         objJogo.setPlataforma(PlataformaEnum.NS.name());
         objJogo2.setPlataforma(PlataformaEnum.NS.name());
-        jogoRepo.save(objJogo);
-        jogoRepo.save(objJogo2);
-        //conta
+        jogoRepo.saveAll(List.of(objJogo, objJogo2));
+        //contas
         Conta objConta = new Conta("conta01@ongames.com", "Hi34Ub");
-        objConta.setJogo(objJogo); 
-        contaRepo.save(objConta);
-        //funcionario public Funcionario(String nick, String whatsapp, String cpf, String nome, String email, String senha)
+        objConta.setJogo(objJogo);
+        Conta objConta2 = new Conta("conta02@ongames.com", "H2fs44!");
+        objConta2.setJogo(objJogo2);
+        contaRepo.saveAll(List.of(objConta,objConta2));
+        //funcionarios
         Funcionario objFunc = new Funcionario("SuperHiggs","(22)9977-0001","942.275.060-18", "Hugo Villela Silva", "superhiggs@ongames.com", new BCryptPasswordEncoder().encode("Senha123!"));
+        Funcionario objFunc2 = new Funcionario("lariSniper","(22)9977-0002","902.382.480-62", "Larissa Hespanho", "larisniper@ongames.com", new BCryptPasswordEncoder().encode("LSn1p3r@"));
         objFunc.setPermissoes(List.of(pAdm, pFunc));
-        funcRepo.save(objFunc);
+        objFunc2.setPermissoes(List.of(pFunc));
+        funcRepo.saveAll(List.of(objFunc,objFunc2));
         //aluguel
         Aluguel objAluguel = new Aluguel();
         objAluguel.setCliente(objCliente);
         objAluguel.setContas(List.of(objConta));
-        //objAluguel.setContas(List.of(objConta));
+        objConta.setAluguel(objAluguel);
         objAluguel.setContatoSuporte(objFunc);
-        //pagamento        
-        objAluguel.getPagamento().iniciaAluguel();
-        objAluguel.getPagamento().setDataPagamento(LocalDate.now()); 
-        objAluguel.getPagamento().iniciaAluguel();
-        objAluguel.getPagamento().setValidacao(gerarStringAleatoria());
-        aluguelRepo.save(objAluguel);
-        pagRepo.save(objAluguel.getPagamento());
+        //pagamento 
+        Pagamento objPag = new Pagamento (); 
+        objPag.setAluguel(objAluguel);
+        objPag.setDataPagamento(LocalDate.now()); 
+        objPag.setValidacao(gerarStringAleatoria());
+        objPag.iniciaAluguel();
+        objAluguel.setPagamento(objPag);
+        objAluguel.atualizaTotal();
+        aluguelRepo.save(objAluguel);        
+        pagRepo.save(objPag);
         //finalização aluguel         
         objConta.setAluguel(objAluguel);
-        contaRepo.save(objConta);  
-        
+        contaRepo.save(objConta);        
     }  
     
     public String gerarStringAleatoria(){

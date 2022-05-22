@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,12 +28,11 @@ public class Pagamento implements Serializable{
     private LocalDate dataPagamento;
     @Column(nullable=false, scale=2)
     @NotNull (message ="Valor do pagamento é obrigatório")
-    private float valorTotal;
+    private float valorTotal = 0f;
     @Column( length = 32)    
     private String validacao;     
      
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pagamento")    
-    @NotNull (message ="Um pagamento precisa ser associado a um aluguel")
     @JsonBackReference  
     private Aluguel aluguel;
    
@@ -41,10 +41,6 @@ public class Pagamento implements Serializable{
     }
 
     public Pagamento() {
-    }
-
-    public Pagamento(Aluguel aluguel) {
-        this.aluguel = aluguel;
     }
 
     public void setId(Long id) {
@@ -67,7 +63,7 @@ public class Pagamento implements Serializable{
            return true;
         } 
         return false;
-    }
+    } 
 
     public float getValorTotal() {
         return valorTotal;
@@ -116,7 +112,7 @@ public class Pagamento implements Serializable{
             return false;
         }
         return true;
-    }
+    }   
     
     
 }

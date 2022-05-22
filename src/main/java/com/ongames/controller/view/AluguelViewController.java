@@ -3,10 +3,12 @@ package com.ongames.controller.view;
 import com.ongames.exception.NotAllowedException;
 import com.ongames.model.Aluguel;
 import com.ongames.model.Conta;
+import com.ongames.model.Pagamento;
 import com.ongames.services.AluguelService;
 import com.ongames.services.ClienteService;
 import com.ongames.services.ContaService;
 import com.ongames.services.FuncionarioService;
+import com.ongames.services.PagamentoService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +33,8 @@ public class AluguelViewController {
     private ContaService contaService;
     @Autowired
     private FuncionarioService funcionarioService;
+    @Autowired
+    private PagamentoService pagamentoService;
        
     @GetMapping(path="/aluguel/{id}/cliente")
     public String findByCliente(Model model, @PathVariable("id") Long idAluguel){
@@ -58,7 +62,10 @@ public class AluguelViewController {
     
     @GetMapping(path ="aluguel")
     public String cadastro(Model model){
-        model.addAttribute("aluguel", new Aluguel());
+        Aluguel aluguel = new Aluguel();
+        Pagamento pagamento = new Pagamento();
+        aluguel.setPagamento(pagamento);       
+        model.addAttribute("aluguel", aluguel);
         model.addAttribute("clientes", clienteService.findAll());
         model.addAttribute("contas", contaService.findAll());
         model.addAttribute("funcionarios", funcionarioService.findAll());        
@@ -75,15 +82,19 @@ public class AluguelViewController {
     }
     
     @PostMapping(path="/aluguel")
-    public String save(@ModelAttribute Aluguel aluguel, BindingResult result, Model model){
+    public String save(@ModelAttribute Aluguel aluguel, BindingResult result, Model model){ 
+        this.removeContasNulas(aluguel);
+        aluguel.getPagamento().setAluguel(aluguel);
+        aluguel.getContas().forEach((Conta c) -> {
+            c.setAluguel(aluguel);
+        });
         if (result.hasErrors()){
             this.cadastro(model);
             model.addAttribute("msgErros", result.getAllErrors());
             return "formAluguel";
         }
-        try{
-            aluguel.setId(null);
-            service.save(aluguel);
+        try{           
+            service.save(aluguel);          
             this.cadastro(model);
             model.addAttribute("msgSucesso", "Aluguel registrado com sucesso!");
             return "formAluguel";
@@ -95,16 +106,18 @@ public class AluguelViewController {
     }
     
     @PostMapping(path="/aluguel/{id}")
-    public String update(@Valid @ModelAttribute Aluguel aluguel, BindingResult result, @PathVariable("id") Long id, Model model){
-        //this.removeContasNulas(aluguel);
+    public String update(@ModelAttribute Aluguel aluguel, BindingResult result, @PathVariable("id") Long id, Model model){         
+        this.removeContasNulas(aluguel);
+        aluguel.getContas().forEach((Conta c) -> {
+            c.setAluguel(aluguel);
+        });
         if (result.hasErrors()){
             this.atualizar(model, id);
             model.addAttribute("msgErros", result.getAllErrors());
             return "formAluguel";
         }
-        try{
-            aluguel.setId(aluguel.getId());            
-            service.update(aluguel);
+        try{    
+            service.update(aluguel);            
             this.atualizar(model, id);
             model.addAttribute("msgSucesso", "Aluguel atualizado com sucesso!");
             return "formAluguel";
@@ -122,6 +135,5 @@ public class AluguelViewController {
         if(aluguel.getContas().isEmpty()){
             throw new NotAllowedException("Ao menos uma conta precisa ser selecionada para cadastrar um aluguel");
         }
-    }
-    
+    }   
 }

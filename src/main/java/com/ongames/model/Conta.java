@@ -30,7 +30,7 @@ public class Conta implements Serializable{
     @Size(min=6, max=20, message="A senha deve conter no mínimo 6 e no máximo 20 caracteres") 
     private String senha;
    
-    @ManyToOne() @JoinColumn(name = "id_jogo")
+    @ManyToOne() @JoinColumn(name = "id_jogo") @NotNull (message = "Um jogo precisa ser associado a esta conta")
     private Jogo jogo;
     
     @OneToOne @JoinColumn(name = "id_aluguel")

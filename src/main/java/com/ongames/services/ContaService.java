@@ -2,6 +2,7 @@ package com.ongames.services;
 
 import com.ongames.exception.NotAllowedException;
 import com.ongames.exception.NotFoundException;
+import com.ongames.model.Aluguel;
 import com.ongames.model.Conta;
 import com.ongames.repository.ContaRepository;
 import java.time.LocalDate;
@@ -48,6 +49,7 @@ public class ContaService {
     
     public Conta update (Conta c){           
         Conta contaDB = repo.getById(c.getId());
+        updatePassword(c, contaDB);
         if(contaDB.getAluguel() != null){
            if (contaDB.getAluguel().getDataFimAluguel().isAfter(LocalDate.now()) ||
                 contaDB.getAluguel().getDataFimAluguel().isEqual(LocalDate.now())){
@@ -92,5 +94,14 @@ public class ContaService {
         }
     }
        
+    private void updatePassword (Conta c, Conta contaDB){
+        if (!c.getSenha().equals(contaDB.getSenha())){
+            Aluguel aluguel = repo.isInOngoingAluguel(c.getId());
+            if (aluguel != null ){
+                throw new NotAllowedException("Não é permitida a troca de senha de conta com aluguel em andamento");
+            }
+            c.setAluguel(null);
+        }
+    }
     
 }

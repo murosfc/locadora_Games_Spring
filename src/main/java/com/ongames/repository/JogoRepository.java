@@ -25,6 +25,5 @@ public interface JogoRepository extends JpaRepository<Jogo, Long>{
     public int countJogoInAluguel (Long idJogo);
     
     @Query(value = "SELECT * FROM Jogo j JOIN Conta c ON j.id=c.id_jogo WHERE c.id_jogo = :idJogo", nativeQuery = true)
-    public Jogo findJogoInConta(Long idJogo);   
-       
+    public Jogo findJogoInConta(Long idJogo);       
 }

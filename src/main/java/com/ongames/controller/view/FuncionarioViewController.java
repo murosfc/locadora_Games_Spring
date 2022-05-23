@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping(path="/funcionarios")
+@RequestMapping
 public class FuncionarioViewController {
     
     @Autowired
@@ -31,41 +31,41 @@ public class FuncionarioViewController {
     @Autowired
     private PermissaoRepository permissaoRepo;
     
-    @GetMapping(path ="/funcionario/{id}/alugueis")
+    @GetMapping(path="/funcionarios/funcionario/{id}/alugueis")
     public String findAlugueisByFuncionario(@PathVariable("id") Long id, Model model){
         model.addAttribute("alugueis", aluguelService.findByFuncionario(id));
         return "alugueis";
     }
     
-    @GetMapping
+    @GetMapping(path="/funcionarios")
     private String findAll(Model model){
         model.addAttribute("funcionarios", service.findAll());
         model.addAttribute("permissoes", permissaoRepo.findAll());
         return "funcionarios";    
     }
     
-    @PostMapping(path = "/busca")
+    @PostMapping(path="/funcionarios/busca")
     public String busca(@RequestParam("nome") String nome, Model model){
         model.addAttribute("funcionarios", service.findByName(nome));
         return "funcionarios";
     }
     
     
-    @GetMapping(path="/funcionario")
+    @GetMapping(path="/funcionarios/funcionario")
     private String cadastrar(Model model){
         model.addAttribute("funcionario", new Funcionario());
         model.addAttribute("permissoes", permissaoRepo.findAll());
         return "formFuncionario";    
     }
     
-    @GetMapping(path="/funcionario/{id}")
+    @GetMapping(path="/funcionarios/funcionario/{id}")
     private String findById(@PathVariable("id") Long id, Model model){
         model.addAttribute("funcionario", service.findById(id));
         model.addAttribute("permissoes", permissaoRepo.findAll());
         return "formFuncionario";    
     }
     
-    @PostMapping(path="/funcionario/{id}")
+    @PostMapping(path="/funcionarios/funcionario/{id}")
     public String update (@ModelAttribute Funcionario func,@PathVariable("id") Long id, BindingResult result, Model model){
         func.setSenha(service.findById(id).getSenha());
         model.addAttribute("permissoes", permissaoRepo.findAll());
@@ -83,6 +83,13 @@ public class FuncionarioViewController {
             return "formFuncionario";    
         }
     }
+    
+    @GetMapping(path = "/meusdados")
+    public String getMeusDados (@AuthenticationPrincipal User meuUser, Model model){
+        Funcionario func = service.findByEmail(meuUser.getUsername());       
+        model.addAttribute("funcionario", func);
+        return "formMeusDados";
+    }   
     
     @PostMapping(path="/meusdados")
     public String updateMeusDados (@ModelAttribute Funcionario func, BindingResult result, Model model,
@@ -107,7 +114,7 @@ public class FuncionarioViewController {
         }
     }
     
-    @PostMapping(path="/funcionario")
+    @PostMapping(path="/funcionarios/funcionario")
     public String save (@Valid @ModelAttribute Funcionario func, BindingResult result, Model model, @RequestParam("confirmaSenha") String confirmaSenha){
         model.addAttribute("permissoes", permissaoRepo.findAll());
         if (result.hasErrors()){
@@ -129,7 +136,7 @@ public class FuncionarioViewController {
         }
     }
     
-    @GetMapping(path = "/{id}/deletar")
+    @GetMapping(path="/funcionarios/{id}/deletar")
     public String deletar(@PathVariable("id") Long id, Model model){       
         try{
             service.delete(service.findById(id));
@@ -141,12 +148,4 @@ public class FuncionarioViewController {
             return "funcionarios";
         }        
     }
-        
-    @GetMapping(path = "/meusdados")
-    public String getMeusDados (@AuthenticationPrincipal User meuUser, Model model){
-        Funcionario func = service.findByEmail(meuUser.getUsername());       
-        model.addAttribute("funcionario", func);
-        return "formMeusDados";
-    }   
-
 }

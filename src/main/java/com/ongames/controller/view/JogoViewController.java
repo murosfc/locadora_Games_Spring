@@ -48,7 +48,7 @@ public class JogoViewController {
     }
     
     @GetMapping(path="/jogo/{id}")
-    public String cadastrar(Model model, @PathVariable("id") Long id){
+    public String editar(Model model, @PathVariable("id") Long id){
        model.addAttribute("jogo", service.findById(id));
        model.addAttribute("plataformas", PlataformaEnum.values());
        model.addAttribute("categorias", categoriaService.findAll());
@@ -57,7 +57,7 @@ public class JogoViewController {
     
     @PostMapping(path="/jogo/{id}")
     public String atualizar(@Valid @ModelAttribute Jogo jogo,@PathVariable("id") Long id, BindingResult result, Model model){
-        this.cadastrar(model, id);
+        this.editar(model, id);        
         if (result.hasErrors()){
             model.addAttribute("msgErros", result.getAllErrors());
             return "formJogo";  
@@ -102,8 +102,7 @@ public class JogoViewController {
             model.addAttribute("msgErros", new ObjectError("jogos", e.getMessage()));
             this.findAll(model);      
             return "jogos";  
-        }
-          
+        }          
     }
     
     private void removeCategoriasNulas(Jogo j){
@@ -114,6 +113,7 @@ public class JogoViewController {
             throw new NotAllowedException("Ao menos uma categoria precisa ser selecionada para salvar um jogo");
         }
     }
+  
     
 }
  

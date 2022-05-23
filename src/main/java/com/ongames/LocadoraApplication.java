@@ -67,23 +67,27 @@ public class LocadoraApplication implements CommandLineRunner{
         Categoria cat1 = new Categoria("RPG");
         Categoria cat2 = new Categoria("Puzzle");
         Categoria cat3 = new Categoria("Ação");
-        catRepo.save(cat1);
-        catRepo.save(cat2);
-        catRepo.save(cat3);
+        Categoria cat4 = new Categoria("Esportes");
+        catRepo.saveAll(List.of(cat1, cat2, cat3, cat4));
         //jogo
         Jogo objJogo = new Jogo("70010000000025", "The Legend of Zelda™: Breath of the Wild", "https://assets.nintendo.com/image/upload/c_pad,f_auto,h_613,q_auto,w_1089/ncom/pt_BR/games/switch/t/the-legend-of-zelda-breath-of-the-wild-switch/hero?v=2022021722", 15.50f);
         Jogo objJogo2 = new Jogo("70010000046395", "Splatoon™ 3", "https://assets.nintendo.com/image/upload/c_pad,f_auto,h_613,q_auto,w_1089/ncom/en_US/games/switch/s/splatoon-3-switch/hero?v=2022042820", 20.00f);
+        Jogo objJogo3 = new Jogo("363371-1", "FIFA 2022", "https://image.api.playstation.com/vulcan/img/rnd/202111/0822/syCdM5vjxZqsHgHDdT3XZUcF.jpg", 15.00f);
         objJogo.setCategorias(List.of(cat1, cat2, cat3));
         objJogo2.setCategorias(List.of(cat3));
+        objJogo3.setCategorias(List.of(cat4));
         objJogo.setPlataforma(PlataformaEnum.NS.name());
         objJogo2.setPlataforma(PlataformaEnum.NS.name());
-        jogoRepo.saveAll(List.of(objJogo, objJogo2));
+        objJogo3.setPlataforma(PlataformaEnum.PS5.name());
+        jogoRepo.saveAll(List.of(objJogo, objJogo2, objJogo3));
         //contas
         Conta objConta = new Conta("conta01@ongames.com", "Hi34Ub");
         objConta.setJogo(objJogo);
         Conta objConta2 = new Conta("conta02@ongames.com", "H2fs44!");
         objConta2.setJogo(objJogo2);
-        contaRepo.saveAll(List.of(objConta,objConta2));
+        Conta objConta3 = new Conta("conta03@ongames.com", "C04Og221!");
+        objConta3.setJogo(objJogo3);
+        contaRepo.saveAll(List.of(objConta,objConta2, objConta3));
         //funcionarios
         Funcionario objFunc = new Funcionario("SuperHiggs","(22)9977-0001","942.275.060-18", "Hugo Villela Silva", "superhiggs@ongames.com", new BCryptPasswordEncoder().encode("Senha123!"));
         Funcionario objFunc2 = new Funcionario("lariSniper","(22)9977-0002","902.382.480-62", "Larissa Hespanho", "larisniper@ongames.com", new BCryptPasswordEncoder().encode("LSn1p3r@"));
@@ -96,6 +100,10 @@ public class LocadoraApplication implements CommandLineRunner{
         objAluguel.setContas(List.of(objConta));
         objConta.setAluguel(objAluguel);
         objAluguel.setContatoSuporte(objFunc);
+        Aluguel objAluguel2 = new Aluguel();
+        objAluguel2.setCliente(objCliente2);
+        objAluguel2.setContas(List.of(objConta3));        
+        objAluguel2.setContatoSuporte(objFunc2);        
         //pagamento 
         Pagamento objPag = new Pagamento (); 
         objPag.setAluguel(objAluguel);
@@ -104,8 +112,15 @@ public class LocadoraApplication implements CommandLineRunner{
         objPag.iniciaAluguel();
         objAluguel.setPagamento(objPag);
         objAluguel.atualizaTotal();
-        aluguelRepo.save(objAluguel);        
-        pagRepo.save(objPag);
+        Pagamento objPag2= new Pagamento (); 
+        objPag2.setAluguel(objAluguel2);
+        objPag2.setDataPagamento(LocalDate.parse("2022-05-09")); 
+        objPag2.setValidacao(gerarStringAleatoria());
+        objPag2.iniciaAluguel();
+        objAluguel2.setPagamento(objPag2);
+        objAluguel2.atualizaTotal();
+        aluguelRepo.saveAll(List.of(objAluguel, objAluguel2));        
+        //pagRepo.save(objPag);
         //finalização aluguel         
         objConta.setAluguel(objAluguel);
         contaRepo.save(objConta);        

@@ -57,9 +57,8 @@ public class AluguelService {
     }
     
     public List<Aluguel> findOngoing ()
-    {
-        LocalDate hoje = LocalDate.now();        
-        return repo.findOngoing(hoje);
+    {       
+        return repo.findOngoing();
     }
     
     public Aluguel save (Aluguel obj){

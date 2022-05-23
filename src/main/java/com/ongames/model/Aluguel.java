@@ -34,7 +34,7 @@ public class Aluguel implements Serializable{
     
     @ManyToOne @JoinColumn(name = "id_cliente", referencedColumnName = "id") @NotNull(message = "Um cliente precisa ser associado ao aluguel")
     private Cliente cliente;
-    @OneToMany @JsonIgnore @NotNull(message = "A menos uma conta precisa ser associada ao aluguel")  
+    @OneToMany @JsonIgnore @NotNull(message = "A menos uma conta precisa ser associada ao aluguel")    
     private List<Conta> contas;
     @ManyToOne @JoinColumn(name = "id_funcionario", referencedColumnName = "id") @NotNull(message = "A menos um funcionário precisa ser associado ao aluguel")     
     private Funcionario contatoSuporte;

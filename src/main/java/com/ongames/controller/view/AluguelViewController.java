@@ -50,8 +50,7 @@ public class AluguelViewController {
     
     @GetMapping
     public String findAll(Model model){
-        model.addAttribute("alugueis", service.findAll());
-        model.addAttribute("hoje", LocalDate.now());
+        model.addAttribute("alugueis", service.findAll());       
         return "alugueis";
     }
     
@@ -84,7 +83,10 @@ public class AluguelViewController {
     
     @PostMapping(path="/aluguel")
     public String save(@ModelAttribute Aluguel aluguel, BindingResult result, Model model){ 
-        this.trataContas(aluguel);
+        this.removeContasNulas(aluguel);
+        aluguel.getContas().forEach((Conta c) -> {
+            c.setAluguel(aluguel);
+        });
         aluguel.getPagamento().setAluguel(aluguel);        
         if (result.hasErrors()){
             this.cadastro(model);
@@ -105,7 +107,10 @@ public class AluguelViewController {
     
     @PostMapping(path="/aluguel/{id}")
     public String update(@ModelAttribute Aluguel aluguel, BindingResult result, @PathVariable("id") Long id, Model model){         
-        this.trataContas(aluguel);
+        this.removeContasNulas(aluguel);
+        aluguel.getContas().forEach((Conta c) -> {
+            c.setAluguel(aluguel);
+        });
         if (result.hasErrors()){
             this.atualizar(model, id);
             model.addAttribute("msgErros", result.getAllErrors());
@@ -123,16 +128,14 @@ public class AluguelViewController {
         }
     } 
     
-    private void trataContas(Aluguel aluguel){
+    private void removeContasNulas(Aluguel aluguel){
         aluguel.getContas().removeIf( (Conta c) -> {
             return c.getId()== null;
         });
         if(aluguel.getContas().isEmpty()){
             throw new NotAllowedException("Ao menos uma conta precisa ser selecionada para cadastrar um aluguel");
         }
-        aluguel.getContas().forEach((Conta c) -> {
-            c.setAluguel(aluguel);
-        });
+       
     }
    
 }

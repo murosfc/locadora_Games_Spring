@@ -30,8 +30,7 @@ public class Jogo implements Serializable{
     @Column(nullable=false, length=50)
     @NotNull (message="O título precisa ser informado")
     @Size(min=1, max=50) 
-    private String titulo;
-    @Lob
+    private String titulo;    
     @Column(nullable=false, length=512)
     @NotNull (message="É obrigatório inserir o link da imagem do jogo")
     @UrlValidation

@@ -1,52 +1,52 @@
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\controller\apirest\FuncionarioController.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\exception\NotFoundException.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\controller\apirest\AluguelController.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\model\Funcionario.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\repository\ClienteRepository.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\security\LocadoraWebSecurity.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\annotation\PasswordValidator.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\services\AluguelService.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\repository\FuncionarioRepository.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\controller\view\JogoViewController.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\controller\view\LocadoraViewControllerAdvice.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\annotation\UrlValidator.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\controller\apirest\ContaController.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\controller\apirest\PagamentoController.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\exception\NotAllowedException.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\repository\PermissaoRepository.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\model\Conta.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\model\Pagamento.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\services\FuncionarioService.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\exception\PropertyError.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\model\PlataformaEnum.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\repository\JogoRepository.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\controller\apirest\CategoriaController.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\services\PagamentoService.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\controller\apirest\ClienteController.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\controller\view\CategoriaViewController.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\LocadoraApplication.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\security\FuncionarioDetailsService.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\services\JogoService.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\exception\Error.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\repository\ContaRepository.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\repository\AluguelRepository.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\services\CategoriaService.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\repository\CategoriaRepository.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\repository\PagamentoRepository.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\annotation\UrlValidation.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\controller\apirest\LocadoraRestControllerAdvice.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\model\Pessoa.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\model\Jogo.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\model\Permissao.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\model\Categoria.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\exception\ValidationError.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\model\Cliente.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\services\ClienteService.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\controller\view\AluguelViewController.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\annotation\Password.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\services\ContaService.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\controller\view\ClienteViewController.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\controller\view\FuncionarioViewController.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\model\Aluguel.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\controller\view\ContaViewController.java
-C:\Users\dedy_\OneDrive\Documentos\GitHub\locadora_Games_Spring\src\main\java\com\ongames\controller\apirest\JogoController.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\repository\PermissaoRepository.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\model\Funcionario.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\LocadoraApplication.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\repository\AluguelRepository.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\controller\apirest\LocadoraRestControllerAdvice.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\annotation\PasswordValidator.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\controller\view\ContaViewController.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\controller\view\AluguelViewController.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\model\Cliente.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\controller\apirest\ContaController.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\model\Pagamento.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\model\Pessoa.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\controller\view\LocadoraViewControllerAdvice.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\repository\CategoriaRepository.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\security\LocadoraWebSecurity.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\services\ClienteService.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\controller\view\CategoriaViewController.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\model\Permissao.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\model\Categoria.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\exception\NotFoundException.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\model\PlataformaEnum.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\controller\view\ClienteViewController.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\controller\view\FuncionarioViewController.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\repository\PagamentoRepository.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\controller\apirest\FuncionarioController.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\exception\ValidationError.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\services\ContaService.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\repository\FuncionarioRepository.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\annotation\Password.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\annotation\UrlValidation.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\controller\apirest\AluguelController.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\security\FuncionarioDetailsService.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\controller\apirest\PagamentoController.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\services\CategoriaService.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\controller\apirest\CategoriaController.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\annotation\UrlValidator.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\repository\ClienteRepository.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\services\JogoService.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\exception\Error.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\repository\ContaRepository.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\model\Aluguel.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\model\Conta.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\model\Jogo.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\repository\JogoRepository.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\controller\apirest\JogoController.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\exception\NotAllowedException.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\services\PagamentoService.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\controller\view\JogoViewController.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\controller\apirest\ClienteController.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\exception\PropertyError.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\services\AluguelService.java
+D:\Documentos\Escola\Sistemas de Informação\Quinto período\Programação para Web\Trabalho\locadora\src\main\java\com\ongames\services\FuncionarioService.java

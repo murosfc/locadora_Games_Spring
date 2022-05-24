@@ -50,7 +50,8 @@ public class AluguelViewController {
     
     @GetMapping
     public String findAll(Model model){
-        model.addAttribute("alugueis", service.findAll());       
+        model.addAttribute("alugueis", service.findAll());  
+        model.addAttribute("hoje", LocalDate.now());
         return "alugueis";
     }
     
@@ -113,7 +114,7 @@ public class AluguelViewController {
         });
         if (result.hasErrors()){
             this.atualizar(model, id);
-            model.addAttribute("msgErros", result.getAllErrors());
+            model.addAttribute("msgErros", result.getGlobalError());
             return "formAluguel";
         }
         try{    

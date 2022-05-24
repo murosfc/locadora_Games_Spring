@@ -43,7 +43,7 @@
                         <span th:text="${aluguel.pagamento.validacao} == null ? 'pendente' : 'pago em '+${aluguel.pagamento.dataPagamento}"/>
                         
                         <div class="card-body">                        
-                            <a th:href="@{'~/alugueis/aluguel/'+${aluguel.id}}" class="btn btn-warning" th:if="${aluguel.dataFimAluguel.before(#dates.createNow())}">Editar</a>
+                            <a th:href="@{'~/alugueis/aluguel/'+${aluguel.id}}" class="btn btn-warning" th:if="${aluguel.dataFimAluguel < dates.createNow()}">Editar</a>
                             <a th:href="@{'~/alugueis/aluguel/'+${aluguel.id}+'/cliente'}" class="btn btn-success">Cliente</a>
                             <a th:href="@{'~/alugueis/aluguel/'+${aluguel.id}+'/funcionario'}" class="btn btn-success">Funcionario</a> 
                         </div>

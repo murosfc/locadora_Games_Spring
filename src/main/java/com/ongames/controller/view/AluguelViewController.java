@@ -83,7 +83,7 @@ public class AluguelViewController {
     
     @PostMapping(path="/aluguel")
     public String save(@ModelAttribute Aluguel aluguel, BindingResult result, Model model){ 
-        this.removeContasNulas(aluguel);
+        this.trataContas(aluguel);
         aluguel.getPagamento().setAluguel(aluguel);
         aluguel.getContas().forEach((Conta c) -> {
             c.setAluguel(aluguel);
@@ -106,11 +106,8 @@ public class AluguelViewController {
     }
     
     @PostMapping(path="/aluguel/{id}")
-    public String update(@ModelAttribute Aluguel aluguel, BindingResult result, @PathVariable("id") Long id, Model model){         
-        this.removeContasNulas(aluguel);
-        aluguel.getContas().forEach((Conta c) -> {
-            c.setAluguel(aluguel);
-        });
+    public String update(@ModelAttribute Aluguel aluguel, BindingResult result, @PathVariable("id") Long id, Model model){       
+        this.trataContas(aluguel);
         if (result.hasErrors()){
             this.atualizar(model, id);
             model.addAttribute("msgErros", result.getAllErrors());
@@ -136,4 +133,21 @@ public class AluguelViewController {
             throw new NotAllowedException("Ao menos uma conta precisa ser selecionada para cadastrar um aluguel");
         }
     }   
+    
+    private void trataContas(Aluguel aluguel){
+        this.removeContasNulas(aluguel);
+        aluguel.getContas().forEach((Conta c) -> {
+            c.setAluguel(aluguel);
+        });
+        if (aluguel.getId() != null){
+            Aluguel aluguelFromDB = service.findById(aluguel.getId());                    
+            aluguelFromDB.getContas().stream().filter(c -> (!aluguel.getContas().contains(c))).map(c -> {
+                c.setAluguel(null);
+                return c;
+            }).forEachOrdered(c -> {
+                contaService.save(c);
+            });
+        }
+    }
+   
 }

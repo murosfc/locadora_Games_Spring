@@ -43,9 +43,9 @@
                         <span th:text="${aluguel.pagamento.validacao} == null ? 'pendente' : 'pago em '+${aluguel.pagamento.dataPagamento}"/>
                         
                         <div class="card-body">                        
-                            <a th:href="@{'~/alugueis/aluguel/'+${aluguel.id}}" class="btn btn-warning" th:disabled="${aluguel.dataFimAluguel > hoje ? 'disabled' : false}" th:title="${aluguel.dataFimAluguel > hoje ? 'Não é permitido editar um aluguel encerrado' : 'Editar aluguel'}">Editar</a>
-                            <a th:href="@{'~/alugueis/aluguel/'+${aluguel.id}+'/cliente'}" class="btn btn-success">Cliente</a>
-                            <a th:href="@{'~/alugueis/aluguel/'+${aluguel.id}+'/funcionario'}" class="btn btn-success">Funcionario</a> 
+                            <a th:href="@{'~/alugueis/aluguel/'+${aluguel.id}}" class="btn btn-warning" th:disabled="${aluguel.dataFimAluguel > hoje ? 'disabled' : false}" th:title="${aluguel.dataFimAluguel > hoje ? 'Não é permitido editar um aluguel encerrado' : 'Editar aluguel'}" role="button">Editar</a>
+                            <a th:href="@{'~/alugueis/aluguel/'+${aluguel.id}+'/cliente'}" class="btn btn-success" role="button">Cliente</a>
+                            <a th:href="@{'~/alugueis/aluguel/'+${aluguel.id}+'/funcionario'}" class="btn btn-success" role="button">Funcionario</a> 
                         </div>
                     </div>
                 </div>

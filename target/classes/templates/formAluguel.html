@@ -41,7 +41,7 @@
                             <label>Contas disponíveis:</label>
                             <div style="overflow-y:scroll; width:250px; height:150px" class="form-control" data-live-search="true" th:if="${aluguel.id != null}">
                                 <div class="form-check form-check-inline" th:each="conta, i : ${contas}" th:if="${conta.aluguel == null || #lists.contains(aluguel.contas, conta)}">
-                                    <input class="form-check-input" onclick="clearTotal()" type="checkbox" th:field="*{contas}" th:name="${'contas['+i.index+'].id'}" th:value="${conta.id}" th:checked="${#lists.contains(aluguel.contas, conta) ? 'checked' : false}"/>
+                                    <input class="form-check-input" onclick="clearTotal()" type="checkbox" th:field="*{contas}" th:name="${'contas['+i.index+'].id'}" th:value="${conta.id}" th:checked="${#lists.contains(aluguel.contas, conta) ? 'checked' : false}" th:disabled="${#lists.contains(aluguel.contas, conta) ? 'disabled' : false}"/>
                                     <label class="form-check-label" th:text="${conta.email}"></label>
                                 </div>
                             </div> 

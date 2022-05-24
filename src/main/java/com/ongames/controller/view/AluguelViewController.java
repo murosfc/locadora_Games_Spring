@@ -122,29 +122,16 @@ public class AluguelViewController {
         }
     } 
     
-    private void removeContasNulas(Aluguel aluguel){
+    private void trataContas(Aluguel aluguel){
         aluguel.getContas().removeIf( (Conta c) -> {
             return c.getId()== null;
         });
         if(aluguel.getContas().isEmpty()){
             throw new NotAllowedException("Ao menos uma conta precisa ser selecionada para cadastrar um aluguel");
         }
-    }   
-    
-    private void trataContas(Aluguel aluguel){
-        this.removeContasNulas(aluguel);
         aluguel.getContas().forEach((Conta c) -> {
             c.setAluguel(aluguel);
         });
-        if (aluguel.getId() != null){
-            Aluguel aluguelFromDB = service.findById(aluguel.getId());                    
-            for (Conta c : aluguelFromDB.getContas()){
-                if(!aluguel.getContas().contains(c)){
-                    c.setAluguel(null);
-                    contaService.save(c);
-                }
-            }
-        }
     }
    
 }

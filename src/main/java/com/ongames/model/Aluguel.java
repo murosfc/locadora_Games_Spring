@@ -14,8 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,7 +34,7 @@ public class Aluguel implements Serializable{
     
     @ManyToOne @JoinColumn(name = "id_cliente", referencedColumnName = "id") @NotNull(message = "Um cliente precisa ser associado ao aluguel")
     private Cliente cliente;
-    @OneToMany @JsonIgnore @NotNull(message = "A menos uma conta precisa ser associada ao aluguel")    
+    @ManyToMany @JsonIgnore @NotNull(message = "A menos uma conta precisa ser associada ao aluguel")    
     private List<Conta> contas;
     @ManyToOne @JoinColumn(name = "id_funcionario", referencedColumnName = "id") @NotNull(message = "A menos um funcionário precisa ser associado ao aluguel")     
     private Funcionario contatoSuporte;

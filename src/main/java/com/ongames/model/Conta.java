@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -33,7 +33,7 @@ public class Conta implements Serializable{
     @ManyToOne() @JoinColumn(name = "id_jogo") @NotNull (message = "Um jogo precisa ser associado a esta conta")
     private Jogo jogo;
     
-    @OneToOne @JoinColumn(name = "id_aluguel")
+    @OneToMany @JoinColumn(name = "id_aluguel")
     private Aluguel aluguel;
 
     public Conta(String email, String senha) {

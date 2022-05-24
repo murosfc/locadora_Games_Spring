@@ -9,6 +9,7 @@ import com.ongames.services.ClienteService;
 import com.ongames.services.ContaService;
 import com.ongames.services.FuncionarioService;
 import com.ongames.services.PagamentoService;
+import java.time.LocalDate;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,6 +52,7 @@ public class AluguelViewController {
     @GetMapping
     public String findAll(Model model){
         model.addAttribute("alugueis", service.findAll());
+        model.addAttribute("hoje", LocalDate.now());
         return "alugueis";
     }
     

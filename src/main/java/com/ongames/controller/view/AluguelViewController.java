@@ -85,10 +85,10 @@ public class AluguelViewController {
     
     @PostMapping(path="/aluguel")
     public String save(@ModelAttribute Aluguel aluguel, BindingResult result, Model model){ 
-        this.removeContasNulas(aluguel);
+        this.removeContasNulas(aluguel);             
         aluguel.getContas().forEach((Conta c) -> {
-            c.setAluguel(aluguel);
-        });
+            c.setAluguel(aluguel);            
+        });     
         aluguel.getPagamento().setAluguel(aluguel);        
         if (result.hasErrors()){
             this.cadastro(model);
@@ -112,6 +112,13 @@ public class AluguelViewController {
         this.removeContasNulas(aluguel);
         aluguel.getContas().forEach((Conta c) -> {            
             c.setAluguel(aluguel);
+        });
+        List<Conta> contasDb = service.findById(aluguel.getId()).getContas();
+        contasDb.forEach((Conta c) -> {
+            if (!aluguel.getContas().contains(c)){
+                c.setAluguel(null);
+                contaService.save(c);
+            }            
         });
         if (result.hasErrors()){
             this.atualizar(model, id);

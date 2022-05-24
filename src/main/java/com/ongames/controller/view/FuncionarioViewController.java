@@ -86,7 +86,7 @@ public class FuncionarioViewController {
     
     @GetMapping(path = "/meusdados")
     public String getMeusDados (@AuthenticationPrincipal User meuUser, Model model){
-        Funcionario func = service.findByEmail(meuUser.getUsername());       
+        Funcionario func = service.findByEmail(meuUser.getUsername());        
         model.addAttribute("funcionario", func);
         return "formMeusDados";
     }   
@@ -129,6 +129,7 @@ public class FuncionarioViewController {
             func.setId(null);
             service.save(func);
             model.addAttribute("msgSucesso", "Funcionario cadastrado com sucesso");
+            model.addAttribute("permissoes", permissaoRepo.findAll());
             return "formFuncionario";            
         }catch (Exception e){
             model.addAttribute("msgErros", new ObjectError("funcionarios", e.getMessage()));

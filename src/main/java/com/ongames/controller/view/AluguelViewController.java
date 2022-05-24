@@ -117,7 +117,13 @@ public class AluguelViewController {
         contasDb.forEach((Conta c) -> {
             if (!aluguel.getContas().contains(c)){
                 c.setAluguel(null);
-                contaService.save(c);
+                try{
+                    contaService.save(c);
+                }catch (Exception e){ 
+                    this.atualizar(model, id);
+                    model.addAttribute("msgErros", List.of(new ObjectError("conta", e.getMessage())));
+                    return "formAluguel";
+                }
             }            
         });
         if (result.hasErrors()){

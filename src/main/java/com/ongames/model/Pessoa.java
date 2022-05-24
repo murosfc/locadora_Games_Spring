@@ -45,7 +45,7 @@ public abstract class Pessoa implements Serializable {
     @Column(nullable=false, length = 60)    
     private String senha; 
     
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.EAGER)
     @Size (min = 1, message= "Pessoa precisa ter ao menos uma perimissão")
     private List<Permissao> permissoes = new ArrayList<>();  
     

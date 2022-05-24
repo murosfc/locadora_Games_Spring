@@ -44,7 +44,7 @@ public class Jogo implements Serializable{
     @NotNull (message="A plataforma precisa ser informada")
     private String plataforma;
     
-    @ManyToMany(fetch = FetchType.EAGER)      
+    @ManyToMany()      
     private List<Categoria> categorias = new ArrayList<>();
     
     public Jogo() {

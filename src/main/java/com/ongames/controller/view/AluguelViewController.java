@@ -10,6 +10,7 @@ import com.ongames.services.ContaService;
 import com.ongames.services.FuncionarioService;
 import com.ongames.services.PagamentoService;
 import java.time.LocalDate;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -101,7 +102,7 @@ public class AluguelViewController {
             return "formAluguel";
         }catch (Exception e){
             this.cadastro(model);
-            model.addAttribute("msgErros", new ObjectError("msgErros", e.getMessage()));            
+            model.addAttribute("msgErros", List.of(new ObjectError("aluguel", e.getMessage())));            
             return "formAluguel";
         }
     }
@@ -110,11 +111,12 @@ public class AluguelViewController {
     public String update(@ModelAttribute Aluguel aluguel, BindingResult result, @PathVariable("id") Long id, Model model){         
         this.removeContasNulas(aluguel);
         aluguel.getContas().forEach((Conta c) -> {
+            if (c.getAluguel() = null)
             c.setAluguel(aluguel);
         });
         if (result.hasErrors()){
             this.atualizar(model, id);
-            model.addAttribute("msgErros", result.getGlobalError());
+            model.addAttribute("msgErros", result.getAllErrors());
             return "formAluguel";
         }
         try{    
@@ -122,9 +124,9 @@ public class AluguelViewController {
             this.atualizar(model, id);
             model.addAttribute("msgSucesso", "Aluguel atualizado com sucesso!");
             return "formAluguel";
-        }catch (Exception e){
+        }catch (Exception e){            
             this.atualizar(model, id);
-            model.addAttribute("msgErros", new ObjectError("msgErros", e.getMessage()));            
+            model.addAttribute("msgErros", List.of(new ObjectError("aluguel", e.getMessage())));            
             return "formAluguel";
         }
     } 

@@ -84,10 +84,7 @@ public class AluguelViewController {
     @PostMapping(path="/aluguel")
     public String save(@ModelAttribute Aluguel aluguel, BindingResult result, Model model){ 
         this.trataContas(aluguel);
-        aluguel.getPagamento().setAluguel(aluguel);
-        aluguel.getContas().forEach((Conta c) -> {
-            c.setAluguel(aluguel);
-        });
+        aluguel.getPagamento().setAluguel(aluguel);        
         if (result.hasErrors()){
             this.cadastro(model);
             model.addAttribute("msgErros", result.getAllErrors());
@@ -106,7 +103,7 @@ public class AluguelViewController {
     }
     
     @PostMapping(path="/aluguel/{id}")
-    public String update(@ModelAttribute Aluguel aluguel, BindingResult result, @PathVariable("id") Long id, Model model){       
+    public String update(@ModelAttribute Aluguel aluguel, BindingResult result, @PathVariable("id") Long id, Model model){         
         this.trataContas(aluguel);
         if (result.hasErrors()){
             this.atualizar(model, id);
@@ -141,12 +138,12 @@ public class AluguelViewController {
         });
         if (aluguel.getId() != null){
             Aluguel aluguelFromDB = service.findById(aluguel.getId());                    
-            aluguelFromDB.getContas().stream().filter(c -> (!aluguel.getContas().contains(c))).map(c -> {
-                c.setAluguel(null);
-                return c;
-            }).forEachOrdered(c -> {
-                contaService.save(c);
-            });
+            for (Conta c : aluguelFromDB.getContas()){
+                if(!aluguel.getContas().contains(c)){
+                    c.setAluguel(null);
+                    contaService.save(c);
+                }
+            }
         }
     }
    

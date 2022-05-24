@@ -1,0 +1,7 @@
+https://locadora-ongames.herokuapp.com/
+
+Login ADMIN: superhiggs@ongames.com
+Senha: Senha123!
+
+Login FUNC: larisniper@ongames.com 
+Senha: LSn1p3r@ 

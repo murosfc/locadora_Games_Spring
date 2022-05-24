@@ -110,8 +110,7 @@ public class AluguelViewController {
     @PostMapping(path="/aluguel/{id}")
     public String update(@ModelAttribute Aluguel aluguel, BindingResult result, @PathVariable("id") Long id, Model model){         
         this.removeContasNulas(aluguel);
-        aluguel.getContas().forEach((Conta c) -> {
-            if (c.getAluguel() = null)
+        aluguel.getContas().forEach((Conta c) -> {            
             c.setAluguel(aluguel);
         });
         if (result.hasErrors()){

@@ -59,7 +59,7 @@ public class FuncionarioViewController {
     }
     
     @GetMapping(path="/funcionarios/funcionario/{id}")
-    private String findById(@PathVariable("id") Long id, Model model){
+    private String atualizar(@PathVariable("id") Long id, Model model){
         model.addAttribute("funcionario", service.findById(id));
         model.addAttribute("permissoes", permissaoRepo.findAll());
         return "formFuncionario";    
@@ -67,8 +67,7 @@ public class FuncionarioViewController {
     
     @PostMapping(path="/funcionarios/funcionario/{id}")
     public String update (@ModelAttribute Funcionario func,@PathVariable("id") Long id, BindingResult result, Model model){
-        func.setSenha(service.findById(id).getSenha());
-        model.addAttribute("permissoes", permissaoRepo.findAll());
+        func.setSenha(service.findById(id).getSenha());        
         if (result.hasErrors()){
             model.addAttribute("msgErros", result.getAllErrors());
             return "formFuncionario";
@@ -76,6 +75,7 @@ public class FuncionarioViewController {
         try{
             func.setId(id);
             service.update(func, "", "", "");
+            this.atualizar(id, model);
             model.addAttribute("msgSucesso", "Funcionario atualizado com sucesso");
             return "formFuncionario";            
         }catch (Exception e){
@@ -106,6 +106,7 @@ public class FuncionarioViewController {
         func.setPermissoes(funcDB.getPermissoes());        
         try{            
             service.update(func, senhaAtual, novaSenha, confirmaNovaSenha);
+            this.getMeusDados(meuUser, model);
             model.addAttribute("msgSucesso", "Funcionario atualizado com sucesso");
             return "formMeusDados";            
         }catch (Exception e){
@@ -128,8 +129,7 @@ public class FuncionarioViewController {
         try{
             func.setId(null);
             service.save(func);
-            model.addAttribute("msgSucesso", "Funcionario cadastrado com sucesso");
-            model.addAttribute("permissoes", permissaoRepo.findAll());
+            model.addAttribute("msgSucesso", "Funcionario cadastrado com sucesso");            
             return "formFuncionario";            
         }catch (Exception e){
             model.addAttribute("msgErros", new ObjectError("funcionarios", e.getMessage()));

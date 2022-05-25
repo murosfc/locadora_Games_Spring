@@ -67,7 +67,7 @@
         </div>
         <div th:fragment="mensagens">
             <div th:if="${not #strings.isEmpty(msgErros)}" class="alert alert-danger alert-dismissible fade show" role="alert">
-                <p th:each="msg : ${msgErros}" th:text="${msg.getMessage()}"></p>
+                <p th:each="msg : ${msgErros}" th:text="${msg.getDefaultMessage()}"></p>
                 <button type="button" class="btn-close" aria-label="Close" style="margin-left: 20px">
                     <span aria-hidden="true">&times;</span>
                 </button>

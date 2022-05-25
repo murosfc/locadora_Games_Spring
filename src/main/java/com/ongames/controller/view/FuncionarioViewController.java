@@ -69,7 +69,8 @@ public class FuncionarioViewController {
     @PostMapping(path="/funcionarios/funcionario/{id}")
     public String update (@ModelAttribute Funcionario func,@PathVariable("id") Long id, BindingResult result, Model model){
         func.setSenha(service.findById(id).getSenha()); 
-        this.removePermissoesNulas(func);
+        this.removePermissoesNulas(func); 
+        model.addAttribute("funcionario", func);
         model.addAttribute("permissoes", permissaoRepo.findAll());
         if (result.hasErrors()){
             model.addAttribute("msgErros", result.getAllErrors());
@@ -78,8 +79,8 @@ public class FuncionarioViewController {
         try{
             func.setId(id);
             service.update(func, "", "", "");            
-            model.addAttribute("msgSucesso", "Funcionario atualizado com sucesso");
-            return "formFuncionario";            
+            model.addAttribute("msgSucesso", "Funcionario atualizado com sucesso");            
+            return "formFuncionario";
         }catch (Exception e){
             model.addAttribute("msgErros", new ObjectError("funcionarios", e.getMessage()));
             return "formFuncionario";    

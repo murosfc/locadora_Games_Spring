@@ -25,6 +25,10 @@ public class ContaService {
         return contas.get();
     }     
     
+    public void saveAll(List<Conta> contas){
+        repo.saveAll(contas);
+    }
+    
     public List<Conta> findAll(){
         List contas = repo.findAll();
         if (contas.isEmpty()){

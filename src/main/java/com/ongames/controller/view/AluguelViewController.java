@@ -10,6 +10,7 @@ import com.ongames.services.ContaService;
 import com.ongames.services.FuncionarioService;
 import com.ongames.services.PagamentoService;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -114,17 +115,16 @@ public class AluguelViewController {
             c.setAluguel(aluguel);
         });
         List<Conta> contasDb = service.findById(aluguel.getId()).getContas();
+        List<Conta> contasRemovidas = new ArrayList<>();
         contasDb.forEach((Conta c) -> {
             if (!aluguel.getContas().contains(c)){
                 c.setAluguel(null);
-                try{
-                    contaService.save(c);
-                }catch (Exception e){ 
-                    this.atualizar(model, id);
-                    model.addAttribute("msgErros", List.of(new ObjectError("conta", e.getMessage())));                    
-                }
+                contasRemovidas.add(c);
             }            
         });
+        if (!contasRemovidas.isEmpty()){
+            contaService.saveAll(contasRemovidas);
+        }
         if (result.hasErrors()){
             this.atualizar(model, id);
             model.addAttribute("msgErros", result.getAllErrors());

@@ -2,6 +2,7 @@ package com.ongames.controller.view;
 
 import com.ongames.exception.NotAllowedException;
 import com.ongames.model.Funcionario;
+import com.ongames.model.Permissao;
 import com.ongames.repository.PermissaoRepository;
 import com.ongames.services.AluguelService;
 import com.ongames.services.FuncionarioService;
@@ -67,7 +68,9 @@ public class FuncionarioViewController {
     
     @PostMapping(path="/funcionarios/funcionario/{id}")
     public String update (@ModelAttribute Funcionario func,@PathVariable("id") Long id, BindingResult result, Model model){
-        func.setSenha(service.findById(id).getSenha());        
+        func.setSenha(service.findById(id).getSenha()); 
+        this.removePermissoesNulas(func);
+        model.addAttribute("permissoes", permissaoRepo.findAll());
         if (result.hasErrors()){
             model.addAttribute("msgErros", result.getAllErrors());
             return "formFuncionario";
@@ -115,6 +118,7 @@ public class FuncionarioViewController {
     
     @PostMapping(path="/funcionarios/funcionario")
     public String save (@Valid @ModelAttribute Funcionario func, BindingResult result, Model model, @RequestParam("confirmaSenha") String confirmaSenha){
+        this.removePermissoesNulas(func);
         model.addAttribute("permissoes", permissaoRepo.findAll());
         if (result.hasErrors()){
             model.addAttribute("msgErros", result.getAllErrors());
@@ -147,4 +151,13 @@ public class FuncionarioViewController {
             return "funcionarios";
         }        
     }
+    
+       private void removePermissoesNulas(Funcionario func){
+        func.getPermissoes().removeIf( (Permissao p) -> {
+            return p.getId()== null;
+        });
+        if(func.getPermissoes().isEmpty()){
+            throw new NotAllowedException("Ao menos uma permissão precisa ser adicionada ao funcionário");
+        }
+       }
 }

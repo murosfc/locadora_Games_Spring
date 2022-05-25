@@ -121,8 +121,7 @@ public class AluguelViewController {
                     contaService.save(c);
                 }catch (Exception e){ 
                     this.atualizar(model, id);
-                    model.addAttribute("msgErros", List.of(new ObjectError("conta", e.getMessage())));
-                    return "formAluguel";
+                    model.addAttribute("msgErros", List.of(new ObjectError("conta", e.getMessage())));                    
                 }
             }            
         });
@@ -149,8 +148,7 @@ public class AluguelViewController {
         });
         if(aluguel.getContas().isEmpty()){
             throw new NotAllowedException("Ao menos uma conta precisa ser selecionada para cadastrar um aluguel");
-        }
-       
+        }       
     }
    
 }

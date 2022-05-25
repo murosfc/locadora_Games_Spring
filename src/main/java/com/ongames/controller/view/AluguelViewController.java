@@ -86,10 +86,7 @@ public class AluguelViewController {
     
     @PostMapping(path="/aluguel")
     public String save(@ModelAttribute Aluguel aluguel, BindingResult result, Model model){ 
-        this.removeContasNulas(aluguel);             
-        aluguel.getContas().forEach((Conta c) -> {
-            c.setAluguel(aluguel);            
-        });     
+        this.trataContas(aluguel);            
         aluguel.getPagamento().setAluguel(aluguel);        
         if (result.hasErrors()){
             this.cadastro(model);
@@ -110,21 +107,7 @@ public class AluguelViewController {
     
     @PostMapping(path="/aluguel/{id}")
     public String update(@ModelAttribute Aluguel aluguel, BindingResult result, @PathVariable("id") Long id, Model model){         
-        this.removeContasNulas(aluguel);
-        aluguel.getContas().forEach((Conta c) -> {            
-            c.setAluguel(aluguel);
-        });
-        List<Conta> contasDb = service.findById(aluguel.getId()).getContas();
-        List<Conta> contasRemovidas = new ArrayList<>();
-        contasDb.forEach((Conta c) -> {
-            if (!aluguel.getContas().contains(c)){
-                c.setAluguel(null);
-                contasRemovidas.add(c);
-            }            
-        });
-        if (!contasRemovidas.isEmpty()){
-            contaService.saveAll(contasRemovidas);
-        }
+        this.trataContas(aluguel);        
         if (result.hasErrors()){
             this.atualizar(model, id);
             model.addAttribute("msgErros", result.getAllErrors());
@@ -142,13 +125,31 @@ public class AluguelViewController {
         }
     } 
     
-    private void removeContasNulas(Aluguel aluguel){
+    private void trataContas(Aluguel aluguel){
         aluguel.getContas().removeIf( (Conta c) -> {
             return c.getId()== null;
         });
         if(aluguel.getContas().isEmpty()){
             throw new NotAllowedException("Ao menos uma conta precisa ser selecionada para cadastrar um aluguel");
-        }       
+        }
+        
+        if (aluguel.getId() != null){
+            aluguel.getContas().forEach((Conta c) -> {            
+            c.setAluguel(aluguel);
+             });        
+            List<Conta> contasDb = service.findById(aluguel.getId()).getContas();
+            List<Conta> contasRemovidas = new ArrayList<>();
+            contasDb.forEach((Conta c) -> {
+                if (!aluguel.getContas().contains(c)){
+                    c.setAluguel(null);
+                    contasRemovidas.add(c);
+                }            
+            });
+            if (!contasRemovidas.isEmpty()){
+                contaService.saveAll(contasRemovidas);
+            }
+        }
+        
     }
    
 }

@@ -74,8 +74,7 @@ public class FuncionarioViewController {
         }
         try{
             func.setId(id);
-            service.update(func, "", "", "");
-            this.atualizar(id, model);
+            service.update(func, "", "", "");            
             model.addAttribute("msgSucesso", "Funcionario atualizado com sucesso");
             return "formFuncionario";            
         }catch (Exception e){
@@ -105,8 +104,7 @@ public class FuncionarioViewController {
         }
         func.setPermissoes(funcDB.getPermissoes());        
         try{            
-            service.update(func, senhaAtual, novaSenha, confirmaNovaSenha);
-            this.getMeusDados(meuUser, model);
+            service.update(func, senhaAtual, novaSenha, confirmaNovaSenha);            
             model.addAttribute("msgSucesso", "Funcionario atualizado com sucesso");
             return "formMeusDados";            
         }catch (Exception e){

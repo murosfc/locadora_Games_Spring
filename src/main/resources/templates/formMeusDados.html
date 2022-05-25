@@ -17,7 +17,7 @@
                 
                 <div th:replace="~{fragmentos :: mensagens}"></div>
                 
-                <form th:object="${funcionario}" th:action="@{~/funcionarios/meusdados}" method="post" class="card-body">
+                <form th:object="${funcionario}" th:action="@{~/meusdados}" method="post" class="card-body">
                     <input type="hidden" th:field="*{id}"/>
                     <div class="row g-2">
                         <div class="col-md-8" >

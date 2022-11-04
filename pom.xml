@@ -14,7 +14,7 @@
 	<name>com.ongames</name>
 	<description>Gerenciador Locadora</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>18</java.version>
 	</properties>
 	<dependencies>               
 		<dependency>
